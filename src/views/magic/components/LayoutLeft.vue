@@ -34,15 +34,16 @@ export default class extends Vue {
   handleChange() {}
 }
 </script>
-<style lang="scss">
-.el-scrollbar__wrap {
-  overflow-x: hidden !important;
-}
+<style scoped></style>
+<style lang="scss" scoped>
 .el-scrollbar {
   height: 100%;
 }
-.layou-left >>> .el-collapse-item__header {
-  padding-left: 20px;
+.layou-left ::v-deep .el-scrollbar__wrap {
+  overflow-x: hidden !important;
+}
+.layou-left ::v-deep .el-collapse-item__header {
+  padding-left: 10px;
 }
 .layou-left {
   position: fixed;
