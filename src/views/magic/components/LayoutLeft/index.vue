@@ -1,7 +1,7 @@
 <template>
   <div class="layou-left">
     <el-scrollbar class="scrollbar-wrapper">
-      <el-collapse v-model="activeNames" @change="handleChange">
+      <el-collapse v-model="activeNames">
         <el-collapse-item title="基础组件" name="base-components">
           <base-components></base-components>
         </el-collapse-item>
@@ -30,8 +30,6 @@ import SaleComponents from './SaleComponents.vue'
 })
 export default class extends Vue {
   private activeNames = 'base-components'
-
-  handleChange() {}
 }
 </script>
 <style scoped></style>
