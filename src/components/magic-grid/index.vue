@@ -1,10 +1,8 @@
 <template>
-  <div class="magic-grid">
-    <div class="grid-list">
-      <div class="grid-item" v-for="item in data" :key="item.name">
-        <div><i :class="[item.icon]"></i></div>
-        <div>{{ item.name }}</div>
-      </div>
+  <div class="magic-grid grid-list">
+    <div class="grid-item" v-for="item in data" :key="item.name">
+      <div><i :class="[item.icon]"></i></div>
+      <div>{{ item.name }}</div>
     </div>
   </div>
 </template>
@@ -30,28 +28,28 @@ export default class extends Vue {
   color: #5e6d82;
   overflow: hidden;
   padding: 0 !important;
-  .grid-item {
-    flex-basis: calc(100% / 3);
-    text-align: center;
-    height: 90px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-right: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    margin-right: -1px;
-    margin-bottom: -1px;
-    font-size: 13px;
-    box-sizing: content-box;
-    cursor: move;
-    transition: all ease 0.3s;
-    &:hover {
-      background-color: $--color-primary;
-      color: #fff;
-    }
-    i {
-      font-size: 26px;
-    }
+}
+.grid-item {
+  flex-basis: calc(100% / 3);
+  text-align: center;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  margin-right: -1px;
+  margin-bottom: -1px;
+  font-size: 13px;
+  box-sizing: content-box;
+  cursor: move;
+  transition: all ease 0.3s;
+  &:hover {
+    background-color: $--color-primary;
+    color: #fff;
+  }
+  i {
+    font-size: 26px;
   }
 }
 </style>

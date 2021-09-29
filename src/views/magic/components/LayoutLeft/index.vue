@@ -1,7 +1,7 @@
 <template>
   <div class="layou-left">
     <el-scrollbar class="scrollbar-wrapper">
-      <el-collapse v-model="activeNames">
+      <el-collapse v-model="activeNames" ref="sortable">
         <el-collapse-item title="基础组件" name="base-components">
           <base-components></base-components>
         </el-collapse-item>
@@ -20,6 +20,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import BaseComponents from './BaseComponents.vue'
 import ShopComponents from './ShopComponents.vue'
 import SaleComponents from './SaleComponents.vue'
+
 @Component({
   name: 'layoutLeft',
   components: {
@@ -40,9 +41,6 @@ export default class extends Vue {
 .layou-left ::v-deep .el-scrollbar__wrap {
   overflow-x: hidden !important;
 }
-// .layou-left ::v-deep .el-collapse-item__header {
-//   padding-left: 10px;
-// }
 .layou-left {
   position: fixed;
   left: 0px;
