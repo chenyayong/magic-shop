@@ -15,7 +15,7 @@ interface IGrid {
   icon: string
 }
 @Component({
-  name: 'magic-grid'
+  name: 'magicGrid'
 })
 export default class extends Vue {
   @Prop({ type: Array }) readonly data!: IGrid[]
@@ -44,13 +44,14 @@ export default class extends Vue {
     font-size: 13px;
     box-sizing: content-box;
     cursor: move;
+    transition: all ease 0.3s;
+    &:hover {
+      background-color: $--color-primary;
+      color: #fff;
+    }
     i {
       font-size: 26px;
     }
-  }
-  .grid-item:hover {
-    background-color: $--color-primary;
-    color: #fff;
   }
 }
 </style>

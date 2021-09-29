@@ -40,9 +40,9 @@ export default class extends Vue {
 .layou-left ::v-deep .el-scrollbar__wrap {
   overflow-x: hidden !important;
 }
-.layou-left ::v-deep .el-collapse-item__header {
-  padding-left: 10px;
-}
+// .layou-left ::v-deep .el-collapse-item__header {
+//   padding-left: 10px;
+// }
 .layou-left {
   position: fixed;
   left: 0px;
@@ -52,5 +52,7 @@ export default class extends Vue {
   background: #ffffff;
   box-sizing: border-box;
   overflow: hidden;
+  box-shadow: 0 0 0 0px rgb(192 197 205 / 80%);
+  padding: 0 10px;
 }
 </style>

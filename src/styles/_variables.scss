@@ -1,34 +1,51 @@
 /* Variables */
 
 // Base color
-$blue:#324157;
-$light-blue:#3A71A8;
-$red:#C03639;
-$pink: #E65D6E;
-$green: #30B08F;
-$tiffany: #4AB7BD;
-$yellow:#FEC171;
-$panGreen: #30B08F;
+// $blue:#324157;
+// $light-blue:#3A71A8;
+// $red:#C03639;
+// $pink: #E65D6E;
+// $green: #30B08F;
+// $tiffany: #4AB7BD;
+// $yellow:#FEC171;
+// $panGreen: #30B08F;
 
 // Sidebar
-$sideBarWidth: 210px;
-$subMenuBg:#1f2d3d;
-$subMenuHover:#001528;
-$subMenuActiveText:#f4f4f5;
-$menuBg:#304156;
-$menuText:#bfcbd9;
-$menuActiveText:#409EFF; // Also see settings.sidebarTextTheme
+// $sideBarWidth: 210px;
+// $subMenuBg:#1f2d3d;
+// $subMenuHover:#001528;
+// $subMenuActiveText:#f4f4f5;
+// $menuBg:#304156;
+// $menuText:#bfcbd9;
+// $menuActiveText:#409EFF; // Also see settings.sidebarTextTheme
 
 // Login page
-$lightGray: #eee;
-$darkGray:#889aa4;
-$loginBg: #2d3a4b;
-$loginCursorColor: #fff;
+// $lightGray: #eee;
+// $darkGray:#889aa4;
+// $loginBg: #2d3a4b;
+// $loginCursorColor: #fff;
+
+// // Element 主要品牌颜色是鲜艳、友好的蓝色
+// $primary-blue: #409eff;
+// $deep-blue: rgb(83, 168, 255);
+// $deep2-blue: rgb(102, 177, 255);
+// $deep3-blue: rgb(121, 187, 255);
+// $deep4-blue: rgb(140, 197, 255);
+// $deep5-blue: rgb(160, 207, 255);
+// $deep6-blue: rgb(179, 216, 255);
+// $deep7-blue: rgb(198, 226, 255);
+// $deep8-blue: rgb(217, 236, 255);
+// $deep8-blue: rgb(236, 245, 255);
+
+// $success: #67c23a;
+// $warning: #e6a23c;
+// $danger: #f56c6c;
+// $info: #909399;
 
 // The :export directive is the magic sauce for webpack
 // https://mattferderer.com/use-sass-variables-in-typescript-and-javascript
-:export {
-  menuBg: $menuBg;
-  menuText: $menuText;
-  menuActiveText: $menuActiveText;
-}
+// :export {
+//   menuBg: $menuBg;
+//   menuText: $menuText;
+//   menuActiveText: $menuActiveText;
+// }
