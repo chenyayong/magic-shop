@@ -1,7 +1,7 @@
 <template>
   <div class="sale-components">
     <!-- <magic-grid :data="compontents"></magic-grid> -->
-    <draggable class="grid-list" group="site">
+    <draggable class="grid-list" :group="group">
       <div class="grid-item" v-for="item in compontents" :key="item.name">
         <div><i :class="[item.icon]"></i></div>
         <div>{{ item.name }}</div>
@@ -22,6 +22,13 @@ import magicGrid from '@/components/magic-grid/index.vue'
   }
 })
 export default class extends Vue {
+  private group = {
+    name: 'site',
+    pull: 'clone',
+    put: false,
+    sort: false
+  }
+
   private compontents = [
     {
       name: '头条',

@@ -1,6 +1,6 @@
 <template>
   <div class="base-components">
-    <draggable class="grid-list" :group="group" :sort="false">
+    <draggable class="grid-list" :list="compontents" :clone="clone" :group="group" :sort="false">
       <!-- <magic-grid :data="compontents"></magic-grid> -->
       <div class="grid-item" v-for="item in compontents" :key="item.name">
         <div><i :class="[item.icon]"></i></div>
@@ -24,27 +24,30 @@ import magicGrid from '@/components/magic-grid/index.vue'
 export default class extends Vue {
   private group = {
     name: 'site',
-    pull: true,
-    put: false,
-    sort: false
+    pull: 'clone',
+    put: false
   }
 
   private compontents = [
     {
       name: '轮播图',
-      icon: 'el-icon-picture'
+      icon: 'el-icon-picture',
+      keyworld: 'magicSwipe'
     },
     {
       name: '按钮组',
-      icon: 'el-icon-switch-button'
+      icon: 'el-icon-switch-button',
+      keyworld: 'magicButtonGroup'
     },
     {
       name: '单图',
-      icon: 'el-icon-picture-outline'
+      icon: 'el-icon-picture-outline',
+      keyworld: 'magicPicture'
     },
     {
       name: '图片组合',
-      icon: 'el-icon-camera'
+      icon: 'el-icon-camera',
+      keyworld: 'magicPictureGroup'
     }
     // {
     //   name: '标题栏',
@@ -67,6 +70,11 @@ export default class extends Vue {
     //   icon: 'el-icon-video-play'
     // }
   ]
+
+  clone(value: any) {
+    console.log('cloneDog', value)
+    return value
+  }
 }
 </script>
 <style scoped lang="scss">

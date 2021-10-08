@@ -8,13 +8,15 @@
         </div>
       </el-empty> -->
       <el-scrollbar>
-        <draggable class="draggable" :group="group" :sort="true"></draggable>
+        <draggable class="draggable" :group="group" :sort="true" :list="compontents">
+          <div v-for="item in compontents" :key="item.keyworld">{{ item.name }}</div>
+        </draggable>
       </el-scrollbar>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import draggable from 'vuedraggable'
 @Component({
   name: 'LayoutContent',
@@ -27,6 +29,13 @@ export default class extends Vue {
     name: 'site',
     pull: false,
     put: true
+  }
+
+  private compontents = []
+
+  @Watch('compontents', { immediate: true, deep: true })
+  changeCompontents(val: any) {
+    console.log('changeCompontents', val)
   }
 }
 </script>
