@@ -8,19 +8,19 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import magicSwipe from '@/components/magic-swipe/index.vue'
-import magicGoods from '@/components/magic-goods/index.vue'
-import magicPicture from '@/components/magic-picture/index.vue'
-import magicPictureGroup from '@/components/magic-picture-group/index.vue'
-import magicButtonGroup from '@/components/magic-button-group/index.vue'
+// import magicSwipe from '@/components/magic-swipe/index.vue'
+// import magicGoods from '@/components/magic-goods/index.vue'
+// import magicPicture from '@/components/magic-picture/index.vue'
+// import magicPictureGroup from '@/components/magic-picture-group/index.vue'
+// import magicButtonGroup from '@/components/magic-button-group/index.vue'
 @Component({
   name: 'LayoutEdit',
   components: {
-    magicSwipe,
-    magicGoods,
-    magicPicture,
-    magicPictureGroup,
-    magicButtonGroup
+    // magicSwipe,
+    // magicGoods,
+    // magicPicture,
+    // magicPictureGroup,
+    // magicButtonGroup
   }
 })
 export default class extends Vue {

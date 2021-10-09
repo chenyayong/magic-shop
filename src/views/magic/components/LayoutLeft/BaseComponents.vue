@@ -1,10 +1,9 @@
 <template>
   <div class="base-components">
     <draggable class="grid-list" :list="compontents" :clone="clone" :group="group" :sort="false">
-      <!-- <magic-grid :data="compontents"></magic-grid> -->
       <div class="grid-item" v-for="item in compontents" :key="item.name">
         <div><i :class="[item.icon]"></i></div>
-        <div>{{ item.name }}</div>
+        <div>{{ item.label }}</div>
       </div>
     </draggable>
   </div>
@@ -13,7 +12,11 @@
 <script lang="ts">
 import draggable from 'vuedraggable'
 import { Vue, Component } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
+import { IComponent } from '@/store/magic/index'
 import magicGrid from '@/components/magic-grid/index.vue'
+const magic = namespace('magic')
+
 @Component({
   name: 'base-components',
   components: {
@@ -22,57 +25,16 @@ import magicGrid from '@/components/magic-grid/index.vue'
   }
 })
 export default class extends Vue {
+  @magic.State('baseComponents') compontents!: IComponent[]
+
   private group = {
     name: 'site',
     pull: 'clone',
     put: false
   }
 
-  private compontents = [
-    {
-      name: '轮播图',
-      icon: 'el-icon-picture',
-      keyworld: 'magicSwipe'
-    },
-    {
-      name: '按钮组',
-      icon: 'el-icon-switch-button',
-      keyworld: 'magicButtonGroup'
-    },
-    {
-      name: '单图',
-      icon: 'el-icon-picture-outline',
-      keyworld: 'magicPicture'
-    },
-    {
-      name: '图片组合',
-      icon: 'el-icon-camera',
-      keyworld: 'magicPictureGroup'
-    }
-    // {
-    //   name: '标题栏',
-    //   icon: 'el-icon-eleme'
-    // },
-    // {
-    //   name: '辅助空白',
-    //   icon: 'el-icon-zoom-out'
-    // },
-    // {
-    //   name: '辅助线',
-    //   icon: 'el-icon-remove-outline'
-    // },
-    // {
-    //   name: '富文本',
-    //   icon: 'el-icon-remove-outline'
-    // },
-    // {
-    //   name: '视频',
-    //   icon: 'el-icon-video-play'
-    // }
-  ]
-
   clone(value: any) {
-    console.log('cloneDog', value)
+    console.log('clone', value)
     return value
   }
 }

@@ -10,7 +10,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 @Component({
-  name: 'magic-table'
+  name: 'magicTable'
 })
 export default class extends Vue {
   @Prop(Array) readonly data!: any[]

@@ -1,10 +1,10 @@
 <template>
-  <div class="magic-swipe">magic-swipe</div>
+  <div class="magic-picture">magic-picture</div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 @Component({
-  name: 'magicSwipe'
+  name: 'magicPicture'
 })
 export default class extends Vue {}
 </script>

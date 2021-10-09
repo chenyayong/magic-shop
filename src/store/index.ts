@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex, { Module } from 'vuex'
 
+Vue.use(Vuex)
+
 interface IModule {
   [key: string]: Module<any, any>
 }
@@ -12,8 +14,6 @@ const modules = files.keys().reduce((ret: IModule, file) => {
   ret[name] = module
   return ret
 }, {})
-
-Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules

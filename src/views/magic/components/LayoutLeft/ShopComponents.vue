@@ -29,44 +29,7 @@ export default class extends Vue {
     sort: false
   }
 
-  private compontents = [
-    {
-      name: '商品列表',
-      icon: 'el-icon-goods'
-    }
-    // {
-    //   name: '定位',
-    //   icon: 'el-icon-remove-outline'
-    // },
-    // {
-    //   name: '搜索框',
-    //   icon: 'el-icon-picture-outline-round'
-    // },
-    // {
-    //   name: '公告',
-    //   icon: 'el-icon-picture-outline'
-    // },
-    // {
-    //   name: '店招',
-    //   icon: 'el-icon-video-play'
-    // },
-    // {
-    //   name: '悬浮按钮',
-    //   icon: 'el-icon-remove-outline'
-    // },
-    // {
-    //   name: '地图',
-    //   icon: 'el-icon-picture-outline-round'
-    // },
-    // {
-    //   name: '回到顶部',
-    //   icon: 'el-icon-picture-outline'
-    // },
-    // {
-    //   name: '选项卡',
-    //   icon: 'el-icon-video-play'
-    // }
-  ]
+  private compontents = []
 }
 </script>
 
