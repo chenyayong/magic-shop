@@ -1,3 +1,5 @@
+import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
+
 export interface IComponent {
   name: string
   icon: string
@@ -6,6 +8,7 @@ export interface IComponent {
 export interface IComponentData {
   id: number
   name: string
+  active?: boolean
 }
 export interface IState {
   name: string
@@ -15,10 +18,12 @@ export interface IState {
   saleComponents: IComponent[]
 }
 
-const state: IState = {
-  name: 'magic',
-  componentsFormData: [],
-  baseComponents: [
+@Module({ namespaced: true })
+class magic extends VuexModule implements IState {
+  public name = 'magic'
+  public componentsFormData: IComponentData[] = []
+
+  public baseComponents = [
     {
       name: 'magicSwipe',
       icon: 'el-icon-picture',
@@ -59,8 +64,9 @@ const state: IState = {
     //   name: '视频',
     //   icon: 'el-icon-video-play'
     // }
-  ],
-  shopComponents: [
+  ]
+
+  public shopComponents = [
     {
       name: 'magicGoods',
       icon: 'el-icon-goods',
@@ -98,8 +104,9 @@ const state: IState = {
     //   name: '选项卡',
     //   icon: 'el-icon-video-play'
     // }
-  ],
-  saleComponents: [
+  ]
+
+  public saleComponents = [
     {
       name: '头条',
       icon: 'el-icon-eleme',
@@ -181,11 +188,70 @@ const state: IState = {
       label: '门店商家排名'
     }
   ]
-}
 
-const module = {
-  namespaced: true,
-  state
-}
+  @Mutation
+  SET_COMPONENTS_FORM_DATA(data: IComponentData[]) {
+    this.componentsFormData = data
+  }
 
-export default module
+  @Mutation
+  ADD_COMPONENTS_FORM_DATA(payload: { data: IComponentData; index: number }) {
+    const { data, index } = payload
+    console.log('ADD_COMPONENTS_FORM_DATA', payload)
+    if (typeof index === 'number') {
+      this.componentsFormData.splice(index, 0, data)
+    } else {
+      this.componentsFormData.push(data)
+    }
+  }
+
+  @Mutation
+  DELE_COMPONENTS_FORM_DATA(data: IComponentData, index: number) {
+    if (typeof index === 'number') {
+      this.componentsFormData.splice(index, 0, data)
+    } else {
+      this.componentsFormData.push(data)
+    }
+  }
+
+  @Mutation
+  RESET_COMPONENTS_FORM_DATA(data: IComponentData[]) {
+    if (data && data.length) {
+      this.componentsFormData = data
+    } else {
+      this.componentsFormData = []
+    }
+  }
+
+  @Mutation
+  DELE_ACTION_COMPONENTS_FORM_DATA() {
+    this.componentsFormData = this.componentsFormData.map((item) => {
+      delete item.active
+      return item
+    })
+  }
+
+  @Mutation
+  RESET_ACTION_COMPONENTS_FORM_DATA(index: number) {
+    this.componentsFormData = this.componentsFormData.map((item, i) => {
+      if (i === index) {
+        item.active = true
+      } else {
+        delete item.active
+      }
+      return item
+    })
+  }
+
+  @Action({ commit: 'SET_COMPONENTS_FORM_DATA' })
+  SetCompoentsFormData(data: IComponentData) {
+    return data
+  }
+
+  @Action({ commit: 'ADD_COMPONENTS_FORM_DATA' })
+  AddCompoentsFormData(payload: { data: IComponentData; index: number }) {
+    // const { data, index } = payload
+    return payload
+  }
+}
+export default magic

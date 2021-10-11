@@ -2,9 +2,15 @@
   <div class="layout-content">
     <div class="content-main">
       <el-scrollbar>
-        <draggable class="draggable" :group="group" :sort="true" :list="compontents" @change="change">
-          <template v-if="compontents.length">
-            <component v-for="item in compontents" :is="item.name" :key="item.id"></component>
+        <draggable class="draggable" :group="group" :sort="true" :list="componentsFormData">
+          <template v-if="componentsFormData.length">
+            <component
+              @click.native="changeActive(index)"
+              v-for="(item, index) in componentsFormData"
+              :class="[item.active ? 'active' : '']"
+              :is="item.name"
+              :key="item.id"
+            ></component>
           </template>
           <template v-else>
             <el-empty>
@@ -20,11 +26,22 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Vue, Component } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
 import draggable from 'vuedraggable'
+import { IComponentData } from '@/store/magic'
+const magic = namespace('magic')
+
 interface iComponents {
   [key: string]: Vue
 }
+// interface draggableElement {
+//   added: {
+//     element: IComponentData
+//     newIndex: number
+//   }
+// }
+
 const files = require.context('@/components/magic/', true, /\.vue$/)
 const components = files.keys().reduce((ret: iComponents, file: string): iComponents => {
   const component = files(file).default
@@ -41,21 +58,30 @@ const components = files.keys().reduce((ret: iComponents, file: string): iCompon
   }
 })
 export default class extends Vue {
+  @magic.State('componentsFormData') componentsFormData!: IComponentData[]
+  @magic.Action('SetCompoentsFormData') SetCompoentsFormData!: (data: IComponentData[]) => void
+  @magic.Action('AddCompoentsFormData') AddCompoentsFormData!: (data: { data: IComponentData; index: number }) => void
+  @magic.Mutation('RESET_ACTION_COMPONENTS_FORM_DATA') resetAction!: (index: number) => void
   private group = {
     name: 'site',
     pull: false,
     put: true
   }
 
-  private compontents = []
+  // @Watch('componentsFormData', { immediate: true, deep: true })
+  // changeCompontents(val: IComponentData[]) {
+  //   this.SetCompoentsFormData(val)
+  // }
 
-  @Watch('compontents', { immediate: true, deep: true })
-  changeCompontents(val: any) {
-    console.log('changeCompontents', val)
-  }
+  // draggableChange(value: draggableElement) {
+  //   const element = value.added.element
+  //   const index = value.added.newIndex
+  //   console.log('change', element, index)
+  //   // this.AddCompoentsFormData({ data: element, index })
+  // }
 
-  change(value: any) {
-    console.log(value)
+  changeActive(index: number) {
+    this.resetAction(index)
   }
 }
 </script>

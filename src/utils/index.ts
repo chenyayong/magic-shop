@@ -1,8 +1,7 @@
+import * as UUID from 'uuid'
+
 // Parse the time to string
-export const parseTime = (
-  time?: object | string | number | null,
-  cFormat?: string
-): string | null => {
+export const parseTime = (time?: object | string | number | null, cFormat?: string): string | null => {
   if (time === undefined || !time) {
     return null
   }
@@ -48,13 +47,15 @@ export const parseTime = (
 
 // Format and filter json data using filterKeys array
 export const formatJson = (filterKeys: any, jsonData: any) =>
-  jsonData.map((data: any) => filterKeys.map((key: string) => {
-    if (key === 'timestamp') {
-      return parseTime(data[key])
-    } else {
-      return data[key]
-    }
-  }))
+  jsonData.map((data: any) =>
+    filterKeys.map((key: string) => {
+      if (key === 'timestamp') {
+        return parseTime(data[key])
+      } else {
+        return data[key]
+      }
+    })
+  )
 
 // Check if an element has a class
 export const hasClass = (ele: HTMLElement, className: string) => {
@@ -84,9 +85,9 @@ export const toggleClass = (ele: HTMLElement, className: string) => {
   if (nameIndex === -1) {
     classString += '' + className
   } else {
-    classString =
-      classString.substr(0, nameIndex) +
-      classString.substr(nameIndex + className.length)
+    classString = classString.substr(0, nameIndex) + classString.substr(nameIndex + className.length)
   }
   ele.className = classString
 }
+
+export const uuid = UUID.v4
