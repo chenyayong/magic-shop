@@ -28,8 +28,6 @@ const magic = namespace('magic')
 })
 export default class extends Vue {
   @magic.State('baseComponents') compontents!: IComponent[]
-  @magic.Mutation('DELE_ACTION_COMPONENTS_FORM_DATA') deleAction!: () => void
-
   private group = {
     name: 'site',
     pull: 'clone',
@@ -37,7 +35,6 @@ export default class extends Vue {
   }
 
   clone(value: any) {
-    this.deleAction()
     value = cloneDeep(value)
     value.id = uuid()
     value.active = true

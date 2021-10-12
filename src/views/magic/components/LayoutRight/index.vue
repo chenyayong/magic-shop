@@ -1,6 +1,6 @@
 <template>
   <div class="layout-right">
-    <LayoutAside @change="switchChange" />
+    <LayoutAside />
     <transition name="slide-fade" mode="out-in">
       <component :is="currentComponent"></component>
     </transition>
@@ -8,18 +8,21 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
 import LayoutAside from './LayoutAside/index.vue'
 import LayoutSetting from './LayoutSetting/index.vue'
-import LayoutEdit from './LayoutEdit/index.vue'
+import LayoutPage from './LayoutPage/index.vue'
+const magic = namespace('magic')
+
 @Component({
   name: 'LayoutRight',
-  components: { LayoutAside, LayoutSetting, LayoutEdit }
+  components: { LayoutAside, LayoutSetting, LayoutPage }
 })
 export default class extends Vue {
-  private components = ['LayoutSetting', 'LayoutEdit']
-  private currentComponent = 'LayoutSetting'
-  switchChange(item: any, index: number) {
-    this.currentComponent = this.components[index]
+  @magic.State('componentsSettingCurrentItem') index!: number
+  private components = ['LayoutPage', 'LayoutSetting']
+  get currentComponent() {
+    return this.components[this.index]
   }
 }
 </script>

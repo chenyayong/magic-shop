@@ -2,7 +2,7 @@
   <div class="layout-content">
     <div class="content-main">
       <el-scrollbar>
-        <draggable class="draggable" :group="group" :sort="true" :list="componentsFormData">
+        <draggable class="draggable" :group="group" :sort="true" :list="componentsFormData" @change="draggableChange">
           <template v-if="componentsFormData.length">
             <component
               @click.native="changeActive(index)"
@@ -30,17 +30,19 @@ import { Vue, Component } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import draggable from 'vuedraggable'
 import { IComponentData } from '@/store/magic'
+
 const magic = namespace('magic')
+const magicSetting = namespace('magicSetting')
 
 interface iComponents {
   [key: string]: Vue
 }
-// interface draggableElement {
-//   added: {
-//     element: IComponentData
-//     newIndex: number
-//   }
-// }
+interface draggableElement {
+  added: {
+    element: IComponentData
+    newIndex: number
+  }
+}
 
 const files = require.context('@/components/magic/', true, /\.vue$/)
 const components = files.keys().reduce((ret: iComponents, file: string): iComponents => {
@@ -59,9 +61,11 @@ const components = files.keys().reduce((ret: iComponents, file: string): iCompon
 })
 export default class extends Vue {
   @magic.State('componentsFormData') componentsFormData!: IComponentData[]
-  @magic.Action('SetCompoentsFormData') SetCompoentsFormData!: (data: IComponentData[]) => void
-  @magic.Action('AddCompoentsFormData') AddCompoentsFormData!: (data: { data: IComponentData; index: number }) => void
-  @magic.Mutation('RESET_ACTION_COMPONENTS_FORM_DATA') resetAction!: (index: number) => void
+  // @magic.Action('SetCompoentsFormData') SetCompoentsFormData!: (data: IComponentData[]) => void
+  // @magic.Action('AddCompoentsFormData') AddCompoentsFormData!: (data: { data: IComponentData; index: number }) => void
+  @magic.Mutation('RESET_ACTION_COMPONENTS_FORM_DATA') RESET_ACTION_COMPONENTS_FORM_DATA!: (index?: number) => void
+  @magic.Mutation('SET_COMPONENTS_SETTING_CURRENT_ITEM') SET_COMPONENTS_SETTING_CURRENT_ITEM!: (index: number) => void
+  @magicSetting.Mutation('SET_COMPONENTS_SETTING_KEY') SET_COMPONENTS_SETTING_KEY!: (key: string) => void
   private group = {
     name: 'site',
     pull: false,
@@ -73,15 +77,18 @@ export default class extends Vue {
   //   this.SetCompoentsFormData(val)
   // }
 
-  // draggableChange(value: draggableElement) {
-  //   const element = value.added.element
-  //   const index = value.added.newIndex
-  //   console.log('change', element, index)
-  //   // this.AddCompoentsFormData({ data: element, index })
-  // }
+  draggableChange(value: draggableElement) {
+    this.RESET_ACTION_COMPONENTS_FORM_DATA()
+    this.SET_COMPONENTS_SETTING_CURRENT_ITEM(1)
+    const element = value.added.element
+    // const index = value.added.newIndex
+    element.active = true
+    this.SET_COMPONENTS_SETTING_KEY(element.name)
+    // console.log('change', element, index)
+  }
 
   changeActive(index: number) {
-    this.resetAction(index)
+    this.RESET_ACTION_COMPONENTS_FORM_DATA(index)
   }
 }
 </script>

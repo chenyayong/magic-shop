@@ -21,11 +21,18 @@ export interface IState {
 @Module({ namespaced: true })
 class magic extends VuexModule implements IState {
   public name = 'magic'
+  public componentsSetting = [
+    { name: '页面', icon: 'el-icon-tickets' },
+    { name: '楼层', icon: 'el-icon-menu' }
+  ]
+
+  public componentsSettingCurrentItem = 0
+
   public componentsFormData: IComponentData[] = []
 
   public baseComponents = [
     {
-      name: 'magicSwipe',
+      name: 'magicSwiper',
       icon: 'el-icon-picture',
       label: '轮播图'
     },
@@ -224,14 +231,6 @@ class magic extends VuexModule implements IState {
   }
 
   @Mutation
-  DELE_ACTION_COMPONENTS_FORM_DATA() {
-    this.componentsFormData = this.componentsFormData.map((item) => {
-      delete item.active
-      return item
-    })
-  }
-
-  @Mutation
   RESET_ACTION_COMPONENTS_FORM_DATA(index: number) {
     this.componentsFormData = this.componentsFormData.map((item, i) => {
       if (i === index) {
@@ -241,6 +240,11 @@ class magic extends VuexModule implements IState {
       }
       return item
     })
+  }
+
+  @Mutation
+  SET_COMPONENTS_SETTING_CURRENT_ITEM(index: number): void {
+    this.componentsSettingCurrentItem = index
   }
 
   @Action({ commit: 'SET_COMPONENTS_FORM_DATA' })

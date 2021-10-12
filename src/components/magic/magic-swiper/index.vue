@@ -1,5 +1,5 @@
 <template>
-  <el-tooltip class="magic-swipe" content="轮播图" placement="left-start" :value="true" :manual="true" :popper-options="{ boundariesElement: 'body', gpuAcceleration: false }">
+  <el-tooltip class="magic-swiper" content="轮播图" placement="left-start" :value="true" :manual="true" :popper-options="{ boundariesElement: 'body', gpuAcceleration: false }">
     <el-skeleton :loading="loading">
       <template slot="template">
         <el-skeleton-item variant="image" style="height: 160px;" />
@@ -15,7 +15,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 @Component({
-  name: 'magicSwipe'
+  name: 'magicSwiper'
 })
 export default class extends Vue {
   private loading = true

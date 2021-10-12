@@ -1,7 +1,7 @@
 const module = {
   namespaced: true,
   state: {
-    name: 'magicSwipe'
+    name: 'magicSwiper'
   }
 }
 

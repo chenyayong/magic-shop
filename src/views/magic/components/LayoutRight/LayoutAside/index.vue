@@ -8,6 +8,9 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
+const magic = namespace('magic')
+
 interface IItems {
   name: string
   icon: string
@@ -16,18 +19,22 @@ interface IItems {
   name: 'LayoutAside'
 })
 export default class extends Vue {
-  private currentItem = 0
-  private items: IItems[] = [
-    { name: '页面', icon: 'el-icon-tickets' },
-    { name: '楼层', icon: 'el-icon-menu' }
-  ]
+  // private currentItem = 0
+  // private items: IItems[] = [
+  //   { name: '页面', icon: 'el-icon-tickets' },
+  //   { name: '楼层', icon: 'el-icon-menu' }
+  // ]
+  @magic.State('componentsSetting') items!: IItems
+  @magic.State('componentsSettingCurrentItem') currentItem!: number
+  @magic.Mutation('SET_COMPONENTS_SETTING_CURRENT_ITEM') setCurrentItem!: (index: number) => void
 
   active(index: number) {
     return this.currentItem === index ? 'active' : ''
   }
 
   change(item: IItems, index: number) {
-    this.currentItem = index
+    // this.currentItem = index
+    this.setCurrentItem(index)
     this.$emit('change', item, index)
   }
 }
