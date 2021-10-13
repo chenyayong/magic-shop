@@ -1,3 +1,4 @@
+import { icon } from 'vue-svgicon'
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 
 export interface IComponent {
@@ -5,11 +6,25 @@ export interface IComponent {
   icon: string
   label: string
 }
-export interface IComponentData {
-  id: number
-  name: string
-  active?: boolean
+export interface IMagicSwiper {
+  data: {
+    padding: number
+    items: { imgUrl: string; imgLink: string }[]
+  }
 }
+export interface IComponentData {
+  id: string
+  name: string
+  label: string
+  icon: string
+  active?: boolean
+  data?: IMagicSwiper
+}
+
+export interface IComponentsFormItemData {
+  magicSwiper: IMagicSwiper
+}
+
 export interface IState {
   name: string
   componentsFormData: IComponentData[]
@@ -29,6 +44,20 @@ class magic extends VuexModule implements IState {
   public componentsSettingCurrentItem = 0
 
   public componentsFormData: IComponentData[] = []
+
+  public componentsFormItemData: IComponentsFormItemData = {
+    magicSwiper: {
+      data: {
+        padding: 0,
+        items: [
+          {
+            imgUrl: '',
+            imgLink: ''
+          }
+        ]
+      }
+    }
+  }
 
   public baseComponents = [
     {

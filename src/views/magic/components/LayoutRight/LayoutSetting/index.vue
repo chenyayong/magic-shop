@@ -28,7 +28,6 @@ const components = files.keys().reduce((ret: iComponents, file: string): iCompon
   components
 })
 export default class extends Vue {
-  // private currentComponent = 'magic-swiper'
   @magicSetting.State('componentsSettingKey') currentComponent!: string
   @magicSetting.Getter('componentsSettingCurrent') componentsSettingCurrent!: any
 }

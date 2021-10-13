@@ -29,7 +29,9 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import draggable from 'vuedraggable'
-import { IComponentData } from '@/store/magic'
+import { cloneDeep } from 'lodash'
+import { uuid } from '@/utils/index'
+import { IComponentData, IComponentsFormItemData } from '@/store/magic'
 
 const magic = namespace('magic')
 const magicSetting = namespace('magicSetting')
@@ -61,6 +63,7 @@ const components = files.keys().reduce((ret: iComponents, file: string): iCompon
 })
 export default class extends Vue {
   @magic.State('componentsFormData') componentsFormData!: IComponentData[]
+  @magic.State('componentsFormItemData') componentsFormItemData!: IComponentsFormItemData
   // @magic.Action('SetCompoentsFormData') SetCompoentsFormData!: (data: IComponentData[]) => void
   // @magic.Action('AddCompoentsFormData') AddCompoentsFormData!: (data: { data: IComponentData; index: number }) => void
   @magic.Mutation('RESET_ACTION_COMPONENTS_FORM_DATA') RESET_ACTION_COMPONENTS_FORM_DATA!: (index?: number) => void
@@ -78,13 +81,18 @@ export default class extends Vue {
   // }
 
   draggableChange(value: draggableElement) {
-    this.RESET_ACTION_COMPONENTS_FORM_DATA()
-    this.SET_COMPONENTS_SETTING_CURRENT_ITEM(1)
+    value = cloneDeep(value)
+    const id = uuid()
     const element = value.added.element
-    // const index = value.added.newIndex
-    element.active = true
-    this.SET_COMPONENTS_SETTING_KEY(element.name)
-    // console.log('change', element, index)
+    const index = value.added.newIndex
+    const name = element.name
+    const component = this.componentsFormItemData[name]
+    element.id = id
+    element.data = component.data
+    console.log('element', element)
+    this.RESET_ACTION_COMPONENTS_FORM_DATA(index)
+    this.SET_COMPONENTS_SETTING_CURRENT_ITEM(1)
+    // this.SET_COMPONENTS_SETTING_KEY(element.name)
   }
 
   changeActive(index: number) {
