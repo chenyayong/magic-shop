@@ -10,6 +10,7 @@
               :class="[item.active ? 'active' : '']"
               :is="item.name"
               :key="item.id"
+              :componentData="item"
             ></component>
           </template>
           <template v-else>
@@ -26,15 +27,13 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import draggable from 'vuedraggable'
-import { cloneDeep } from 'lodash'
-import { uuid } from '@/utils/index'
-import { IComponentData, IComponentsFormItemData } from '@/store/magic'
+import { IComponentData } from '@/store/magic'
 
 const magic = namespace('magic')
-const magicSetting = namespace('magicSetting')
+const magicAsidebar = namespace('magicAsidebar')
 
 interface iComponents {
   [key: string]: Vue
@@ -63,36 +62,23 @@ const components = files.keys().reduce((ret: iComponents, file: string): iCompon
 })
 export default class extends Vue {
   @magic.State('componentsFormData') componentsFormData!: IComponentData[]
-  @magic.State('componentsFormItemData') componentsFormItemData!: IComponentsFormItemData
-  // @magic.Action('SetCompoentsFormData') SetCompoentsFormData!: (data: IComponentData[]) => void
-  // @magic.Action('AddCompoentsFormData') AddCompoentsFormData!: (data: { data: IComponentData; index: number }) => void
   @magic.Mutation('RESET_ACTION_COMPONENTS_FORM_DATA') RESET_ACTION_COMPONENTS_FORM_DATA!: (index?: number) => void
-  @magic.Mutation('SET_COMPONENTS_SETTING_CURRENT_ITEM') SET_COMPONENTS_SETTING_CURRENT_ITEM!: (index: number) => void
-  @magicSetting.Mutation('SET_COMPONENTS_SETTING_KEY') SET_COMPONENTS_SETTING_KEY!: (key: string) => void
+  @magicAsidebar.Mutation('SET_ASIDEBAR_DATA_INDEX') SET_ASIDEBAR_DATA_INDEX!: (index: number) => void
   private group = {
     name: 'site',
     pull: false,
     put: true
   }
 
-  // @Watch('componentsFormData', { immediate: true, deep: true })
-  // changeCompontents(val: IComponentData[]) {
-  //   this.SetCompoentsFormData(val)
-  // }
+  @Watch('componentsFormData', { immediate: true, deep: true })
+  changeCompontents(val: IComponentData[]) {
+    console.log('componentsFormData', val)
+  }
 
   draggableChange(value: draggableElement) {
-    value = cloneDeep(value)
-    const id = uuid()
-    const element = value.added.element
     const index = value.added.newIndex
-    const name = element.name
-    const component = this.componentsFormItemData[name]
-    element.id = id
-    element.data = component.data
-    console.log('element', element)
     this.RESET_ACTION_COMPONENTS_FORM_DATA(index)
-    this.SET_COMPONENTS_SETTING_CURRENT_ITEM(1)
-    // this.SET_COMPONENTS_SETTING_KEY(element.name)
+    this.SET_ASIDEBAR_DATA_INDEX(1)
   }
 
   changeActive(index: number) {

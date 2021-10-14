@@ -1,19 +1,11 @@
-import { icon } from 'vue-svgicon'
-import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
+import { VuexModule, Module, Mutation } from 'vuex-module-decorators'
 
-export interface IComponent {
-  name: string
-  icon: string
-  label: string
-}
 export interface IMagicSwiper {
-  data: {
-    padding: number
-    items: { imgUrl: string; imgLink: string }[]
-  }
+  padding: number
+  items: { imgUrl: string; imgLink: string }[]
 }
 export interface IComponentData {
-  id: string
+  id?: string
   name: string
   label: string
   icon: string
@@ -21,41 +13,31 @@ export interface IComponentData {
   data?: IMagicSwiper
 }
 
-export interface IComponentsFormItemData {
+export interface IComponentsFormDataMap {
   magicSwiper: IMagicSwiper
 }
 
 export interface IState {
   name: string
   componentsFormData: IComponentData[]
-  baseComponents: IComponent[]
-  shopComponents: IComponent[]
-  saleComponents: IComponent[]
+  baseComponents: IComponentData[]
+  shopComponents: IComponentData[]
+  saleComponents: IComponentData[]
 }
 
 @Module({ namespaced: true })
 class magic extends VuexModule implements IState {
   public name = 'magic'
-  public componentsSetting = [
-    { name: '页面', icon: 'el-icon-tickets' },
-    { name: '楼层', icon: 'el-icon-menu' }
-  ]
-
-  public componentsSettingCurrentItem = 0
-
   public componentsFormData: IComponentData[] = []
-
-  public componentsFormItemData: IComponentsFormItemData = {
+  public componentsFormDataMap: IComponentsFormDataMap = {
     magicSwiper: {
-      data: {
-        padding: 0,
-        items: [
-          {
-            imgUrl: '',
-            imgLink: ''
-          }
-        ]
-      }
+      padding: 0,
+      items: [
+        {
+          imgUrl: '',
+          imgLink: ''
+        }
+      ]
     }
   }
 
@@ -225,38 +207,9 @@ class magic extends VuexModule implements IState {
     }
   ]
 
-  @Mutation
-  SET_COMPONENTS_FORM_DATA(data: IComponentData[]) {
-    this.componentsFormData = data
-  }
-
-  @Mutation
-  ADD_COMPONENTS_FORM_DATA(payload: { data: IComponentData; index: number }) {
-    const { data, index } = payload
-    console.log('ADD_COMPONENTS_FORM_DATA', payload)
-    if (typeof index === 'number') {
-      this.componentsFormData.splice(index, 0, data)
-    } else {
-      this.componentsFormData.push(data)
-    }
-  }
-
-  @Mutation
-  DELE_COMPONENTS_FORM_DATA(data: IComponentData, index: number) {
-    if (typeof index === 'number') {
-      this.componentsFormData.splice(index, 0, data)
-    } else {
-      this.componentsFormData.push(data)
-    }
-  }
-
-  @Mutation
-  RESET_COMPONENTS_FORM_DATA(data: IComponentData[]) {
-    if (data && data.length) {
-      this.componentsFormData = data
-    } else {
-      this.componentsFormData = []
-    }
+  get componentsFormDataActionItem() {
+    const ret = this.componentsFormData.filter((item) => item.active)
+    return ret && ret[0]
   }
 
   @Mutation
@@ -269,22 +222,6 @@ class magic extends VuexModule implements IState {
       }
       return item
     })
-  }
-
-  @Mutation
-  SET_COMPONENTS_SETTING_CURRENT_ITEM(index: number): void {
-    this.componentsSettingCurrentItem = index
-  }
-
-  @Action({ commit: 'SET_COMPONENTS_FORM_DATA' })
-  SetCompoentsFormData(data: IComponentData) {
-    return data
-  }
-
-  @Action({ commit: 'ADD_COMPONENTS_FORM_DATA' })
-  AddCompoentsFormData(payload: { data: IComponentData; index: number }) {
-    // const { data, index } = payload
-    return payload
   }
 }
 export default magic

@@ -1,6 +1,6 @@
 <template>
   <div class="layout-right">
-    <LayoutAside />
+    <LayoutAsidebar />
     <transition name="slide-fade" mode="out-in">
       <component :is="currentComponent"></component>
     </transition>
@@ -9,17 +9,17 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
-import LayoutAside from './LayoutAside/index.vue'
+import LayoutAsidebar from './LayoutAsidebar/index.vue'
 import LayoutSetting from './LayoutSetting/index.vue'
 import LayoutPage from './LayoutPage/index.vue'
-const magic = namespace('magic')
+const magicAsidebar = namespace('magicAsidebar')
 
 @Component({
   name: 'LayoutRight',
-  components: { LayoutAside, LayoutSetting, LayoutPage }
+  components: { LayoutAsidebar, LayoutSetting, LayoutPage }
 })
 export default class extends Vue {
-  @magic.State('componentsSettingCurrentItem') index!: number
+  @magicAsidebar.State('asidebarDataIndex') index!: number
   private components = ['LayoutPage', 'LayoutSetting']
   get currentComponent() {
     return this.components[this.index]

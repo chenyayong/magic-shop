@@ -1,21 +1,21 @@
 <template>
   <div class="layout-edit">
-    <el-empty v-if="!currentComponent"></el-empty>
-    <transition mode="out-in" name="slide-fade">
-      <component :is="currentComponent" :componentData="componentsSettingCurrent"></component>
+    <el-empty v-if="!componentsFormDataActionItem"></el-empty>
+    <transition mode="out-in" name="slide-fade" v-else>
+      <component :is="componentsFormDataActionItem.name" :componentData="componentsFormDataActionItem"></component>
     </transition>
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
-const magicSetting = namespace('magicSetting')
+const magic = namespace('magic')
 
 interface iComponents {
   [key: string]: () => any
 }
 
-const files = require.context('./components', false, /\.vue$/)
+const files = require.context('./components', true, /index\.vue$/)
 const components = files.keys().reduce((ret: iComponents, file: string): iComponents => {
   const component = files(file).default
   const name = component.extendOptions.name
@@ -28,8 +28,7 @@ const components = files.keys().reduce((ret: iComponents, file: string): iCompon
   components
 })
 export default class extends Vue {
-  @magicSetting.State('componentsSettingKey') currentComponent!: string
-  @magicSetting.Getter('componentsSettingCurrent') componentsSettingCurrent!: any
+  @magic.Getter('componentsFormDataActionItem') componentsFormDataActionItem!: any
 }
 </script>
 

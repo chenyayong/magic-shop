@@ -12,8 +12,10 @@
 <script lang="ts">
 import draggable from 'vuedraggable'
 import { Vue, Component } from 'vue-property-decorator'
+import { cloneDeep } from 'lodash'
+import { uuid } from '@/utils/index'
 import { namespace } from 'vuex-class'
-import { IComponent } from '@/store/magic/index'
+import { IComponentData, IComponentsFormDataMap } from '@/store/magic/index'
 
 import magicGrid from '@/components/magic-grid/index.vue'
 const magic = namespace('magic')
@@ -26,7 +28,9 @@ const magic = namespace('magic')
   }
 })
 export default class extends Vue {
-  @magic.State('baseComponents') compontents!: IComponent[]
+  @magic.State('baseComponents') compontents!: IComponentData[]
+  @magic.State('componentsFormDataMap') componentsFormDataMap!: IComponentsFormDataMap
+
   private group = {
     name: 'site',
     pull: 'clone',
@@ -34,6 +38,10 @@ export default class extends Vue {
   }
 
   clone(value: any) {
+    value = cloneDeep(value)
+    value.id = uuid()
+    value.data = cloneDeep(this.componentsFormDataMap[value.name])
+    value.active = true
     return value
   }
 }
