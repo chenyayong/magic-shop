@@ -40,7 +40,7 @@ export interface IComponentData {
 
 export interface IComponentsFormDataMap {
   magicSwiper: IMagicSwiper
-  magicButtonGroup: IMagicSwiper
+  magicButtonGroup: IMagicButtonGroup
   magicPicture: IMagicPicture
   magicPictureGroup: IMagicPictureGroup
   magicGoods: IMagicGoods

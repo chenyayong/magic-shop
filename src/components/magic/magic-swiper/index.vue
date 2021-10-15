@@ -15,23 +15,48 @@
     <template slot="template">
       <el-skeleton-item variant="image" style="height: 160px;" />
     </template>
-    <!-- <swiper :slides-per-view="3" :space-between="50">
+    <swiper :options="swiperOptions" :auto-update="true" :auto-destroy="true">
+      <swiper-slide v-for="(item, index) in componentData.data.items" :key="index">
+        <img
+          src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+          alt=""
+          srcset=""
+        />
+      </swiper-slide>
+      <div class="swiper-pagination" slot="pagination"></div>
+    </swiper>
+    <!-- <swiper ref="mySwiper" :options="swiperOptions">
       <swiper-slide>Slide 1</swiper-slide>
       <swiper-slide>Slide 2</swiper-slide>
       <swiper-slide>Slide 3</swiper-slide>
+      <swiper-slide>Slide 4</swiper-slide>
+      <swiper-slide>Slide 5</swiper-slide>
+      <div class="swiper-pagination" slot="pagination"></div>
     </swiper> -->
   </el-skeleton>
 </template>
 <script lang="ts">
-import Swiper from 'swiper/swiper.esm.js'
-// import 'swiper/swiper.min.css'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IComponentData } from '@/store/magic/index'
 @Component({
-  name: 'magicSwiper'
+  name: 'magicSwiper',
+  components: {
+    Swiper,
+    SwiperSlide
+  }
 })
 export default class extends Vue {
   @Prop({ type: Object, required: true }) componentData!: IComponentData
+  private swiperOptions = {
+    autoplay: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true
+    }
+  }
+
   private loading = true
   mounted() {
     this.loading = false
@@ -40,11 +65,8 @@ export default class extends Vue {
 }
 </script>
 <style scoped lang="scss">
-.magic-swiper ::v-deep .el-carousel__item img {
+.magic-swiper ::v-deep .swiper-slide img {
   width: 100%;
   height: auto;
-}
-.magic-swiper ::v-deep .el-carousel__indicators {
-  position: absolute;
 }
 </style>

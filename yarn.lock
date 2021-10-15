@@ -1471,6 +1471,11 @@
   resolved "https://registry.yarnpkg.com/@types/strip-json-comments/-/strip-json-comments-0.0.30.tgz#9aa30c04db212a9a0649d6ae6fd50accc40748a1"
   integrity sha512-7NQmHra/JILCd1QqpSzl8+mJRc8ZHz3uDm8YV1Ks9IhK0epEiTw8aIErbvH9PI+6XbqhyIQy3462nEsn7UVzjQ==
 
+"@types/swiper@^5.4.3":
+  version "5.4.3"
+  resolved "https://registry.nlark.com/@types/swiper/download/@types/swiper-5.4.3.tgz#a1420bd9737626e630bb116d711efde34f5b9e99"
+  integrity sha1-oUIL2XN2JuYwuxFtcR79409bnpk=
+
 "@types/tapable@^1":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.7.tgz#545158342f949e8fd3bfd813224971ecddc3fac4"
@@ -4490,12 +4495,12 @@ dom-serializer@0:
     domelementtype "^2.0.1"
     entities "^2.0.0"
 
-dom7@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.nlark.com/dom7/download/dom7-4.0.0.tgz#69c8fb9b170c92d64f385fdc37f81456e82b80a1"
-  integrity sha1-acj7mxcMktZPOF/cN/gUVugrgKE=
+dom7@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.nlark.com/dom7/download/dom7-2.1.5.tgz?cache=0&sync_timestamp=1629879453685&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdom7%2Fdownload%2Fdom7-2.1.5.tgz#a79411017800b31d8400070cdaebbfc92c1f6377"
+  integrity sha1-p5QRAXgAsx2EAAcM2uu/ySwfY3c=
   dependencies:
-    ssr-window "^4.0.0"
+    ssr-window "^2.0.0"
 
 domain-browser@^1.1.1:
   version "1.2.0"
@@ -10361,7 +10366,7 @@ sass-loader@^10.1.1:
 
 sass@1.26.0:
   version "1.26.0"
-  resolved "https://registry.npmmirror.com/sass/download/sass-1.26.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fsass%2Fdownload%2Fsass-1.26.0.tgz#58dd90f9a2ff6e3d953cf15bfb1cfd0823bed92d"
+  resolved "https://registry.npmmirror.com/sass/download/sass-1.26.0.tgz?cache=0&sync_timestamp=1634170610682&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fsass%2Fdownload%2Fsass-1.26.0.tgz#58dd90f9a2ff6e3d953cf15bfb1cfd0823bed92d"
   integrity sha1-WN2Q+aL/bj2VPPFb+xz9CCO+2S0=
   dependencies:
     chokidar ">=2.0.0 <4.0.0"
@@ -10851,10 +10856,10 @@ sshpk@^1.7.0:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
-ssr-window@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.nlark.com/ssr-window/download/ssr-window-4.0.0.tgz?cache=0&sync_timestamp=1629879256060&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fssr-window%2Fdownload%2Fssr-window-4.0.0.tgz#4ee82fc360c5f88a022f321740bcfec59ada1a61"
-  integrity sha1-Tugvw2DF+IoCLzIXQLz+xZraGmE=
+ssr-window@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.nlark.com/ssr-window/download/ssr-window-2.0.0.tgz?cache=0&sync_timestamp=1629879256060&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fssr-window%2Fdownload%2Fssr-window-2.0.0.tgz#98c301aef99523317f8d69618f0010791096efc4"
+  integrity sha1-mMMBrvmVIzF/jWlhjwAQeRCW78Q=
 
 ssri@^6.0.1:
   version "6.0.2"
@@ -11200,13 +11205,13 @@ swagger-routes-express@^3.3.0:
   dependencies:
     semver "^7.3.2"
 
-swiper@^7.0.8:
-  version "7.0.8"
-  resolved "https://registry.npmmirror.com/swiper/download/swiper-7.0.8.tgz?cache=0&sync_timestamp=1633340184369&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fswiper%2Fdownload%2Fswiper-7.0.8.tgz#5727cf4c34ca11e4b038ccff2a984bbf41d2f6ad"
-  integrity sha1-VyfPTDTKEeSwOMz/KphLv0HS9q0=
+swiper@5.x:
+  version "5.4.5"
+  resolved "https://registry.npmmirror.com/swiper/download/swiper-5.4.5.tgz#a350f654bf68426dbb651793824925512d223c0f"
+  integrity sha1-o1D2VL9oQm27ZReTgkklUS0iPA8=
   dependencies:
-    dom7 "^4.0.0"
-    ssr-window "^4.0.0"
+    dom7 "^2.1.5"
+    ssr-window "^2.0.0"
 
 symbol-tree@^3.2.2:
   version "3.2.4"
@@ -11963,6 +11968,11 @@ void-elements@^3.1.0:
   version "3.1.0"
   resolved "https://registry.nlark.com/void-elements/download/void-elements-3.1.0.tgz#614f7fbf8d801f0bb5f0661f5b2f5785750e4f09"
   integrity sha1-YU9/v42AHwu18GYfWy9XhXUOTwk=
+
+vue-awesome-swiper@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.nlark.com/vue-awesome-swiper/download/vue-awesome-swiper-4.1.1.tgz#8f7ab221ad003021d756b86aa618f429924900fe"
+  integrity sha1-j3qyIa0AMCHXVrhqphj0KZJJAP4=
 
 vue-class-component@^7.2.6:
   version "7.2.6"
