@@ -37,7 +37,7 @@ export default class extends Vue {
     put: false
   }
 
-  clone(value: any) {
+  clone(value: IComponentData) {
     value = cloneDeep(value)
     value.id = uuid()
     value.data = cloneDeep(this.componentsFormDataMap[value.name])

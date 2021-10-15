@@ -139,6 +139,7 @@ export default class extends Vue {
     right: 2px;
     box-shadow: 0 0 10px $--color-primary;
     pointer-events: none;
+    z-index: 1000;
   }
   &.active::after {
     position: absolute;
@@ -150,6 +151,7 @@ export default class extends Vue {
     border: 2px dashed $--color-primary;
     box-shadow: none;
     pointer-events: none;
+    z-index: 1000;
   }
 }
 </style>
