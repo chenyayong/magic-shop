@@ -15,30 +15,27 @@
     <template slot="template">
       <el-skeleton-item variant="image" style="height: 160px;" />
     </template>
-    <swiper :slides-per-view="3" :space-between="50">
+    <!-- <swiper :slides-per-view="3" :space-between="50">
       <swiper-slide>Slide 1</swiper-slide>
       <swiper-slide>Slide 2</swiper-slide>
       <swiper-slide>Slide 3</swiper-slide>
-    </swiper>
+    </swiper> -->
   </el-skeleton>
 </template>
 <script lang="ts">
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import 'swiper/css'
+import Swiper from 'swiper/swiper.esm.js'
+// import 'swiper/swiper.min.css'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IComponentData } from '@/store/magic/index'
 @Component({
-  name: 'magicSwiper',
-  components: {
-    Swiper,
-    SwiperSlide
-  }
+  name: 'magicSwiper'
 })
 export default class extends Vue {
   @Prop({ type: Object, required: true }) componentData!: IComponentData
   private loading = true
   mounted() {
     this.loading = false
+    console.log(Swiper)
   }
 }
 </script>
