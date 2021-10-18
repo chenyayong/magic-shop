@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-edit">
+  <div class="layout-setting">
     <el-empty v-if="!componentsFormDataActionItem"></el-empty>
     <transition mode="out-in" name="slide-fade" v-else>
       <component :is="componentsFormDataActionItem.name" :componentData="componentsFormDataActionItem"></component>

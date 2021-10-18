@@ -1,9 +1,11 @@
 <template>
   <div class="layout-right">
     <LayoutAsidebar />
-    <transition name="slide-fade" mode="out-in">
-      <component :is="currentComponent"></component>
-    </transition>
+    <el-scrollbar class="scrollbar-wrapper">
+      <transition name="slide-fade" mode="out-in">
+        <component :is="currentComponent" class="component"></component>
+      </transition>
+    </el-scrollbar>
   </div>
 </template>
 <script lang="ts">
@@ -28,6 +30,12 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
+.el-scrollbar {
+  height: 100%;
+}
+.layout-right ::v-deep .el-scrollbar__wrap {
+  overflow-x: hidden !important;
+}
 .slide-fade-enter-active {
   transition: all 0.3s ease;
 }
@@ -35,6 +43,9 @@ export default class extends Vue {
 /* .slide-fade-leave-active for below version 2.1.8 */ {
   transform: translateX(50px);
   opacity: 0;
+}
+.component {
+  padding: 0 10px;
 }
 .layout-right {
   position: fixed;
@@ -44,6 +55,9 @@ export default class extends Vue {
   bottom: 0px;
   background: $--color-white;
   box-sizing: border-box;
-  padding: 10px;
+  // padding: 0 10px;
+  // overflow: hidden;
+  box-shadow: 0 0 0 0px rgb(192 197 205 / 80%);
+  z-index: 0;
 }
 </style>

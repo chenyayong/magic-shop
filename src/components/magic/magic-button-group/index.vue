@@ -1,6 +1,7 @@
 <template>
   <div class="magic-button-group">
-    <div></div>
+    <div>magic-button-group</div>
+    <!-- <el-slider></el-slider> -->
   </div>
 </template>
 <script lang="ts">

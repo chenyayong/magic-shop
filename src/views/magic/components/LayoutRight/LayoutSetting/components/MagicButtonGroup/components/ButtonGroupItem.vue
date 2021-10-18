@@ -1,9 +1,17 @@
 <template>
-  <div class="swiper-data">
+  <div class="button-group-data">
     <i class="el-icon-delete" @click="dele"></i>
-    <el-upload list-type="picture-card" class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/">
-      <i class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload>
+    <el-row type="flex" align="middle">
+      <el-col :span="14">
+        <el-upload list-type="picture-card" class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/">
+          <i class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-col>
+      <el-col>
+        <el-input placeholder="请输入文本"></el-input>
+      </el-col>
+    </el-row>
+
     <el-row :gutter="10" style="margin-top: 15px;">
       <el-col :span="18"><el-input placeholder="请输入链接"></el-input></el-col>
       <el-col :span="6"><el-button type="primary">选择</el-button></el-col>
@@ -25,7 +33,7 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.swiper-data {
+.button-group-data {
   border: 1px solid #ddd;
   padding: 15px;
   margin-bottom: 15px;
@@ -39,9 +47,9 @@ export default class extends Vue {
     color: $--color-primary;
   }
 }
-.swiper-data ::v-deep .el-upload--picture-card {
-  width: 100px;
-  height: 100px;
-  line-height: 100px;
+.button-group-data ::v-deep .el-upload--picture-card {
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
 }
 </style>

@@ -1,17 +1,19 @@
 <template>
   <div class="layou-left">
     <el-scrollbar class="scrollbar-wrapper">
-      <el-collapse v-model="activeNames" ref="sortable">
-        <el-collapse-item title="基础组件" name="base-components">
-          <base-components></base-components>
-        </el-collapse-item>
-        <el-collapse-item title="店铺组件" name="shop-components">
-          <shop-components></shop-components>
-        </el-collapse-item>
-        <el-collapse-item title="营销组件" name="sale-components">
-          <sale-components></sale-components>
-        </el-collapse-item>
-      </el-collapse>
+      <div class="components">
+        <el-collapse v-model="activeNames" ref="sortable">
+          <el-collapse-item title="基础组件" name="base-components">
+            <base-components></base-components>
+          </el-collapse-item>
+          <el-collapse-item title="店铺组件" name="shop-components">
+            <shop-components></shop-components>
+          </el-collapse-item>
+          <el-collapse-item title="营销组件" name="sale-components">
+            <sale-components></sale-components>
+          </el-collapse-item>
+        </el-collapse>
+      </div>
     </el-scrollbar>
   </div>
 </template>
@@ -47,10 +49,13 @@ export default class extends Vue {
   top: 50px;
   bottom: 0px;
   width: 280px;
-  background: #ffffff;
+  background: $--color-white;
   box-sizing: border-box;
   overflow: hidden;
   box-shadow: 0 0 0 0px rgb(192 197 205 / 80%);
+  // padding: 0 10px;
+}
+.components {
   padding: 0 10px;
 }
 </style>

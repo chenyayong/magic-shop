@@ -17,11 +17,7 @@
     </template>
     <swiper :options="swiperOptions" :auto-update="true" :auto-destroy="true">
       <swiper-slide v-for="(item, index) in componentData.data.items" :key="index">
-        <img
-          src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-          alt=""
-          srcset=""
-        />
+        <img src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="" srcset="" />
       </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
@@ -60,7 +56,7 @@ export default class extends Vue {
   private loading = true
   mounted() {
     this.loading = false
-    console.log(Swiper)
+    // console.log(Swiper)
   }
 }
 </script>
