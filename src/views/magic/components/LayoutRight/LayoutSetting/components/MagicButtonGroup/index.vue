@@ -25,8 +25,8 @@
             <el-input></el-input>
           </el-row>
           <el-row class="block">
-            <!-- <div>按钮大小</div> -->
-            <el-slider v-model="value"></el-slider>
+            <div>按钮大小</div>
+            <el-slider v-model="value" show-input></el-slider>
           </el-row>
           <el-row class="block">
             <div>圆角大小</div>
@@ -80,5 +80,8 @@ export default class extends Vue {
 }
 .magic-button-broup-setting ::v-deep .el-collapse-item__wrap {
   overflow: visible;
+}
+.el-slider {
+  padding-left: 10px;
 }
 </style>
