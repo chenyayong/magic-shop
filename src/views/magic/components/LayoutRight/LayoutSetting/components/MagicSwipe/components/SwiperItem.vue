@@ -17,6 +17,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
   name: 'swiperData'
 })
 export default class extends Vue {
+  @Prop({ type: Object, required: true }) item!: { imgUrl: string; imgLink: string }
   @Prop({ type: Number }) index!: number
   dele() {
     this.$emit('dele', this.index)

@@ -8,12 +8,12 @@
         </el-upload>
       </el-col>
       <el-col>
-        <el-input placeholder="请输入文本"></el-input>
+        <el-input placeholder="请输入文本" v-model="item.imgLabel"></el-input>
       </el-col>
     </el-row>
 
     <el-row :gutter="10" style="margin-top: 15px;">
-      <el-col :span="18"><el-input placeholder="请输入链接"></el-input></el-col>
+      <el-col :span="18"><el-input placeholder="请输入链接" v-model="item.imgLink"></el-input></el-col>
       <el-col :span="6"><el-button type="primary">选择</el-button></el-col>
     </el-row>
   </div>
@@ -21,10 +21,12 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+
 @Component({
-  name: 'swiperData'
+  name: 'buttonGroupItem'
 })
 export default class extends Vue {
+  @Prop({ type: Object, required: true }) item!: { imgUrl: string; imgLink: string; imgLabel: string }
   @Prop({ type: Number }) index!: number
   dele() {
     this.$emit('dele', this.index)

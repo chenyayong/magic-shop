@@ -4,45 +4,56 @@
     <el-form>
       <el-collapse v-model="activeNames">
         <el-collapse-item title="按钮组配置" name="1">
-          <ButtonGroupItem></ButtonGroupItem>
+          <ButtonGroupItem @dele="deleButtonGroupItem" :item="item" :index="index" v-for="(item, index) in componentData.data.items" :key="index"></ButtonGroupItem>
+          <div><el-button type="primary" style="width: 100%" @click="addButtonGroupItem">添加更多</el-button></div>
         </el-collapse-item>
         <el-collapse-item title="样式配置" name="2">
-          <div class="block">
-            <div>单行按钮数量</div>
-            <el-radio v-model="radio" label="1">四个按钮</el-radio>
-            <el-radio v-model="radio" label="2">五个按钮</el-radio>
-          </div>
+          <el-row class="block">
+            <el-col>单行按钮数量</el-col>
+            <el-col>
+              <el-radio v-model="componentData.data.rowButtonCount" :label="4">四个按钮</el-radio>
+              <el-radio v-model="componentData.data.rowButtonCount" :label="5">五个按钮</el-radio>
+            </el-col>
+          </el-row>
           <el-row type="flex" class="block">
             <el-col :span="8">是否滑动</el-col>
-            <el-col><el-switch v-model="swiper"></el-switch></el-col>
+            <el-col><el-switch v-model="componentData.data.swiper" :active-value="1" :inactive-value="0"></el-switch></el-col>
+          </el-row>
+          <el-row class="block" v-show="componentData.data.swiper === 1">
+            <el-col>滑动行数</el-col>
+            <el-col>
+              <el-radio v-model="componentData.data.rowSwiper" :label="1">一行</el-radio>
+              <el-radio v-model="componentData.data.rowSwiper" :label="2">两行</el-radio>
+              <el-radio v-model="componentData.data.rowSwiper" :label="3">三行</el-radio>
+            </el-col>
           </el-row>
           <el-row class="block">
-            <div>上边距</div>
-            <el-input></el-input>
+            <el-col>上边距</el-col>
+            <el-col><el-slider v-model="componentData.data.paddingTop" show-input></el-slider></el-col>
           </el-row>
           <el-row class="block">
             <div>下边距</div>
-            <el-input></el-input>
+            <el-col><el-slider v-model="componentData.data.paddingBottom" show-input></el-slider></el-col>
           </el-row>
           <el-row class="block">
             <div>按钮大小</div>
-            <el-slider v-model="value" show-input></el-slider>
+            <el-slider :min="30" :max="70" v-model="componentData.data.buttonSize" show-input></el-slider>
           </el-row>
           <el-row class="block">
             <div>圆角大小</div>
-            <el-slider v-model="value" show-input></el-slider>
+            <el-slider :max="35" v-model="componentData.data.buttonRound" show-input></el-slider>
           </el-row>
           <el-row class="block">
             <div>字体大小</div>
-            <el-slider show-input></el-slider>
+            <el-slider :min="12" :max="30" v-model="componentData.data.textSize" show-input></el-slider>
           </el-row>
           <el-row type="flex" class="block">
             <el-col :span="8">文字颜色</el-col>
-            <el-col><el-color-picker v-model="color"></el-color-picker></el-col>
+            <el-col><el-color-picker v-model="componentData.data.textColor"></el-color-picker></el-col>
           </el-row>
           <el-row type="flex" class="block">
             <el-col :span="8">背景</el-col>
-            <el-col><el-color-picker v-model="color"></el-color-picker></el-col>
+            <el-col><el-color-picker v-model="componentData.data.background"></el-color-picker></el-col>
           </el-row>
         </el-collapse-item>
       </el-collapse>
@@ -51,7 +62,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import { IComponentData } from '@/store/magic'
 import ButtonGroupItem from './components/ButtonGroupItem.vue'
 @Component({
   name: 'magicButtonGroup',
@@ -60,11 +72,26 @@ import ButtonGroupItem from './components/ButtonGroupItem.vue'
   }
 })
 export default class extends Vue {
+  @Prop({ type: Object, required: true }) componentData!: IComponentData
+
   private activeNames = ['1', '2']
   private value = 0
   private radio = '1'
   private swiper = true
   private color = ''
+  private count = ''
+
+  addButtonGroupItem() {
+    this.componentData.data?.items.push({ imgUrl: '', imgLink: '', imgLabel: '' })
+  }
+
+  deleButtonGroupItem(index: number) {
+    this.componentData.data?.items.splice(index, 1)
+  }
+
+  mounted() {
+    console.log('mounted button group', this.componentData)
+  }
 }
 </script>
 
@@ -73,7 +100,7 @@ export default class extends Vue {
   margin-bottom: 15px;
 }
 .magic-button-broup-setting ::v-deep .el-slider__input {
-  width: 100px;
+  width: 110px;
 }
 .magic-button-broup-setting ::v-deep .el-slider__runway.show-input {
   margin-right: 120px;

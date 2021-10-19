@@ -9,8 +9,8 @@
           </el-form-item>
         </el-collapse-item> -->
         <el-collapse-item title="轮播图数据配置" name="2">
-          <SwiperItem @dele="dele" :index="index" v-for="(item, index) in componentData.data.items" :key="item.name"></SwiperItem>
-          <el-button type="primary" style="width: 100%;" @click="add">添加更多</el-button>
+          <SwiperItem @dele="deleSwiperItem" :item="item" :index="index" v-for="(item, index) in componentData.data.items" :key="index"></SwiperItem>
+          <el-button type="primary" style="width: 100%;" @click="addSwiperItem">添加更多</el-button>
         </el-collapse-item>
       </el-collapse>
     </el-form>
@@ -32,11 +32,11 @@ export default class extends Vue {
   @Prop({ type: Object, required: true }) componentData!: IComponentData
   public activeNames = ['1', '2']
 
-  dele(index: number) {
+  deleSwiperItem(index: number) {
     this.componentData.data?.items.splice(index, 1)
   }
 
-  add() {
+  addSwiperItem() {
     this.componentData.data?.items.push({ imgUrl: '', imgLink: '' })
   }
 }

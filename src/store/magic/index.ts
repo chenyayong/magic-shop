@@ -13,8 +13,17 @@ export interface IMagicSwiper {
   items: { imgUrl: string; imgLink: string }[]
 }
 export interface IMagicButtonGroup {
-  padding: number
-  items: { imgUrl: string; imgLink: string }[]
+  rowButtonCount: number
+  swiper: number
+  rowSwiper: number
+  paddingTop: number
+  paddingBottom: number
+  buttonSize: number
+  buttonRound: number
+  textSize: number
+  textColor: string
+  background: string
+  items: { imgUrl: string; imgLink: string; imgLabel: string }[]
 }
 export interface IMagicPicture {
   padding: number
@@ -35,7 +44,7 @@ export interface IComponentData {
   label: string
   icon: string
   active?: boolean
-  data?: IMagicSwiper
+  data?: IMagicSwiper | IMagicButtonGroup
 }
 
 export interface IComponentsFormDataMap {
@@ -69,11 +78,21 @@ class magic extends VuexModule implements IState {
       ]
     },
     magicButtonGroup: {
-      padding: 0,
+      rowButtonCount: 4,
+      swiper: 0,
+      rowSwiper: 1,
+      paddingTop: 0,
+      paddingBottom: 0,
+      buttonSize: 20,
+      buttonRound: 0,
+      textSize: 0,
+      textColor: '',
+      background: '',
       items: [
         {
           imgUrl: '',
-          imgLink: ''
+          imgLink: '',
+          imgLabel: ''
         }
       ]
     },
