@@ -55,11 +55,13 @@ export default class extends Vue {
   }
 
   get gridItems() {
-    const items = this.componentData.data?.items
+    const items = this.componentData.data?.items as []
+    const length = items.length
     const rowSwiper = this.componentData.data?.rowSwiper as number
-    const buttonRound = this.componentData.data?.buttonRound as number
-    const count = rowSwiper * buttonRound
-
+    const rowButtonCount = this.componentData.data?.rowButtonCount as number
+    const count = rowSwiper * rowButtonCount
+    const page = length % count
+    const remain = length - page * count
     if (this.componentData.data?.swiper) {
       // items = items?.map(() => {})
     }
