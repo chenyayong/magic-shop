@@ -33,7 +33,7 @@
 </template>
 <script lang="ts">
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-import 'swiper/css/swiper.css'
+import 'swiper/swiper-bundle.css'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IComponentData } from '@/store/magic/index'
 @Component({

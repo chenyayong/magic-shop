@@ -9,20 +9,20 @@ export enum ComponentName {
 }
 
 export interface IMagicSwiper {
-  padding: number
+  padding?: number
   items: { imgUrl: string; imgLink: string }[]
 }
 export interface IMagicButtonGroup {
-  rowButtonCount: number
-  swiper: number
-  rowSwiper: number
-  paddingTop: number
-  paddingBottom: number
-  buttonSize: number
-  buttonRound: number
-  textSize: number
-  textColor: string
-  background: string
+  rowButtonCount?: number
+  swiper?: number
+  rowSwiper?: number
+  paddingTop?: number
+  paddingBottom?: number
+  buttonSize?: number
+  buttonRound?: number
+  textSize?: number
+  textColor?: string
+  background?: string
   items: { imgUrl: string; imgLink: string; imgLabel: string }[]
 }
 export interface IMagicPicture {
@@ -44,7 +44,7 @@ export interface IComponentData {
   label: string
   icon: string
   active?: boolean
-  data?: IMagicSwiper | IMagicButtonGroup
+  data?: IMagicSwiper & IMagicButtonGroup & IMagicPicture & IMagicPictureGroup & IMagicGoods
 }
 
 export interface IComponentsFormDataMap {
@@ -83,7 +83,7 @@ class magic extends VuexModule implements IState {
       rowSwiper: 1,
       paddingTop: 0,
       paddingBottom: 0,
-      buttonSize: 20,
+      buttonSize: 50,
       buttonRound: 0,
       textSize: 0,
       textColor: '',
@@ -92,7 +92,7 @@ class magic extends VuexModule implements IState {
         {
           imgUrl: '',
           imgLink: '',
-          imgLabel: ''
+          imgLabel: '文本'
         }
       ]
     },

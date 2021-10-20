@@ -42,7 +42,7 @@ export default class extends Vue {
     const element = this.componentsFormDataMap[name]
     value = cloneDeep(value)
     value.id = uuid()
-    value.data = cloneDeep(element)
+    value.data = cloneDeep(element) as any
     value.active = true
     return value
   }

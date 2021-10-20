@@ -82,7 +82,7 @@ export default class extends Vue {
   private count = ''
 
   addButtonGroupItem() {
-    this.componentData.data?.items.push({ imgUrl: '', imgLink: '', imgLabel: '' })
+    this.componentData.data?.items.push({ imgUrl: '', imgLink: '', imgLabel: '文本' })
   }
 
   deleButtonGroupItem(index: number) {
