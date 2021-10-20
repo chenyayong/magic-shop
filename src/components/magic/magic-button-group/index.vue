@@ -1,11 +1,19 @@
 <template>
   <div class="magic-button-group" :style="style">
     <swiper ref="mySwiper" :options="swiperOptions">
-      <swiper-slide>
+      <swiper-slide v-for="(item, index) in gridItems" :key="index">
         <grid :border="false" :column-num="componentData.data.rowButtonCount">
-          <grid-item v-for="(item, index) in componentData.data.items" :key="index" :text="item.imgLabel">
+          <grid-item
+            v-for="(item, index) in componentData.data.items"
+            :key="index"
+            :text="item.imgLabel"
+          >
             <div class="button-group__image" slot="icon" :style="imgStyle">
-              <img src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="" srcset="" />
+              <img
+                src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+                alt=""
+                srcset=""
+              />
             </div>
             <div class="button-group__text" slot="text" :style="textStyle">
               {{ item.imgLabel }}
@@ -44,6 +52,18 @@ export default class extends Vue {
       el: '.swiper-pagination',
       clickable: true
     }
+  }
+
+  get gridItems() {
+    const items = this.componentData.data?.items
+    const rowSwiper = this.componentData.data?.rowSwiper as number
+    const buttonRound = this.componentData.data?.buttonRound as number
+    const count = rowSwiper * buttonRound
+
+    if (this.componentData.data?.swiper) {
+      // items = items?.map(() => {})
+    }
+    return items
   }
 
   get style() {
