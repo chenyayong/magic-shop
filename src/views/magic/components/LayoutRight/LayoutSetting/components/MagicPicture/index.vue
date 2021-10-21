@@ -1,6 +1,6 @@
 <template>
   <div class="magic-picture-setting">
-    <h4>轮播图组件</h4>
+    <h4>单图组件</h4>
     <el-form>
       <el-collapse v-model="activeNames">
         <el-collapse-item title="样式配置" name="1">

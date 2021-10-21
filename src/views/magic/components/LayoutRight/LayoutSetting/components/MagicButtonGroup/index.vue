@@ -1,5 +1,5 @@
 <template>
-  <div class="magic-button-broup-setting">
+  <div class="magic-button-group-setting">
     <h4>按钮组组件</h4>
     <el-form>
       <el-collapse v-model="activeNames">
@@ -99,13 +99,13 @@ export default class extends Vue {
 .block {
   margin-bottom: 15px;
 }
-.magic-button-broup-setting ::v-deep .el-slider__input {
+.magic-button-group-setting ::v-deep .el-slider__input {
   width: 110px;
 }
-.magic-button-broup-setting ::v-deep .el-slider__runway.show-input {
+.magic-button-group-setting ::v-deep .el-slider__runway.show-input {
   margin-right: 120px;
 }
-.magic-button-broup-setting ::v-deep .el-collapse-item__wrap {
+.magic-button-group-setting ::v-deep .el-collapse-item__wrap {
   overflow: visible;
 }
 .el-slider {
