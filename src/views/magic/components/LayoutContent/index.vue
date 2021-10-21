@@ -45,7 +45,7 @@ interface draggableElement {
   }
 }
 
-const files = require.context('@/components/magic/', true, /\.vue$/)
+const files = require.context('@/components/magic/', true, /index\.vue$/)
 const components = files.keys().reduce((ret: iComponents, file: string): iComponents => {
   const component = files(file).default
   const name = component.extendOptions.name
