@@ -1,10 +1,9 @@
 <template>
   <div class="shop-components">
-    <!-- <magic-grid :data="compontents"></magic-grid> -->
-    <draggable class="grid-list" :group="group">
+    <draggable class="grid-list" :list="compontents" :group="group" :sort="false">
       <div class="grid-item" v-for="item in compontents" :key="item.name">
         <div><i :class="[item.icon]"></i></div>
-        <div>{{ item.name }}</div>
+        <div>{{ item.label }}</div>
       </div>
     </draggable>
   </div>
@@ -14,6 +13,10 @@
 import draggable from 'vuedraggable'
 import { Vue, Component } from 'vue-property-decorator'
 import magicGrid from '@/components/magic-grid/index.vue'
+import { namespace } from 'vuex-class'
+import { IComponentData, IComponentsFormDataMap } from '@/store/magic/index'
+const magic = namespace('magic')
+
 @Component({
   name: 'shop-components',
   components: {
@@ -22,14 +25,24 @@ import magicGrid from '@/components/magic-grid/index.vue'
   }
 })
 export default class extends Vue {
+  @magic.State('shopComponents') compontents!: IComponentData[]
+  @magic.State('componentsFormDataMap') componentsFormDataMap!: IComponentsFormDataMap
+
   private group = {
     name: 'site',
     pull: 'clone',
-    put: false,
-    sort: false
+    put: false
   }
 
-  private compontents = []
+  // clone(value: IComponentData) {
+  //   const name = value.name
+  //   const element = this.componentsFormDataMap[name]
+  //   value = cloneDeep(value)
+  //   value.id = uuid()
+  //   value.data = cloneDeep(element) as any
+  //   value.active = true
+  //   return value
+  // }
 }
 </script>
 

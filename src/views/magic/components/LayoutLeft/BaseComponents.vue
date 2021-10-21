@@ -16,8 +16,8 @@ import { cloneDeep } from 'lodash'
 import { uuid } from '@/utils/index'
 import { namespace } from 'vuex-class'
 import { IComponentData, IComponentsFormDataMap } from '@/store/magic/index'
-
 import magicGrid from '@/components/magic-grid/index.vue'
+
 const magic = namespace('magic')
 
 @Component({
