@@ -11,25 +11,19 @@
       </el-carousel>
     </el-skeleton>
   </el-tooltip> -->
-  <el-skeleton class="magic-swiper" :loading="loading">
-    <template slot="template">
-      <el-skeleton-item variant="image" style="height: 160px;" />
-    </template>
+  <div class="magic-swiper" :style="style">
     <swiper :options="swiperOptions" :auto-update="true" :auto-destroy="true">
       <swiper-slide v-for="(item, index) in componentData.data.items" :key="index">
-        <img src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="" srcset="" />
+        <el-skeleton style="width: 100%;" :loading="!item.imgUrl">
+          <template slot="template">
+            <div><el-skeleton-item variant="image" style="height: 160px;" /></div>
+          </template>
+          <img :src="item.imgUrl" alt="" srcset="" />
+        </el-skeleton>
       </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
-    <!-- <swiper ref="mySwiper" :options="swiperOptions">
-      <swiper-slide>Slide 1</swiper-slide>
-      <swiper-slide>Slide 2</swiper-slide>
-      <swiper-slide>Slide 3</swiper-slide>
-      <swiper-slide>Slide 4</swiper-slide>
-      <swiper-slide>Slide 5</swiper-slide>
-      <div class="swiper-pagination" slot="pagination"></div>
-    </swiper> -->
-  </el-skeleton>
+  </div>
 </template>
 <script lang="ts">
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
@@ -53,10 +47,16 @@ export default class extends Vue {
     }
   }
 
+  get style() {
+    const style = {
+      padding: this.componentData.data?.padding + 'px'
+    }
+    return style
+  }
+
   private loading = true
   mounted() {
-    this.loading = false
-    // console.log(Swiper)
+    // this.loading = false
   }
 }
 </script>
