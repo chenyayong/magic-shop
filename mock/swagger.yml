@@ -13,6 +13,8 @@ servers:
 tags:
   - name: shop
     description: 店铺页面数据 api.
+  - name: images
+    description: 店铺页面图片 api.
   - name: articles
     description: Articles data related api.
   - name: roles

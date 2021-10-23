@@ -22,7 +22,7 @@
     <el-dialog :visible.sync="dialogVisible" :append-to-body="true">
       <img width="100%" :src="item.imgUrl" alt="" />
     </el-dialog>
-    <MagicLinksFactory :visible.sync="linksVisible"></MagicLinksFactory>
+    <MagicLinksFactory @confirm="linkConfirm" :visible.sync="linksVisible"></MagicLinksFactory>
   </div>
 </template>
 
@@ -61,6 +61,11 @@ export default class extends Vue {
 
   uploadHandle() {
     this.$emit('upload', this.item, this.index)
+  }
+
+  linkConfirm(value: any) {
+    this.item.imgLink = 'hello' // value.link
+    console.log('linkConfirm', value)
   }
 }
 </script>
