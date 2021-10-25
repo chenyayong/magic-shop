@@ -1,10 +1,10 @@
 <template>
-  <div class="magic-button-group-setting">
+  <div class="magic-button-group-setting component-setting">
     <h4>按钮组组件</h4>
     <el-form>
       <el-collapse v-model="activeNames">
         <el-collapse-item title="按钮组配置" name="1">
-          <ButtonGroupItem @dele="deleButtonGroupItem" :item="item" :index="index" v-for="(item, index) in componentData.data.items" :key="index"></ButtonGroupItem>
+          <ButtonGroupItem :items="componentData.data.items" :item="item" :index="index" v-for="(item, index) in componentData.data.items" :key="index"></ButtonGroupItem>
           <div><el-button type="primary" style="width: 100%" @click="addButtonGroupItem">添加更多</el-button></div>
         </el-collapse-item>
         <el-collapse-item title="样式配置" name="2">
@@ -85,12 +85,8 @@ export default class extends Vue {
     this.componentData.data?.items.push({ imgUrl: '', imgLink: '', imgLabel: '文本' })
   }
 
-  deleButtonGroupItem(index: number) {
-    this.componentData.data?.items.splice(index, 1)
-  }
-
   mounted() {
-    console.log('mounted button group', this.componentData)
+    // console.log('mounted button group', this.componentData)
   }
 }
 </script>
@@ -99,16 +95,16 @@ export default class extends Vue {
 .block {
   margin-bottom: 15px;
 }
-.magic-button-group-setting ::v-deep .el-slider__input {
-  width: 110px;
-}
-.magic-button-group-setting ::v-deep .el-slider__runway.show-input {
-  margin-right: 120px;
-}
-.magic-button-group-setting ::v-deep .el-collapse-item__wrap {
-  overflow: visible;
-}
-.el-slider {
-  padding-left: 10px;
-}
+// .magic-button-group-setting ::v-deep .el-slider__input {
+//   width: 110px;
+// }
+// .magic-button-group-setting ::v-deep .el-slider__runway.show-input {
+//   margin-right: 120px;
+// }
+// .magic-button-group-setting ::v-deep .el-collapse-item__wrap {
+//   overflow: visible;
+// }
+// .el-slider {
+//   padding-left: 10px;
+// }
 </style>

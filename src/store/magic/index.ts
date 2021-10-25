@@ -8,9 +8,19 @@ export enum ComponentName {
   magicGoods = 'magicGoods'
 }
 
+export interface IMagicSwiperItem {
+  imgUrl: string
+  imgLink: string
+}
 export interface IMagicSwiper {
   padding?: number
-  items: { imgUrl: string; imgLink: string }[]
+  items: IMagicSwiperItem[]
+}
+
+export interface IMagicButtonGroupItem {
+  imgUrl: string
+  imgLink: string
+  imgLabel: string
 }
 export interface IMagicButtonGroup {
   rowButtonCount?: number
@@ -23,11 +33,16 @@ export interface IMagicButtonGroup {
   textSize?: number
   textColor?: string
   background?: string
-  items: { imgUrl: string; imgLink: string; imgLabel: string }[]
+  items: IMagicButtonGroupItem[]
+}
+
+export interface IMagicPictureItem {
+  imgUrl: string
+  imgLink: string
 }
 export interface IMagicPicture {
   padding: number
-  items: { imgUrl: string; imgLink: string }[]
+  items: IMagicPictureItem[]
 }
 export interface IMagicPictureGroup {
   padding: number

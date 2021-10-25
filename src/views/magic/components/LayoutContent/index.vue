@@ -71,8 +71,9 @@ export default class extends Vue {
   }
 
   @Watch('componentsFormData', { immediate: true, deep: true })
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   changeCompontents(val: IComponentData[]) {
-    console.log('componentsFormData', val)
+    // console.log('componentsFormData', val)
   }
 
   draggableChange(value: draggableElement) {

@@ -154,3 +154,49 @@ aside {
 .no-padding {
   padding: 0px !important;
 }
+
+.component-setting {
+  .el-collapse-item__wrap {
+    overflow: visible;
+  }
+  .el-slider__input {
+    width: 110px;
+  }
+  .el-slider__runway.show-input {
+    margin-right: 120px;
+  }
+  .el-slider {
+    padding-left: 10px;
+  }
+}
+
+.setting-item {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 15px;
+  position: relative;
+  .item.el-icon-delete {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    color: $--color-primary;
+  }
+  .el-upload--picture-card {
+    width: 100px !important;
+    height: 100px !important;
+    line-height: 100px !important;
+  }
+
+  .el-upload-list {
+    display: block;
+    width: 100px !important;
+    height: 100px !important;
+  }
+  .el-upload-list__item {
+    width: 100px !important;
+    height: 100px !important;
+    margin: 0 !important;
+  }
+}

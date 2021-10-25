@@ -49,7 +49,7 @@ export default class extends Vue {
 }
 .layout-right {
   position: fixed;
-  width: 280px;
+  width: 360px;
   right: 0;
   top: 50px;
   bottom: 0px;

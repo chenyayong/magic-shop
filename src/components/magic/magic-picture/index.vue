@@ -1,23 +1,37 @@
 <template>
-  <div class="magic-picture">
-    <el-skeleton>
+  <div class="magic-picture" :style="style">
+    <el-skeleton :loading="!item.imgUrl" v-for="(item, index) in componentData.data.items" :key="index">
       <template slot="template">
         <el-skeleton-item variant="image" style="height: 160px;" />
       </template>
-      <!-- <swiper :options="swiperOptions" :auto-update="true" :auto-destroy="true">
-        <swiper-slide v-for="(item, index) in componentData.data.items" :key="index">
-          <img src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="" srcset="" />
-        </swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
-      </swiper> -->
+      <div class="picture">
+        <img :src="item.imgUrl" alt="" srcset="" />
+      </div>
     </el-skeleton>
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import { IComponentData } from '@/store/magic/index'
 @Component({
   name: 'magicPicture'
 })
-export default class extends Vue {}
+export default class extends Vue {
+  @Prop({ type: Object, required: true }) componentData!: IComponentData
+  get style() {
+    const style = {
+      padding: this.componentData.data?.padding + 'px'
+    }
+    return style
+  }
+}
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.picture {
+  width: 100%;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+</style>

@@ -53,11 +53,6 @@ export default class extends Vue {
     }
     return style
   }
-
-  private loading = true
-  mounted() {
-    // this.loading = false
-  }
 }
 </script>
 <style scoped lang="scss">

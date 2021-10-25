@@ -7,7 +7,7 @@
     <template v-if="list && list.length">
       <ul class="el-upload-list el-upload-list--picture-card">
         <li @click="handleSelect(item)" class="el-upload-list__item is-success" v-for="item in list" :key="item.id">
-          <img src="http://bat367.bvimg.com/12800/61be522532c1ba7e.png" alt="" class="el-upload-list__item-thumbnail" />
+          <img src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="" class="el-upload-list__item-thumbnail" />
           <span class="el-upload-list__item-actions" :class="[item.active ? 'active' : '']">
             <span class="el-upload-list__item-preview" @click="dialogVisible = true"><i class="el-icon-zoom-in"></i></span>
           </span>
@@ -42,7 +42,7 @@ export default class extends Vue {
 
   get dialogImg() {
     const item = this.list.find((item) => item.active) || {}
-    item.url = 'http://bat367.bvimg.com/12800/61be522532c1ba7e.png'
+    item.url = 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
     return item && item.url
   }
 
@@ -81,7 +81,7 @@ export default class extends Vue {
   }
 
   handleSelect(item: any) {
-    const url = 'http://bat367.bvimg.com/12800/61be522532c1ba7e.png'
+    const url = 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
     this.list.forEach((item) => (item.active = false))
     item.active = true
     this.$emit('select', url)
