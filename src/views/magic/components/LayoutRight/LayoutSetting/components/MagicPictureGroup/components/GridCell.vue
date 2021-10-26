@@ -1,51 +1,52 @@
 <template>
-  <div class="layout-3" ref="layout" :style="setGridStyle">
-    <div class="layout-absolute flex-center" :style="setItemStyle(item)" v-for="(item, index) in layoutData.items" :key="index">{{ scaleTips(item) }}</div>
+  <div class="grid-cell" ref="layout" :style="setGridStyle">
+    <div
+      class="absolute flex-center"
+      :class="[itemIndex === index ? 'active' : '']"
+      @click="selectCell(index)"
+      :style="setItemStyle(item)"
+      v-for="(item, index) in data.items"
+      :key="index"
+    >
+      {{ scaleTips(item) }}
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
-
+import { Vue, Component, Prop } from 'vue-property-decorator'
+interface IItem {
+  size: string
+  position: string
+}
+interface IData {
+  padding: number
+  scale: number
+  row: number
+  col: number
+  items: IItem[]
+}
 @Component({
-  name: 'layout2'
+  name: 'gridCell'
 })
 export default class extends Vue {
+  @Prop({ type: Object, required: true }) data!: IData
   private offsetWidth = 0
-  private layoutData = {
-    padding: 0,
-    scale: 1,
-    row: 2,
-    col: 2,
-    items: [
-      {
-        size: '1:2',
-        position: '0:0'
-      },
-      {
-        size: '1:1',
-        position: '1:0'
-      },
-      {
-        size: '1:1',
-        position: '1:1'
-      }
-    ]
-  }
+  private itemIndex = 0
 
   get cellWidth() {
-    const value = Math.floor(this.offsetWidth / this.layoutData.col)
+    const value = Math.floor(this.offsetWidth / this.data.col)
     return value
   }
 
   get cellHeight() {
-    const value = this.cellWidth * this.layoutData.scale
+    const value = this.cellWidth * this.data.scale
     return value
   }
 
   get setGridStyle() {
     const style = {
-      height: this.layoutData.row * this.cellHeight + 'px'
+      height: this.data.row * this.cellHeight + 'px'
     }
     return style
   }
@@ -72,6 +73,10 @@ export default class extends Vue {
     return style
   }
 
+  selectCell(index: number) {
+    this.itemIndex = index
+  }
+
   mounted() {
     this.offsetWidth = (this.$refs.layout as any).offsetWidth
   }
@@ -84,12 +89,17 @@ export default class extends Vue {
   justify-content: center;
   align-items: center;
 }
-.layout-absolute {
+.absolute {
   position: absolute;
   border: 1px $--border-color-lighter solid;
+  cursor: pointer;
+  &.active {
+    background-color: $--color-primary-light-6;
+    color: $--color-white;
+  }
 }
 
-.layout-3 {
+.grid-cell {
   position: relative;
   margin-top: 20px;
   width: 100%;

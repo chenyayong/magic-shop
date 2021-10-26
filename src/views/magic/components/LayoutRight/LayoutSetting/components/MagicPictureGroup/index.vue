@@ -17,24 +17,15 @@
           <el-row>
             <el-row>魔方布局</el-row>
             <el-row>
-              <el-col :span="6">
-                <svg-icon name="layout-2" width="50" height="50"></svg-icon>
-              </el-col>
-              <el-col :span="6">
-                <svg-icon name="layout-3" width="50" height="50"></svg-icon>
-              </el-col>
-              <el-col :span="6">
-                <svg-icon name="layout-4" width="50" height="50"></svg-icon>
-              </el-col>
-              <el-col :span="6">
-                <svg-icon name="layout-table" width="50" height="50"></svg-icon>
+              <el-col :span="6" v-for="(item, index) in svgNames" :key="index">
+                <svg-icon @click.native="changeSvg(index)" :class="[svgIndex === index ? 'active' : '']" :name="item" width="50" height="50"></svg-icon>
               </el-col>
             </el-row>
             <el-row>
               <el-alert title="选定布局区域，在下方添加图片，建议添加比例一致的图片" type="info" show-icon :closable="false"></el-alert>
             </el-row>
             <el-row>
-              <layou4 />
+              <GridCell :data="layoutData[svgIndex]" />
               <div style="margin-top: 20px;">
                 <PictureItem :index="0" :item="{ imgUrl: '', imgLink: '' }" :items="[{ imgUrl: '', imgLink: '' }]" />
               </div>
@@ -48,24 +39,110 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IComponentData } from '@/store/magic/index'
-import layou2 from './components/layout-2.vue'
-import layou3 from './components/layout-3.vue'
-import layou4 from './components/layout-4.vue'
-import layouTable from './components/layout-table.vue'
+import GridCell from './components/GridCell.vue'
+// import layout2 from './components/layout-2.vue'
+// import layout3 from './components/layout-3.vue'
+// import layout4 from './components/layout-4.vue'
+// import layoutTable from './components/layout-table.vue'
 import PictureItem from './components/picture-item.vue'
 @Component({
   name: 'magicPictureGroup',
   components: {
-    layou2,
-    layou3,
-    layou4,
-    layouTable,
+    GridCell,
     PictureItem
   }
 })
 export default class extends Vue {
   @Prop({ type: Object, required: true }) componentData!: IComponentData
   private activeNames = ['1', '2']
+  private svgNames = ['layout-2', 'layout-3', 'layout-4', 'layout-table']
+  private layoutData = [
+    {
+      padding: 0,
+      scale: 1,
+      row: 1,
+      col: 2,
+      items: [
+        {
+          size: '1:1',
+          position: '0:0'
+        },
+        {
+          size: '1:1',
+          position: '1:0'
+        }
+      ]
+    },
+    {
+      padding: 0,
+      scale: 1,
+      row: 2,
+      col: 2,
+      items: [
+        {
+          size: '1:2',
+          position: '0:0'
+        },
+        {
+          size: '1:1',
+          position: '1:0'
+        },
+        {
+          size: '1:1',
+          position: '1:1'
+        }
+      ]
+    },
+    {
+      padding: 0,
+      scale: 1,
+      row: 2,
+      col: 2,
+      items: [
+        {
+          size: '1:2',
+          position: '0:0'
+        },
+        {
+          size: '1:1',
+          position: '1:0'
+        },
+        {
+          size: '1:1',
+          position: '1:1'
+        }
+      ]
+    },
+    {
+      padding: 0,
+      scale: 1,
+      col: 2,
+      row: 2,
+      items: [
+        {
+          size: '1:1',
+          position: '0:0'
+        },
+        {
+          size: '1:1',
+          position: '1:0'
+        },
+        {
+          size: '1:1',
+          position: '0:1'
+        },
+        {
+          size: '1:1',
+          position: '1:1'
+        }
+      ]
+    }
+  ]
+
+  private svgIndex = 0
+  changeSvg(index: number) {
+    this.svgIndex = index
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -73,6 +150,9 @@ export default class extends Vue {
   color: $--color-text-secondary;
   cursor: pointer;
   &:hover {
+    color: $--color-primary;
+  }
+  &.active {
     color: $--color-primary;
   }
 }
