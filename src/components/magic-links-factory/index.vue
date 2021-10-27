@@ -18,6 +18,12 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import SystemLink from './components/SystemLink/index.vue'
+
+export interface ILink {
+  name: string
+  active?: boolean
+}
+
 @Component({
   name: 'magicLinksFactory',
   components: {

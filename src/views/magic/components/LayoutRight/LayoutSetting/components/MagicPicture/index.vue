@@ -10,7 +10,7 @@
           </el-row>
         </el-collapse-item>
         <el-collapse-item title="数据配置" name="2">
-          <PictureItem v-for="(item, index) in componentData.data.items" :items="componentData.data.items" :index="index" :item="item" :key="index"></PictureItem>
+          <magicSettingGrid v-for="(item, index) in componentData.data.items" :items="componentData.data.items" :index="index" :item="item" :key="index"></magicSettingGrid>
           <el-button type="primary" style="width: 100%;" @click="addPictureItem">添加更多</el-button>
         </el-collapse-item>
       </el-collapse>
@@ -21,12 +21,12 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IComponentData } from '@/store/magic/index'
-import PictureItem from './components/PictureItem.vue'
+import magicSettingGrid from '@/components/magic-setting-grid/index.vue'
 
 @Component({
   name: 'magicPicture',
   components: {
-    PictureItem
+    magicSettingGrid
   }
 })
 export default class extends Vue {

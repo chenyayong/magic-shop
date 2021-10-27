@@ -27,18 +27,13 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-
-interface link {
-  name: string
-  active?: boolean
-}
-
+import { ILink } from '../../index.vue'
 @Component({
   name: 'SystemLink'
 })
 export default class extends Vue {
   private activeName = ['1', '2', '3']
-  private homeLinks: link[] = [
+  private homeLinks: ILink[] = [
     {
       name: '商城首页'
     },
@@ -50,7 +45,7 @@ export default class extends Vue {
     }
   ]
 
-  private memberLinks: link[] = [
+  private memberLinks: ILink[] = [
     {
       name: '会员中心'
     },
@@ -80,7 +75,7 @@ export default class extends Vue {
     }
   ]
 
-  private otherLinks: link[] = [
+  private otherLinks: ILink[] = [
     {
       name: '积分'
     },
@@ -133,11 +128,11 @@ export default class extends Vue {
     return link
   }
 
-  selectLinks(link: link, links: link[]) {
+  selectLinks(link: ILink, links: ILink[]) {
     this.homeLinks.forEach((item) => this.$set(item, 'active', false))
     this.memberLinks.forEach((item) => this.$set(item, 'active', false))
     this.otherLinks.forEach((item) => this.$set(item, 'active', false))
-    const item = links.find((e) => e === link) as link
+    const item = links.find((e) => e === link) as ILink
     this.$set(item, 'active', true)
   }
 }

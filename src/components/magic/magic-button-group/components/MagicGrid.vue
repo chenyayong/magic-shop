@@ -4,18 +4,22 @@
       <grid-item v-for="(item, index) in items" :key="index">
         <el-skeleton :loading="!item.imgUrl">
           <template slot="template">
-            <el-skeleton-item variant="image" :style="imgStyle" />
-            <div style="margin-top: 10px;display: flex; justify-content: center;">
+            <el-row type="flex" justify="center">
+              <el-skeleton-item variant="image" :style="imgStyle" />
+            </el-row>
+            <el-row type="flex" justify="center" style="margin-top: 10px;">
               <el-skeleton-item variant="h3" style="width: 70%;" />
-            </div>
+            </el-row>
           </template>
           <template>
-            <div class="button-group__image" :style="imgStyle">
-              <img :src="item.imgUrl" alt="" srcset="" />
-            </div>
-            <div class="button-group__text" :style="textStyle">
-              {{ item.imgLabel }}
-            </div>
+            <el-row>
+              <div class="button-group__image">
+                <img :src="item.imgUrl" alt="" srcset="" :style="imgStyle" />
+              </div>
+              <div class="button-group__text" :style="textStyle">
+                {{ item.imgLabel }}
+              </div>
+            </el-row>
           </template>
         </el-skeleton>
       </grid-item>
@@ -28,7 +32,8 @@ import Grid from 'vant/lib/grid'
 import GridItem from 'vant/lib/grid-item'
 import 'vant/lib/grid/style'
 import 'vant/lib/grid-item/style'
-import { IComponentData, IMagicButtonGroupItem } from '@/store/magic'
+import { IComponentData } from '@/store/magic'
+import { IMagicButtonGroupItem } from '@/store/magic/magic-button-group'
 @Component({
   name: 'magicGrid',
   components: {
@@ -72,19 +77,23 @@ export default class extends Vue {
   height: auto;
   padding: 10px;
 }
+.magic-grid ::v-deep .van-grid-item__content > div {
+  width: 100%;
+}
 .magic-grid ::v-deep .el-skeleton__image svg {
   width: 60%;
   height: 60%;
 }
-.button-group__image {
+.magic-grid ::v-deep .button-group__image {
   overflow: hidden;
+  text-align: center;
 }
-.button-group__image img {
+.magic-grid ::v-deep .button-group__image img {
   object-fit: cover;
   width: 100%;
   height: 100%;
 }
-.button-group__text {
+.magic-grid ::v-deep .button-group__text {
   margin-top: 4px;
   white-space: nowrap;
   overflow: hidden;

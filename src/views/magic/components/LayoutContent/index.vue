@@ -7,7 +7,7 @@
             <component
               @click.native="changeActive(index)"
               v-for="(item, index) in componentsFormData"
-              :class="[item.active ? 'active' : '']"
+              :class="[index === componentsFormDataIndex ? 'active' : '']"
               :is="item.name"
               :key="item.id"
               :componentData="item"
@@ -61,8 +61,9 @@ const components = files.keys().reduce((ret: iComponents, file: string): iCompon
   }
 })
 export default class extends Vue {
+  @magic.State('componentsFormDataIndex') componentsFormDataIndex!: number
   @magic.State('componentsFormData') componentsFormData!: IComponentData[]
-  @magic.Mutation('RESET_ACTION_COMPONENTS_FORM_DATA') RESET_ACTION_COMPONENTS_FORM_DATA!: (index?: number) => void
+  @magic.Mutation('SET_COMPONENTS_FORM_DATA_INDEX') SET_COMPONENTS_FORM_DATA_INDEX!: (index?: number) => void
   @magicAsidebar.Mutation('SET_ASIDEBAR_DATA_INDEX') SET_ASIDEBAR_DATA_INDEX!: (index: number) => void
   private group = {
     name: 'site',
@@ -73,17 +74,17 @@ export default class extends Vue {
   @Watch('componentsFormData', { immediate: true, deep: true })
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   changeCompontents(val: IComponentData[]) {
-    // console.log('componentsFormData', val)
+    console.log('componentsFormData', val)
   }
 
   draggableChange(value: draggableElement) {
     const index = value.added.newIndex
-    this.RESET_ACTION_COMPONENTS_FORM_DATA(index)
+    this.SET_COMPONENTS_FORM_DATA_INDEX(index)
     this.SET_ASIDEBAR_DATA_INDEX(1)
   }
 
   changeActive(index: number) {
-    this.RESET_ACTION_COMPONENTS_FORM_DATA(index)
+    this.SET_COMPONENTS_FORM_DATA_INDEX(index)
   }
 }
 </script>

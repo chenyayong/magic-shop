@@ -4,8 +4,14 @@
     <el-form>
       <el-collapse v-model="activeNames">
         <el-collapse-item title="按钮组配置" name="1">
-          <ButtonGroupItem :items="componentData.data.items" :item="item" :index="index" v-for="(item, index) in componentData.data.items" :key="index"></ButtonGroupItem>
-          <div><el-button type="primary" style="width: 100%" @click="addButtonGroupItem">添加更多</el-button></div>
+          <magicSettingGrid v-for="(item, index) in componentData.data.items" :items="componentData.data.items" :item="item" :index="index" :key="index">
+            <template v-slot:input="slotProps">
+              <el-row>
+                <el-input placeholder="请输入文本" v-model="slotProps.item.imgLabel"></el-input>
+              </el-row>
+            </template>
+          </magicSettingGrid>
+          <el-row><el-button type="primary" style="width: 100%" @click="addButtonGroupItem">添加更多</el-button></el-row>
         </el-collapse-item>
         <el-collapse-item title="样式配置" name="2">
           <el-row class="block">
@@ -64,29 +70,20 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IComponentData } from '@/store/magic'
-import ButtonGroupItem from './components/ButtonGroupItem.vue'
+import magicSettingGrid from '@/components/magic-setting-grid/index.vue'
 @Component({
   name: 'magicButtonGroup',
   components: {
-    ButtonGroupItem
+    magicSettingGrid
   }
 })
 export default class extends Vue {
   @Prop({ type: Object, required: true }) componentData!: IComponentData
 
   private activeNames = ['1', '2']
-  private value = 0
-  private radio = '1'
-  private swiper = true
-  private color = ''
-  private count = ''
 
   addButtonGroupItem() {
     this.componentData.data?.items.push({ imgUrl: '', imgLink: '', imgLabel: '文本' })
-  }
-
-  mounted() {
-    // console.log('mounted button group', this.componentData)
   }
 }
 </script>
@@ -95,16 +92,4 @@ export default class extends Vue {
 .block {
   margin-bottom: 15px;
 }
-// .magic-button-group-setting ::v-deep .el-slider__input {
-//   width: 110px;
-// }
-// .magic-button-group-setting ::v-deep .el-slider__runway.show-input {
-//   margin-right: 120px;
-// }
-// .magic-button-group-setting ::v-deep .el-collapse-item__wrap {
-//   overflow: visible;
-// }
-// .el-slider {
-//   padding-left: 10px;
-// }
 </style>
