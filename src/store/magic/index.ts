@@ -1,5 +1,11 @@
 import { VuexModule, Module, Mutation } from 'vuex-module-decorators'
 
+import magicSwiper, { IMagicSwiper } from './magic-swiper'
+import magicButtonGroup, { IMagicButtonGroup } from './magic-button-group'
+import magicPicture, { IMagicPicture } from './magic-picture'
+import magicPictureGroup, { IMagicPictureGroup } from './magic-picture-group'
+import magicGoods, { IMagicGoods } from './magic-goods'
+
 export enum ComponentName {
   magicSwiper = 'magicSwiper',
   magicButtonGroup = 'magicButtonGroup',
@@ -8,58 +14,12 @@ export enum ComponentName {
   magicGoods = 'magicGoods'
 }
 
-export interface IMagicSwiperItem {
-  imgUrl: string
-  imgLink: string
-}
-export interface IMagicSwiper {
-  padding?: number
-  items: IMagicSwiperItem[]
-}
-
-export interface IMagicButtonGroupItem {
-  imgUrl: string
-  imgLink: string
-  imgLabel: string
-}
-export interface IMagicButtonGroup {
-  rowButtonCount?: number
-  swiper?: number
-  rowSwiper?: number
-  paddingTop?: number
-  paddingBottom?: number
-  buttonSize?: number
-  buttonRound?: number
-  textSize?: number
-  textColor?: string
-  background?: string
-  items: IMagicButtonGroupItem[]
-}
-
-export interface IMagicPictureItem {
-  imgUrl: string
-  imgLink: string
-}
-export interface IMagicPicture {
-  padding: number
-  items: IMagicPictureItem[]
-}
-export interface IMagicPictureGroup {
-  padding: number
-  items: { imgUrl: string; imgLink: string }[]
-}
-export interface IMagicGoods {
-  padding: number
-  items: { imgUrl: string; imgLink: string }[]
-}
-
 export interface IComponentData {
   id?: string
   name: ComponentName
   label: string
   icon: string
-  active?: boolean
-  data?: IMagicSwiper & IMagicButtonGroup & IMagicPicture & IMagicPictureGroup & IMagicGoods
+  data: IMagicSwiper & IMagicButtonGroup & IMagicPicture & IMagicPictureGroup & IMagicGoods
 }
 
 export interface IComponentsFormDataMap {
@@ -70,74 +30,31 @@ export interface IComponentsFormDataMap {
   magicGoods: IMagicGoods
 }
 
-export interface IState {
+interface IComponent {
+  name: string
+  icon: string
+  label: string
+}
+
+interface IState {
   name: string
   componentsFormData: IComponentData[]
-  baseComponents: IComponentData[]
-  shopComponents: IComponentData[]
-  saleComponents: IComponentData[]
+  baseComponents: IComponent[]
+  shopComponents: IComponent[]
+  saleComponents: IComponent[]
 }
 
 @Module({ namespaced: true })
 class magic extends VuexModule implements IState {
   public name = 'magic'
+  public componentsFormDataIndex = 0
   public componentsFormData: IComponentData[] = []
   public componentsFormDataMap: IComponentsFormDataMap = {
-    magicSwiper: {
-      padding: 0,
-      items: [
-        {
-          imgUrl: '',
-          imgLink: ''
-        }
-      ]
-    },
-    magicButtonGroup: {
-      rowButtonCount: 4,
-      swiper: 0,
-      rowSwiper: 1,
-      paddingTop: 0,
-      paddingBottom: 0,
-      buttonSize: 50,
-      buttonRound: 0,
-      textSize: 0,
-      textColor: '',
-      background: '',
-      items: [
-        {
-          imgUrl: '',
-          imgLink: '',
-          imgLabel: '文本'
-        }
-      ]
-    },
-    magicPicture: {
-      padding: 0,
-      items: [
-        {
-          imgUrl: '',
-          imgLink: ''
-        }
-      ]
-    },
-    magicPictureGroup: {
-      padding: 0,
-      items: [
-        {
-          imgUrl: '',
-          imgLink: ''
-        }
-      ]
-    },
-    magicGoods: {
-      padding: 0,
-      items: [
-        {
-          imgUrl: '',
-          imgLink: ''
-        }
-      ]
-    }
+    magicSwiper: magicSwiper.state.rawData,
+    magicButtonGroup: magicButtonGroup.state.rawData,
+    magicPicture: magicPicture.state.rawData,
+    magicPictureGroup: magicPictureGroup.state.rawData,
+    magicGoods: magicGoods.state.rawData
   }
 
   public baseComponents = [
@@ -306,21 +223,14 @@ class magic extends VuexModule implements IState {
     // }
   ]
 
-  get componentsFormDataActionItem() {
-    const ret = this.componentsFormData.filter((item) => item.active)
-    return ret && ret[0]
+  get componentsFormDataCurrentItem() {
+    const ret = this.componentsFormData[this.componentsFormDataIndex]
+    return ret
   }
 
   @Mutation
-  RESET_ACTION_COMPONENTS_FORM_DATA(index: number) {
-    this.componentsFormData = this.componentsFormData.map((item, i) => {
-      if (i === index) {
-        item.active = true
-      } else {
-        delete item.active
-      }
-      return item
-    })
+  SET_COMPONENTS_FORM_DATA_INDEX(index: number) {
+    this.componentsFormDataIndex = index
   }
 }
 export default magic

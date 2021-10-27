@@ -1,6 +1,6 @@
 <template>
-  <div class="picture-item setting-item">
-    <i class="item el-icon-delete" @click="dele"></i>
+  <div class="swiper-item setting-item">
+    <!-- <i class="item el-icon-delete" @click="dele"></i> -->
     <el-row>
       <div class="el-upload el-upload--picture-card" @click="uploadVisible = true" v-if="!item.imgUrl">
         <i class="el-icon-plus"></i>
@@ -19,6 +19,7 @@
       <el-col :span="18"><el-input placeholder="请输入链接" v-model="item.imgLink"></el-input></el-col>
       <el-col :span="6"><el-button type="primary" @click="linksVisible = true">选择</el-button></el-col>
     </el-row>
+
     <MagicUploadImgs @confirm="uploadImgsConfirm" :visible.sync="uploadVisible"></MagicUploadImgs>
     <MagicLinksFactory @confirm="linkConfirm" :visible.sync="linksVisible"></MagicLinksFactory>
     <el-dialog :visible.sync="dialogVisible" :append-to-body="true">
@@ -31,18 +32,18 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import MagicUploadImgs from '@/components/magic-upload-imgs/index.vue'
 import MagicLinksFactory from '@/components/magic-links-factory/index.vue'
-import { IMagicPictureItem } from '@/store/magic'
+import { IMagicSwiperItem } from '@/store/magic/magic-swiper'
 @Component({
-  name: 'pictureItem',
+  name: 'swiperItem',
   components: {
     MagicUploadImgs,
     MagicLinksFactory
   }
 })
 export default class extends Vue {
-  @Prop({ type: Array, required: true }) items!: IMagicPictureItem[]
-  @Prop({ type: Object, required: true }) item!: IMagicPictureItem
-  @Prop({ type: Number }) index!: number
+  @Prop({ type: Array }) items!: IMagicSwiperItem[]
+  @Prop({ type: Object, required: true }) item!: IMagicSwiperItem
+  @Prop({ type: Number, required: true }) index!: number
   private linksVisible = false
   private uploadVisible = false
   private dialogVisible = false
@@ -60,35 +61,3 @@ export default class extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-// .picture-item {
-//   border: 1px solid #ddd;
-//   padding: 15px;
-//   margin-bottom: 15px;
-//   position: relative;
-//   .item.el-icon-delete {
-//     position: absolute;
-//     right: 6px;
-//     top: 6px;
-//     cursor: pointer;
-//     font-size: 18px;
-//     color: $--color-primary;
-//   }
-// }
-// .picture-item ::v-deep .el-upload--picture-card {
-//   width: 100px;
-//   height: 100px;
-//   line-height: 100px;
-// }
-// .picture-item ::v-deep .el-upload-list {
-//   display: block;
-//   width: 100px;
-//   height: 100px;
-// }
-// .picture-item ::v-deep .el-upload-list__item {
-//   width: 100px;
-//   height: 100px;
-//   margin: 0;
-// }
-</style>

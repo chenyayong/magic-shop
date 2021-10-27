@@ -15,24 +15,16 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-interface IItem {
-  size: string
-  position: string
-}
-interface IData {
-  padding: number
-  scale: number
-  row: number
-  col: number
-  items: IItem[]
-}
+import { IMagicPictureGroup } from '@/store/magic/magic-picture-group'
+
 @Component({
   name: 'gridCell'
 })
 export default class extends Vue {
-  @Prop({ type: Object, required: true }) data!: IData
+  @Prop({ type: Object, required: true }) data!: IMagicPictureGroup
+  @Prop({ type: Number, default: 0 }) itemIndex!: number
   private offsetWidth = 0
-  private itemIndex = 0
+  // private itemIndex = 0
 
   get cellWidth() {
     const value = Math.floor(this.offsetWidth / this.data.col)
@@ -69,13 +61,15 @@ export default class extends Vue {
       height: height + 'px',
       left: left + 'px',
       top: top + 'px',
-      padding: this.data.padding + 'px'
+      backgroundImage: `url(${item.imgUrl})`
     }
     return style
   }
 
   selectCell(index: number) {
-    this.itemIndex = index
+    this.$emit('update:itemIndex', index)
+    // this.itemIndex = index
+    // this.data.items[this.itemIndex].imgUrl = this.imgUrl
   }
 
   mounted() {
@@ -94,6 +88,9 @@ export default class extends Vue {
   position: absolute;
   border: 1px $--border-color-lighter solid;
   cursor: pointer;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: $--color-warning;
   &.active {
     background-color: $--color-primary-light-6;
     color: $--color-white;

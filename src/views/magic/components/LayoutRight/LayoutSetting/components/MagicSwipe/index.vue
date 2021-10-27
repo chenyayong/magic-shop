@@ -11,7 +11,7 @@
         </el-collapse-item>
         <el-collapse-item title="轮播图数据配置" name="2">
           <el-row>
-            <SwiperItem v-for="(item, index) in componentData.data.items" :items="componentData.data.items" :item="item" :index="index" :key="index"></SwiperItem>
+            <magicSettingGrid v-for="(item, index) in componentData.data.items" :items="componentData.data.items" :item="item" :index="index" :key="index" />
           </el-row>
           <el-row>
             <el-button type="primary" style="width: 100%;" @click="addSwiperItem">添加更多</el-button>
@@ -25,12 +25,12 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IComponentData } from '@/store/magic/index'
-import SwiperItem from './components/SwiperItem.vue'
+import magicSettingGrid from '@/components/magic-setting-grid/index.vue'
 
 @Component({
   name: 'magicSwiper',
   components: {
-    SwiperItem
+    magicSettingGrid
   }
 })
 export default class extends Vue {
@@ -44,17 +44,4 @@ export default class extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-// .magic-swiper-setting ::v-deep .el-collapse-item__wrap {
-//   overflow: visible;
-// }
-// .magic-swiper-setting ::v-deep .el-slider__input {
-//   width: 110px;
-// }
-// .magic-swiper-setting ::v-deep .el-slider__runway.show-input {
-//   margin-right: 120px;
-// }
-// .el-slider {
-//   padding-left: 10px;
-// }
-</style>
+<style lang="scss" scoped></style>

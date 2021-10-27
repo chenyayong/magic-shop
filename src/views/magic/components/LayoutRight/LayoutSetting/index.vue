@@ -1,14 +1,15 @@
 <template>
   <div class="layout-setting">
-    <el-empty v-if="!componentsFormDataActionItem"></el-empty>
+    <el-empty v-if="!componentsFormDataCurrentItem"></el-empty>
     <transition mode="out-in" name="slide-fade" v-else>
-      <component :is="componentsFormDataActionItem.name" :componentData="componentsFormDataActionItem"></component>
+      <component :is="componentsFormDataCurrentItem.name" :componentData="componentsFormDataCurrentItem"></component>
     </transition>
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
+import { IComponentData } from '@/store/magic'
 const magic = namespace('magic')
 
 interface iComponents {
@@ -28,7 +29,7 @@ const components = files.keys().reduce((ret: iComponents, file: string): iCompon
   components
 })
 export default class extends Vue {
-  @magic.Getter('componentsFormDataActionItem') componentsFormDataActionItem!: any
+  @magic.Getter('componentsFormDataCurrentItem') componentsFormDataCurrentItem!: IComponentData
 }
 </script>
 

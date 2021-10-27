@@ -1,16 +1,15 @@
 import { VuexModule, Module } from 'vuex-module-decorators'
-export interface IMagicPictureItem {
+export interface IMagicGoodsItem {
   imgUrl: string
   imgLink: string
 }
-export interface IMagicPicture {
+export interface IMagicGoods {
   padding: number
-  items: IMagicPictureItem[]
+  items: IMagicGoodsItem[]
 }
-
 interface IState {
   name: string
-  rawData: IMagicPicture
+  rawData: IMagicGoods
 }
 
 @Module({ namespaced: true })

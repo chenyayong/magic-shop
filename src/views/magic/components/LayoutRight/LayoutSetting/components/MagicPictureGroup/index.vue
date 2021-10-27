@@ -19,10 +19,10 @@
           <el-row>
             <el-row>魔方布局</el-row>
             <el-row>
-              <el-col :span="6" v-for="(item, index) in svgNames" :key="index">
+              <el-col :span="6" v-for="(item, index) in gridNames" :key="index">
                 <svg-icon
-                  @click.native="changeSvg(index)"
-                  :class="[svgIndex === index ? 'active' : '']"
+                  @click.native="changeGridIndex(index)"
+                  :class="[gridIndex === index ? 'active' : '']"
                   :name="item"
                   width="50"
                   height="50"
@@ -38,12 +38,15 @@
               ></el-alert>
             </el-row>
             <el-row>
-              <GridCell :data="layoutData[svgIndex]" />
+              <GridCell :itemIndex.sync="gridCellIndex" :data="gridData" />
               <div style="margin-top: 20px;">
-                <PictureItem
-                  :index="0"
-                  :item="{ imgUrl: '', imgLink: '' }"
-                  :items="[{ imgUrl: '', imgLink: '' }]"
+                <magicSettingGrid
+                  :closable="false"
+                  v-for="(item, index) in magicSettingGrid"
+                  :item="item"
+                  :index="index"
+                  :key="index"
+                  :items="magicSettingGrid"
                 />
               </div>
             </el-row>
@@ -57,23 +60,22 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IComponentData } from '@/store/magic/index'
 import GridCell from './components/GridCell.vue'
-// import layout2 from './components/layout-2.vue'
-// import layout3 from './components/layout-3.vue'
-// import layout4 from './components/layout-4.vue'
+import magicSettingGrid from '@/components/magic-setting-grid/index.vue'
 // import layoutTable from './components/layout-table.vue'
-import PictureItem from './components/picture-item.vue'
 @Component({
   name: 'magicPictureGroup',
   components: {
     GridCell,
-    PictureItem
+    magicSettingGrid
   }
 })
 export default class extends Vue {
   @Prop({ type: Object, required: true }) componentData!: IComponentData
   private activeNames = ['1', '2']
-  private svgNames = ['layout-2', 'layout-3', 'layout-4', 'layout-table']
-  private layoutData = [
+  private gridCellIndex = 0
+  private gridNames = ['layout-2', 'layout-3', 'layout-4', 'layout-table']
+  private gridIndex = 0
+  private gridsData = [
     {
       padding: 20,
       scale: 1,
@@ -82,11 +84,15 @@ export default class extends Vue {
       items: [
         {
           size: '1:1',
-          position: '0:0'
+          position: '0:0',
+          imgUrl: '',
+          imgLink: ''
         },
         {
           size: '1:1',
-          position: '1:0'
+          position: '1:0',
+          imgUrl: '',
+          imgLink: ''
         }
       ]
     },
@@ -98,15 +104,21 @@ export default class extends Vue {
       items: [
         {
           size: '1:2',
-          position: '0:0'
+          position: '0:0',
+          imgUrl: '',
+          imgLink: ''
         },
         {
           size: '1:1',
-          position: '1:0'
+          position: '1:0',
+          imgUrl: '',
+          imgLink: ''
         },
         {
           size: '1:1',
-          position: '1:1'
+          position: '1:1',
+          imgUrl: '',
+          imgLink: ''
         }
       ]
     },
@@ -118,19 +130,27 @@ export default class extends Vue {
       items: [
         {
           size: '1:1',
-          position: '0:0'
+          position: '0:0',
+          imgUrl: '',
+          imgLink: ''
         },
         {
           size: '1:1',
-          position: '1:0'
+          position: '1:0',
+          imgUrl: '',
+          imgLink: ''
         },
         {
           size: '1:1',
-          position: '0:1'
+          position: '0:1',
+          imgUrl: '',
+          imgLink: ''
         },
         {
           size: '1:1',
-          position: '1:1'
+          position: '1:1',
+          imgUrl: '',
+          imgLink: ''
         }
       ]
     },
@@ -142,27 +162,46 @@ export default class extends Vue {
       items: [
         {
           size: '1:1',
-          position: '0:0'
+          position: '0:0',
+          imgUrl: '',
+          imgLink: ''
         },
         {
           size: '1:1',
-          position: '1:0'
+          position: '1:0',
+          imgUrl: '',
+          imgLink: ''
         },
         {
           size: '1:1',
-          position: '0:1'
+          position: '0:1',
+          imgUrl: '',
+          imgLink: ''
         },
         {
           size: '1:1',
-          position: '1:1'
+          position: '1:1',
+          imgUrl: '',
+          imgLink: ''
         }
       ]
     }
   ]
 
-  private svgIndex = 0
-  changeSvg(index: number) {
-    this.svgIndex = index
+  get gridData() {
+    const data = this.gridsData[this.gridIndex]
+    this.$set(this.componentData, 'data', data)
+    // this.componentData.data = data as any
+    return this.componentData.data
+  }
+
+  get magicSettingGrid() {
+    const item = this.gridData.items[this.gridCellIndex]
+    return [item]
+  }
+
+  changeGridIndex(index: number) {
+    this.gridIndex = index
   }
 }
 </script>
