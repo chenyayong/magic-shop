@@ -68,7 +68,8 @@ export default class extends Vue {
       width: width + 'px',
       height: height + 'px',
       left: left + 'px',
-      top: top + 'px'
+      top: top + 'px',
+      padding: this.data.padding + 'px'
     }
     return style
   }

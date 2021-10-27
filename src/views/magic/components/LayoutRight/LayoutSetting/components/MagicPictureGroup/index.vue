@@ -6,7 +6,9 @@
         <el-collapse-item title="样式配置" name="1">
           <el-row type="flex" class="block">
             <el-col :span="8">背景颜色</el-col>
-            <el-col><el-color-picker v-model="componentData.data.background"></el-color-picker></el-col>
+            <el-col
+              ><el-color-picker v-model="componentData.data.background"></el-color-picker
+            ></el-col>
           </el-row>
           <el-row class="block">
             <el-col>图片间距</el-col>
@@ -18,16 +20,31 @@
             <el-row>魔方布局</el-row>
             <el-row>
               <el-col :span="6" v-for="(item, index) in svgNames" :key="index">
-                <svg-icon @click.native="changeSvg(index)" :class="[svgIndex === index ? 'active' : '']" :name="item" width="50" height="50"></svg-icon>
+                <svg-icon
+                  @click.native="changeSvg(index)"
+                  :class="[svgIndex === index ? 'active' : '']"
+                  :name="item"
+                  width="50"
+                  height="50"
+                ></svg-icon>
               </el-col>
             </el-row>
             <el-row>
-              <el-alert title="选定布局区域，在下方添加图片，建议添加比例一致的图片" type="info" show-icon :closable="false"></el-alert>
+              <el-alert
+                title="选定布局区域，在下方添加图片，建议添加比例一致的图片"
+                type="info"
+                show-icon
+                :closable="false"
+              ></el-alert>
             </el-row>
             <el-row>
               <GridCell :data="layoutData[svgIndex]" />
               <div style="margin-top: 20px;">
-                <PictureItem :index="0" :item="{ imgUrl: '', imgLink: '' }" :items="[{ imgUrl: '', imgLink: '' }]" />
+                <PictureItem
+                  :index="0"
+                  :item="{ imgUrl: '', imgLink: '' }"
+                  :items="[{ imgUrl: '', imgLink: '' }]"
+                />
               </div>
             </el-row>
           </el-row>
@@ -58,7 +75,7 @@ export default class extends Vue {
   private svgNames = ['layout-2', 'layout-3', 'layout-4', 'layout-table']
   private layoutData = [
     {
-      padding: 0,
+      padding: 20,
       scale: 1,
       row: 1,
       col: 2,
@@ -96,16 +113,20 @@ export default class extends Vue {
     {
       padding: 0,
       scale: 1,
-      row: 2,
       col: 2,
+      row: 2,
       items: [
         {
-          size: '1:2',
+          size: '1:1',
           position: '0:0'
         },
         {
           size: '1:1',
           position: '1:0'
+        },
+        {
+          size: '1:1',
+          position: '0:1'
         },
         {
           size: '1:1',
