@@ -10,29 +10,33 @@
     </el-row>
     <el-row class="block">
       <el-col>高度比例</el-col>
-      <el-col><el-slider v-model="scale" :min="0.5" :step="0.5" :max="2" show-input></el-slider></el-col>
+      <el-col
+        ><el-slider v-model="scale" :min="0.5" :step="0.5" :max="2" show-input></el-slider
+      ></el-col>
     </el-row>
     <div class="grid" ref="grid" :style="setGridStyle">
-      <div :style="setCellStyle(item)" class="cell" :class="[item.filter ? 'cell-filter' : 'cell-cancel']" v-for="(item, index) in data" :key="index">
+      <div
+        :style="setCellStyle(item)"
+        class="cell"
+        :data-id="item.id"
+        :class="[item.filter ? 'cell-filter' : 'cell-cancel']"
+        v-for="(item, index) in data"
+        :key="item.id"
+      >
         <div class="cell-sub">{{ index + 1 }}</div>
       </div>
     </div>
-
-    <!-- <DragSelect selectorClass="item">
-      <template slot-scope="{ selectedItems }">
-        <div v-for="item in arr" :key="item.id" :class="getClasses(item, selectedItems)" :data-item="item.id">Item {{ item.id }}</div>
-      </template>
-    </DragSelect> -->
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { IMagicPictureGroupItem } from '@/store/magic/magic-picture-group'
+import { uuid } from '@/utils/index'
 import $ from 'jquery'
 import 'jquery-ui-dist/jquery-ui'
 import 'jquery-ui-dist/jquery-ui.min.css'
-// import DragSelect from 'vue-drag-select'
+
 @Component({
   name: 'layoutTable'
 })
@@ -65,6 +69,7 @@ export default class extends Vue {
     for (let i = 0; i < this.row; i++) {
       for (let j = 0; j < this.col; j++) {
         const temp = {
+          id: uuid(),
           size: '1:1',
           position: `${j}:${i}`,
           imgUrl: '',
@@ -97,7 +102,8 @@ export default class extends Vue {
   mounted() {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this
-    const data = {
+    let data = {
+      id: '',
       size: '1:1',
       position: '0,0',
       imgUrl: '',
@@ -106,27 +112,55 @@ export default class extends Vue {
     }
     this.offsetWidth = (this.$refs.grid as any).offsetWidth
     this.data = this.cellsData
-    ;($('.grid') as any).selectable({
+    ;($(this.$refs.grid) as any).selectable({
       cancel: '.cell-cancel',
       filter: '.cell-filter',
-      start: function(event: any) {
-        const top = Math.floor(event.toElement.offsetParent.offsetTop / that.cellHeight)
-        const left = Math.floor(event.toElement.offsetParent.offsetLeft / that.cellWidth)
-        data.position = `${left}:${top}`
-        console.log('start', `${left}:${top}`)
+      selecting: function() {
+        const selectedElements = $('.ui-selecting', this).toArray()
+        const element = selectedElements[0]
+
+        const left = Math.floor(element.offsetLeft / that.cellWidth)
+        const top = Math.floor(element.offsetTop / that.cellHeight)
+        data = {
+          position: `${left}:${top}`,
+          id: uuid(),
+          size: '1:1',
+          imgUrl: '',
+          imgLink: '',
+          filter: false
+        }
+        console.log('selecting', data.position)
       },
-      stop: function(event: any) {
-        const top = Math.floor(event.toElement.offsetParent.offsetTop / that.cellHeight) + 1
-        const left = Math.floor(event.toElement.offsetParent.offsetLeft / that.cellWidth) + 1
-        const selected = $('.ui-selected', this).toArray()
-        const indexs = selected.map((e) => $(e).index()).reverse()
-        data.size = `${left}:${top}`
-        indexs.forEach((index) => {
-          that.data.splice(index, 1)
-        })
-        that.data.splice(indexs.length - 1, 0, data)
-        // console.log(indexs)
-        // console.log('stop', event.toElement.offsetParent.offsetTop, indexs, that.cellsData)
+      start: function() {
+        // const top = Math.floor(event.toElement.offsetParent.offsetTop / that.cellHeight)
+        // const left = Math.floor(event.toElement.offsetParent.offsetLeft / that.cellWidth)
+        // const selectedElements = $('.ui-selecting', this).toArray()
+        // const element = selectedElements[0]
+        // console.log('start', selectedElements)
+        // const left = Math.floor(element.offsetLeft / that.cellWidth)
+        // const top = Math.floor(element.offsetTop / that.cellHeight)
+        // data = {
+        //   position: `${left}:${top}`,
+        //   id: uuid(),
+        //   size: '1:1',
+        //   imgUrl: '',
+        //   imgLink: '',
+        //   filter: false
+        // }
+      },
+      stop: function() {
+        const selectedElements = $('.ui-selected', this).toArray()
+        const element = selectedElements[selectedElements.length - 1]
+        const width = Math.floor(element.offsetLeft / that.cellWidth) + 1
+        const height = Math.floor(element.offsetTop / that.cellHeight) + 1
+        const selectedIds = selectedElements.map((e) => $(e).data('id'))
+        const addIndex = that.data.findIndex((e) => e.id === selectedIds[0])
+        data.size = `${width}:${height}`
+        // that.data.splice(addIndex, 0, data)
+        // that.data = that.data.filter((e) => {
+        //   return !selectedIds.includes(e.id)
+        // })
+        console.log('stop', data.size, element, element.offsetLeft, element.offsetTop)
       }
     })
   }

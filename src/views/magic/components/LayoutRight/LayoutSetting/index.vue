@@ -2,7 +2,10 @@
   <div class="layout-setting">
     <el-empty v-if="!componentsFormDataCurrentItem"></el-empty>
     <transition mode="out-in" name="slide-fade" v-else>
-      <component :is="componentsFormDataCurrentItem.name" :componentData="componentsFormDataCurrentItem"></component>
+      <component
+        :is="componentsFormDataCurrentItem.name"
+        :componentData="componentsFormDataCurrentItem"
+      ></component>
     </transition>
   </div>
 </template>

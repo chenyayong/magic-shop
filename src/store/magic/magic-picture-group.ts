@@ -1,5 +1,6 @@
 import { VuexModule, Module } from 'vuex-module-decorators'
 export interface IMagicPictureGroupItem {
+  id?: string
   size: string
   position: string
   imgUrl: string
