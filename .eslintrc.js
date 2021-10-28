@@ -10,6 +10,7 @@ module.exports = {
   rules: {
     camelcase: 'off',
     'vue/object-curly-spacing': 'off',
+    '@typescript-eslint/no-extra-semi': 'off',
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/member-delimiter-style': [

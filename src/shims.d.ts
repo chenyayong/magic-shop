@@ -21,3 +21,5 @@ declare module 'vue2-dropzone'
 declare module 'vue-image-crop-upload'
 
 declare module 'vant/*'
+
+declare module 'vue-drag-select'

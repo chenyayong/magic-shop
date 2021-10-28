@@ -1,21 +1,15 @@
 <template>
   <div class="grid-cell" ref="layout" :style="setGridStyle">
-    <div
-      class="absolute flex-center"
-      :class="[itemIndex === index ? 'active' : '']"
-      @click="selectCell(index)"
-      :style="setItemStyle(item)"
-      v-for="(item, index) in data.items"
-      :key="index"
-    >
-      {{ scaleTips(item) }}
+    <div class="cell" :class="[itemIndex === index ? 'active' : '']" @click="selectCell(index)" :style="setItemStyle(item)" v-for="(item, index) in data.items" :key="index">
+      <div class="cell-sub" :style="{ 'background-image': `url(${item.imgUrl})` }"></div>
+      <span class="cell-tips">{{ scaleTips(item) }}</span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IMagicPictureGroup } from '@/store/magic/magic-picture-group'
+import { IMagicPictureGroup, IMagicPictureGroupItem } from '@/store/magic/magic-picture-group'
 
 @Component({
   name: 'gridCell'
@@ -43,13 +37,13 @@ export default class extends Vue {
     return style
   }
 
-  scaleTips(item: any) {
+  scaleTips(item: IMagicPictureGroupItem) {
     const size = item.size.split(':').map((e: string) => parseInt(e))
     const value = 375
     return `${size[0] * value}x${size[1] * value}像素或${item.size}比例 `
   }
 
-  setItemStyle(item: any) {
+  setItemStyle(item: IMagicPictureGroupItem) {
     const position = item.position.split(':').map((e: string) => parseInt(e))
     const size = item.size.split(':').map((e: string) => parseInt(e))
     const width = size[0] * this.cellWidth
@@ -61,7 +55,7 @@ export default class extends Vue {
       height: height + 'px',
       left: left + 'px',
       top: top + 'px',
-      backgroundImage: `url(${item.imgUrl})`
+      padding: this.data.padding + 'px'
     }
     return style
   }
@@ -84,16 +78,29 @@ export default class extends Vue {
   justify-content: center;
   align-items: center;
 }
-.absolute {
+.cell {
   position: absolute;
   border: 1px $--border-color-lighter solid;
   cursor: pointer;
-  background-position: center;
-  background-repeat: no-repeat;
-  color: $--color-warning;
+  color: $--color-info;
+  box-sizing: border-box;
   &.active {
-    background-color: $--color-primary-light-6;
-    color: $--color-white;
+    background-color: $--color-primary-light-5;
+    color: $--color-danger;
+    box-shadow: $--box-shadow-dark;
+  }
+  .cell-sub {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .cell-tips {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
   }
 }
 

@@ -1,6 +1,8 @@
 <template>
   <div class="magic-picture-group" ref="magic" :style="setGridStyle">
-    <div class="absolute" :style="setItemStyle(item)" v-for="(item, index) in componentData.data.items" :key="index"></div>
+    <div class="cell" :style="setItemStyle(item)" v-for="(item, index) in componentData.data.items" :key="index">
+      <div class="cell-sub" :style="{ 'background-image': `url(${item.imgUrl})` }"></div>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -28,7 +30,8 @@ export default class extends Vue {
 
   get setGridStyle() {
     const style = {
-      height: this.componentData.data.row * this.cellHeight + 'px'
+      height: this.componentData.data.row * this.cellHeight + 'px',
+      backgroundColor: this.componentData.data.background
     }
     return style
   }
@@ -51,7 +54,7 @@ export default class extends Vue {
       height: height + 'px',
       left: left + 'px',
       top: top + 'px',
-      backgroundImage: `url(${item.imgUrl})`
+      padding: this.componentData.data.padding + 'px'
     }
     return style
   }
@@ -62,10 +65,16 @@ export default class extends Vue {
 }
 </script>
 <style scoped lang="scss">
-.absolute {
+.cell {
   position: absolute;
   cursor: pointer;
   background-position: center;
   background-repeat: no-repeat;
+  .cell-sub {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
 }
 </style>
