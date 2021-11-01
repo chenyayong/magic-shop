@@ -151,15 +151,18 @@ export default class extends Vue {
       stop: function() {
         const selectedElements = $('.ui-selected', this).toArray()
         const element = selectedElements[selectedElements.length - 1]
-        const width = Math.floor(element.offsetLeft / that.cellWidth) + 1
-        const height = Math.floor(element.offsetTop / that.cellHeight) + 1
+        const position = data.position.split(':').map((e) => parseInt(e))
+        const left = position[0]
+        const right = position[1]
+        const width = Math.floor(element.offsetLeft / that.cellWidth) + 1 - left
+        const height = Math.floor(element.offsetTop / that.cellHeight) + 1 - right
         const selectedIds = selectedElements.map((e) => $(e).data('id'))
         const addIndex = that.data.findIndex((e) => e.id === selectedIds[0])
         data.size = `${width}:${height}`
-        // that.data.splice(addIndex, 0, data)
-        // that.data = that.data.filter((e) => {
-        //   return !selectedIds.includes(e.id)
-        // })
+        that.data.splice(addIndex, 0, data)
+        that.data = that.data.filter((e) => {
+          return !selectedIds.includes(e.id)
+        })
         console.log('stop', data.size, element, element.offsetLeft, element.offsetTop)
       }
     })
