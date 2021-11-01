@@ -1,6 +1,6 @@
 <template>
   <div class="magic-button-group" :style="style">
-    <swiper v-if="componentData.data.swiper" ref="mySwiper" :options="swiperOptions">
+    <swiper :auto-update="true" :auto-destroy="true" v-if="componentData.data.swiper" ref="mySwiper" :options="swiperOptions">
       <swiper-slide v-for="(item, index) in swiperSlides" :key="index">
         <MagicGrid :component-data="componentData" :items="item" />
       </swiper-slide>
@@ -66,10 +66,6 @@ export default class extends Vue {
 
   get swiper() {
     return (this.$refs.mySwiper as any).$swiper
-  }
-
-  destroyed() {
-    this.swiper && this.swiper.destroy()
   }
 }
 </script>

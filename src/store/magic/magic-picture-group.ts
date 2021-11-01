@@ -5,6 +5,7 @@ export interface IMagicPictureGroupItem {
   position: string
   imgUrl: string
   imgLink: string
+  filter?: boolean
 }
 export interface IMagicPictureGroup {
   padding: number

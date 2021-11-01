@@ -229,6 +229,14 @@ class magic extends VuexModule implements IState {
   }
 
   @Mutation
+  DELE_COMPONENTS_FORM_DATA(id: string) {
+    const index = this.componentsFormData.findIndex((e) => e.id === id)
+    if (index > -1) {
+      this.componentsFormData.splice(index, 1)
+    }
+  }
+
+  @Mutation
   SET_COMPONENTS_FORM_DATA_INDEX(index: number) {
     this.componentsFormDataIndex = index
   }

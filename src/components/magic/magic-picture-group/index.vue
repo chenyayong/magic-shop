@@ -1,7 +1,14 @@
 <template>
   <div class="magic-picture-group" ref="magic" :style="setGridStyle">
     <div class="cell" :style="setItemStyle(item)" v-for="(item, index) in componentData.data.items" :key="index">
-      <div class="cell-sub" :style="{ 'background-image': `url(${item.imgUrl})` }"></div>
+      <el-skeleton class="cell-sub" :loading="!item.imgUrl">
+        <template slot="template">
+          <el-skeleton-item variant="image" class="cell-img" />
+        </template>
+        <template>
+          <div class="cell-img" :style="{ 'background-image': `url(${item.imgUrl})` }"></div>
+        </template>
+      </el-skeleton>
     </div>
   </div>
 </template>
@@ -65,9 +72,17 @@ export default class extends Vue {
 }
 </script>
 <style scoped lang="scss">
+.magic-picture-group ::v-deep .el-skeleton {
+  height: 100%;
+}
+.magic-picture-group ::v-deep .cell-img {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .cell {
   position: absolute;
-  cursor: pointer;
   background-position: center;
   background-repeat: no-repeat;
   .cell-sub {

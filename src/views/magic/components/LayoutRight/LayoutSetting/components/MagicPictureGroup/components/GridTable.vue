@@ -2,72 +2,87 @@
   <div class="grid-table component-setting">
     <el-row class="block">
       <el-col>列数</el-col>
-      <el-col><el-slider v-model="col" :min="1" :max="10" show-input></el-slider></el-col>
+      <el-col><el-slider v-model="data.col" :min="1" :max="10" show-input></el-slider></el-col>
     </el-row>
     <el-row class="block">
       <el-col>行数</el-col>
-      <el-col><el-slider v-model="row" :min="1" :max="10" show-input></el-slider></el-col>
+      <el-col><el-slider v-model="data.row" :min="1" :max="10" show-input></el-slider></el-col>
     </el-row>
     <el-row class="block">
       <el-col>高度比例</el-col>
-      <el-col
-        ><el-slider v-model="scale" :min="0.5" :step="0.5" :max="2" show-input></el-slider
-      ></el-col>
+      <el-col><el-slider v-model="data.scale" :min="0.5" :step="0.5" :max="2" show-input></el-slider></el-col>
     </el-row>
+    <!-- <el-row class="block">
+      <el-button type="primary" style="width: 100%;">重置</el-button>
+    </el-row> -->
     <div class="grid" ref="grid" :style="setGridStyle">
       <div
         :style="setCellStyle(item)"
         class="cell"
         :data-id="item.id"
-        :class="[item.filter ? 'cell-filter' : 'cell-cancel']"
-        v-for="(item, index) in data"
+        :class="[item.filter ? 'cell-filter' : 'cell-cancel', itemIndex === index ? 'active' : '']"
+        v-for="(item, index) in data.items"
         :key="item.id"
       >
-        <div class="cell-sub">{{ index + 1 }}</div>
+        <div class="cell-sub" v-if="item.filter">
+          <div class="cell-tips"><i class="el-icon-plus"></i></div>
+        </div>
+        <div class="cell-sub" :style="{ 'background-image': `url(${item.imgUrl})` }" @click="changeItemIndex(index)" v-else>
+          <div class="cell-tips">{{ scaleTips(item) }}</div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
-import { IMagicPictureGroupItem } from '@/store/magic/magic-picture-group'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { IMagicPictureGroup, IMagicPictureGroupItem } from '@/store/magic/magic-picture-group'
+// import { clone } from 'lodash'
 import { uuid } from '@/utils/index'
 import $ from 'jquery'
 import 'jquery-ui-dist/jquery-ui'
 import 'jquery-ui-dist/jquery-ui.min.css'
 
 @Component({
-  name: 'layoutTable'
+  name: 'gridTable'
 })
 export default class extends Vue {
+  @Prop({ type: Object, required: true }) data!: IMagicPictureGroup
+  @Prop({ type: Number }) itemIndex!: number
   private offsetWidth = 0
-  private row = 3
-  private col = 3
-  private scale = 1
-  private data: IMagicPictureGroupItem[] = []
+
+  @Watch('data.col')
+  changeCol(col: number) {
+    this.data.items = this.cellsData(col, this.data.row)
+  }
+
+  @Watch('data.row')
+  changeRow(row: number) {
+    this.data.items = this.cellsData(this.data.col, row)
+  }
 
   get cellWidth() {
-    const value = Math.floor(this.offsetWidth / this.col)
+    const value = Math.floor(this.offsetWidth / this.data.col)
     return value
   }
 
   get cellHeight() {
-    const value = this.cellWidth * this.scale
+    const value = this.cellWidth * this.data.scale
     return value
   }
 
   get setGridStyle() {
     const style = {
-      height: this.row * this.cellHeight + 'px'
+      height: this.data.row * this.cellHeight + 'px'
     }
     return style
   }
 
-  get cellsData() {
+  cellsData(col: number, row: number) {
     const data = []
-    for (let i = 0; i < this.row; i++) {
-      for (let j = 0; j < this.col; j++) {
+    for (let i = 0; i < row; i++) {
+      for (let j = 0; j < col; j++) {
         const temp = {
           id: uuid(),
           size: '1:1',
@@ -93,13 +108,23 @@ export default class extends Vue {
       width: width + 'px',
       height: height + 'px',
       left: left + 'px',
-      top: top + 'px'
-      // padding: this.data.padding + 'px'
+      top: top + 'px',
+      padding: this.data.padding + 'px'
     }
     return style
   }
 
-  mounted() {
+  scaleTips(item: IMagicPictureGroupItem) {
+    const size = item.size.split(':').map((e: string) => parseInt(e))
+    // const value = 375
+    return `${size[0]}:${size[1] * this.data.scale}`
+  }
+
+  changeItemIndex(index: number) {
+    this.$emit('update:itemIndex', index)
+  }
+
+  selectable() {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this
     let data = {
@@ -110,8 +135,6 @@ export default class extends Vue {
       imgLink: '',
       filter: false
     }
-    this.offsetWidth = (this.$refs.grid as any).offsetWidth
-    this.data = this.cellsData
     ;($(this.$refs.grid) as any).selectable({
       cancel: '.cell-cancel',
       filter: '.cell-filter',
@@ -129,24 +152,6 @@ export default class extends Vue {
           imgLink: '',
           filter: false
         }
-        console.log('selecting', data.position)
-      },
-      start: function() {
-        // const top = Math.floor(event.toElement.offsetParent.offsetTop / that.cellHeight)
-        // const left = Math.floor(event.toElement.offsetParent.offsetLeft / that.cellWidth)
-        // const selectedElements = $('.ui-selecting', this).toArray()
-        // const element = selectedElements[0]
-        // console.log('start', selectedElements)
-        // const left = Math.floor(element.offsetLeft / that.cellWidth)
-        // const top = Math.floor(element.offsetTop / that.cellHeight)
-        // data = {
-        //   position: `${left}:${top}`,
-        //   id: uuid(),
-        //   size: '1:1',
-        //   imgUrl: '',
-        //   imgLink: '',
-        //   filter: false
-        // }
       },
       stop: function() {
         const selectedElements = $('.ui-selected', this).toArray()
@@ -157,15 +162,24 @@ export default class extends Vue {
         const width = Math.floor(element.offsetLeft / that.cellWidth) + 1 - left
         const height = Math.floor(element.offsetTop / that.cellHeight) + 1 - right
         const selectedIds = selectedElements.map((e) => $(e).data('id'))
-        const addIndex = that.data.findIndex((e) => e.id === selectedIds[0])
+        const addIndex = that.data.items.findIndex((e) => e.id === selectedIds[0])
         data.size = `${width}:${height}`
-        that.data.splice(addIndex, 0, data)
-        that.data = that.data.filter((e) => {
+        that.data.items.splice(addIndex, 0, data)
+        that.data.items = that.data.items.filter((e) => {
           return !selectedIds.includes(e.id)
         })
-        console.log('stop', data.size, element, element.offsetLeft, element.offsetTop)
       }
     })
+  }
+
+  mounted() {
+    this.offsetWidth = (this.$refs.grid as any).offsetWidth
+    this.selectable()
+    // this.data.items = this.cellsData
+  }
+
+  destroyed() {
+    ;($(this.$refs.grid) as any).selectable('destroy')
   }
 }
 </script>
@@ -182,20 +196,29 @@ export default class extends Vue {
     position: relative;
   }
   .cell {
-    background-color: $--background-color-base;
-    height: 100px;
-    width: 100px;
-    box-shadow: $--box-shadow-base;
     position: absolute;
-    &.ui-selected {
+    border: 1px $--border-color-lighter solid;
+    cursor: pointer;
+    color: $--color-info;
+    box-sizing: border-box;
+    &.cell-cancel.active {
       background-color: $--color-primary-light-5;
+      color: $--color-danger;
+      box-shadow: $--box-shadow-dark;
     }
     .cell-sub {
       width: 100%;
       height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .cell-tips {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      font-size: 12px;
     }
   }
 }

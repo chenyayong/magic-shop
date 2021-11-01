@@ -1,16 +1,4 @@
 <template>
-  <!-- <el-tooltip class="magic-swiper" content="轮播图" placement="left-start" :value="true" :manual="true" :popper-options="{ boundariesElement: 'body', gpuAcceleration: false }">
-    <el-skeleton :loading="loading">
-      <template slot="template">
-        <el-skeleton-item variant="image" style="height: 160px;" />
-      </template>
-      <el-carousel height="160px" arrow="never" indicator-position="outside">
-        <el-carousel-item v-for="item in 4" :key="item">
-          <h3 class="small">{{ item }}</h3>
-        </el-carousel-item>
-      </el-carousel>
-    </el-skeleton>
-  </el-tooltip> -->
   <div class="magic-swiper" :style="style">
     <swiper :options="swiperOptions" :auto-update="true" :auto-destroy="true">
       <swiper-slide v-for="(item, index) in componentData.data.items" :key="index">
