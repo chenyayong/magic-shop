@@ -8,6 +8,9 @@ export interface IMagicPictureGroupItem {
   filter?: boolean
 }
 export interface IMagicPictureGroup {
+  gridsIndex?: number
+  gridsData?: IMagicPictureGroup[]
+  background: string
   padding: number
   scale: number
   row: number
@@ -24,10 +27,42 @@ interface IState {
 export default class extends VuexModule implements IState {
   public name = 'magicPicture'
   public rawData = {
+    background: '',
     padding: 0,
     scale: 1,
     row: 1,
     col: 2,
+    gridsIndex: 0,
+    // gridsData: [
+    //   {
+    //     padding: 0,
+    //     scale: 1,
+    //     row: 1,
+    //     col: 2,
+    //     items: []
+    //   },
+    //   {
+    //     padding: 0,
+    //     scale: 1,
+    //     row: 2,
+    //     col: 2,
+    //     items: []
+    //   },
+    //   {
+    //     padding: 0,
+    //     scale: 1,
+    //     col: 2,
+    //     row: 2,
+    //     items: []
+    //   },
+    //   {
+    //     padding: 0,
+    //     scale: 1,
+    //     col: 3,
+    //     row: 3,
+    //     items: []
+    //   }
+    // ],
     items: [
       {
         size: '1:1',
