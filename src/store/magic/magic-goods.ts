@@ -4,6 +4,7 @@ export interface IMagicGoodsItem {
   imgLink: string
 }
 export interface IMagicGoods {
+  background: string
   padding: number
   items: IMagicGoodsItem[]
 }
@@ -16,6 +17,7 @@ interface IState {
 export default class extends VuexModule implements IState {
   public name = 'magicPicture'
   public rawData = {
+    background: '',
     padding: 0,
     items: [
       {

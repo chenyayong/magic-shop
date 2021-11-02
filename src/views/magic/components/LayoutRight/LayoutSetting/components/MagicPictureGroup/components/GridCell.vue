@@ -9,13 +9,14 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IMagicPictureGroup, IMagicPictureGroupItem } from '@/store/magic/magic-picture-group'
+import { IMagicPictureGroupSub, IMagicPictureGroupItem } from '@/store/magic/magic-picture-group'
 
 @Component({
   name: 'gridCell'
 })
 export default class extends Vue {
-  @Prop({ type: Object, required: true }) data!: IMagicPictureGroup
+  @Prop({ type: Object, required: true }) data!: IMagicPictureGroupSub
+  @Prop({ type: Number }) padding!: number
   @Prop({ type: Number, default: 0 }) itemIndex!: number
   private offsetWidth = 0
   // private itemIndex = 0
@@ -55,15 +56,13 @@ export default class extends Vue {
       height: height + 'px',
       left: left + 'px',
       top: top + 'px',
-      padding: this.data.padding + 'px'
+      padding: this.padding + 'px'
     }
     return style
   }
 
   selectCell(index: number) {
     this.$emit('update:itemIndex', index)
-    // this.itemIndex = index
-    // this.data.items[this.itemIndex].imgUrl = this.imgUrl
   }
 
   mounted() {

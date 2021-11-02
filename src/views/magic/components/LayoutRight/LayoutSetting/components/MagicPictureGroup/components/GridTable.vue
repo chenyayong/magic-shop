@@ -12,9 +12,6 @@
       <el-col>高度比例</el-col>
       <el-col><el-slider v-model="data.scale" :min="0.5" :step="0.5" :max="2" show-input></el-slider></el-col>
     </el-row>
-    <!-- <el-row class="block">
-      <el-button type="primary" style="width: 100%;">重置</el-button>
-    </el-row> -->
     <div class="grid" ref="grid" :style="setGridStyle">
       <div
         :style="setCellStyle(item)"
@@ -37,8 +34,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { IMagicPictureGroup, IMagicPictureGroupItem } from '@/store/magic/magic-picture-group'
-// import { clone } from 'lodash'
+import { IMagicPictureGroupSub, IMagicPictureGroupItem, cellsData } from '@/store/magic/magic-picture-group'
 import { uuid } from '@/utils/index'
 import $ from 'jquery'
 import 'jquery-ui-dist/jquery-ui'
@@ -48,18 +44,19 @@ import 'jquery-ui-dist/jquery-ui.min.css'
   name: 'gridTable'
 })
 export default class extends Vue {
-  @Prop({ type: Object, required: true }) data!: IMagicPictureGroup
+  @Prop({ type: Object, required: true }) data!: IMagicPictureGroupSub
+  @Prop({ type: Number }) padding!: number
   @Prop({ type: Number }) itemIndex!: number
   private offsetWidth = 0
 
   @Watch('data.col')
   changeCol(col: number) {
-    this.data.items = this.cellsData(col, this.data.row)
+    this.data.items = cellsData(col, this.data.row)
   }
 
   @Watch('data.row')
   changeRow(row: number) {
-    this.data.items = this.cellsData(this.data.col, row)
+    this.data.items = cellsData(this.data.col, row)
   }
 
   get cellWidth() {
@@ -79,24 +76,6 @@ export default class extends Vue {
     return style
   }
 
-  cellsData(col: number, row: number) {
-    const data = []
-    for (let i = 0; i < row; i++) {
-      for (let j = 0; j < col; j++) {
-        const temp = {
-          id: uuid(),
-          size: '1:1',
-          position: `${j}:${i}`,
-          imgUrl: '',
-          imgLink: '',
-          filter: true
-        }
-        data.push(temp)
-      }
-    }
-    return data
-  }
-
   setCellStyle(item: IMagicPictureGroupItem) {
     const position = item.position.split(':').map((e: string) => parseInt(e))
     const size = item.size.split(':').map((e: string) => parseInt(e))
@@ -109,14 +88,13 @@ export default class extends Vue {
       height: height + 'px',
       left: left + 'px',
       top: top + 'px',
-      padding: this.data.padding + 'px'
+      padding: this.padding + 'px'
     }
     return style
   }
 
   scaleTips(item: IMagicPictureGroupItem) {
     const size = item.size.split(':').map((e: string) => parseInt(e))
-    // const value = 375
     return `${size[0]}:${size[1] * this.data.scale}`
   }
 
@@ -175,7 +153,6 @@ export default class extends Vue {
   mounted() {
     this.offsetWidth = (this.$refs.grid as any).offsetWidth
     this.selectable()
-    // this.data.items = this.cellsData
   }
 
   destroyed() {

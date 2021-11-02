@@ -1,6 +1,6 @@
 <template>
   <div class="magic-picture-group" ref="magic" :style="setGridStyle">
-    <div class="cell" :style="setItemStyle(item)" v-for="(item, index) in componentData.data.items" :key="index">
+    <div class="cell" :style="setItemStyle(item)" v-for="(item, index) in gridData.items" :key="index">
       <el-skeleton class="cell-sub" :loading="!item.imgUrl">
         <template slot="template">
           <el-skeleton-item variant="image" class="cell-img" />
@@ -25,19 +25,23 @@ export default class extends Vue {
   // private data = this.componentData.data
   private offsetWidth = 0
 
+  get gridData() {
+    return this.componentData.data.gridsData[this.componentData.data.gridsIndex]
+  }
+
   get cellWidth() {
-    const value = Math.floor(this.offsetWidth / this.componentData.data.col)
+    const value = Math.floor(this.offsetWidth / this.gridData.col)
     return value
   }
 
   get cellHeight() {
-    const value = this.cellWidth * this.componentData.data.scale
+    const value = this.cellWidth * this.gridData.scale
     return value
   }
 
   get setGridStyle() {
     const style = {
-      height: this.componentData.data.row * this.cellHeight + 'px',
+      height: this.gridData.row * this.cellHeight + 'px',
       backgroundColor: this.componentData.data.background
     }
     return style

@@ -1,6 +1,6 @@
 <template>
   <div class="shop-components">
-    <draggable class="grid-list" :list="compontents" :group="group" :sort="false">
+    <draggable class="grid-list" :list="compontents" :clone="clone" :group="group" :sort="false">
       <div class="grid-item" v-for="item in compontents" :key="item.name">
         <div><i :class="[item.icon]"></i></div>
         <div>{{ item.label }}</div>
@@ -13,6 +13,8 @@
 import draggable from 'vuedraggable'
 import { Vue, Component } from 'vue-property-decorator'
 import magicGrid from '@/components/magic-grid/index.vue'
+import { uuid } from '@/utils/index'
+import { cloneDeep } from 'lodash'
 import { namespace } from 'vuex-class'
 import { IComponentData, IComponentsFormDataMap } from '@/store/magic/index'
 const magic = namespace('magic')
@@ -34,15 +36,14 @@ export default class extends Vue {
     put: false
   }
 
-  // clone(value: IComponentData) {
-  //   const name = value.name
-  //   const element = this.componentsFormDataMap[name]
-  //   value = cloneDeep(value)
-  //   value.id = uuid()
-  //   value.data = cloneDeep(element) as any
-  //   value.active = true
-  //   return value
-  // }
+  clone(value: IComponentData) {
+    const name = value.name
+    const element = this.componentsFormDataMap[name]
+    value = cloneDeep(value)
+    value.id = uuid()
+    value.data = cloneDeep(element) as any
+    return value
+  }
 }
 </script>
 

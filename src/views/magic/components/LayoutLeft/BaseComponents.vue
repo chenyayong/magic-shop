@@ -43,7 +43,6 @@ export default class extends Vue {
     value = cloneDeep(value)
     value.id = uuid()
     value.data = cloneDeep(element) as any
-    console.log('clone', value, value.data)
     return value
   }
 }

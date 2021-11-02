@@ -43,7 +43,6 @@ interface IState {
   shopComponents: IComponent[]
   saleComponents: IComponent[]
 }
-console.log('magicPictureGroup.state.rawData', magicPictureGroup.state.rawData)
 @Module({ namespaced: true })
 class magic extends VuexModule implements IState {
   public name = 'magic'
