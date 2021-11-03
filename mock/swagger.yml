@@ -24,6 +24,9 @@ tags:
   - name: users
     description: Users related api.
 paths:
+  /goods:
+    get:
+      operationId: getGoods
   /shops:
     get:
       tags:

@@ -14,7 +14,13 @@
               <img :src="row.src" alt="" srcset="" style="width: 50px;height: 50px;" />
             </div>
           </el-table-column>
-          <el-table-column property="title" align="center" label="商品名称" width="160" show-overflow-tooltip></el-table-column>
+          <el-table-column
+            property="title"
+            align="center"
+            label="商品名称"
+            width="160"
+            show-overflow-tooltip
+          ></el-table-column>
           <el-table-column property="status" align="center" label="商品状态">
             <div slot-scope="{ row }">
               <span>{{ row.status === 1 ? '上架' : '下架' }}</span>
@@ -26,7 +32,7 @@
         </el-table>
       </el-row>
       <el-row type="flex" justify="end">
-        <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+        <el-pagination background layout="prev, pager, next" :total="total"></el-pagination>
       </el-row>
 
       <span slot="footer" class="dialog-footer">
@@ -38,6 +44,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { getGoods } from '@/api/goods'
 
 export interface IGoodsItem {
   id: number
@@ -67,10 +74,12 @@ export default class extends Vue {
     }
   }
 
+  private total = 0
   private gridData: IGoodsItem[] = [
     {
       id: 1,
-      src: 'https://app.global3plus.com/public/upload/goods/2021/09-19/b3aeba7fe9991bf41bca4d56afbda869.png',
+      src:
+        'https://app.global3plus.com/public/upload/goods/2021/09-19/b3aeba7fe9991bf41bca4d56afbda869.png',
       title: '升级套餐 (只限旧会员)',
       status: 0,
       new_price: '150.69',
@@ -79,7 +88,8 @@ export default class extends Vue {
     },
     {
       id: 2,
-      src: 'https://app.global3plus.com/public/upload/goods/2021/09-19/b3aeba7fe9991bf41bca4d56afbda869.png',
+      src:
+        'https://app.global3plus.com/public/upload/goods/2021/09-19/b3aeba7fe9991bf41bca4d56afbda869.png',
       title: '升级套餐 (只限旧会员)',
       status: 1,
       new_price: '999.36',
@@ -88,7 +98,8 @@ export default class extends Vue {
     },
     {
       id: 3,
-      src: 'https://app.global3plus.com/public/upload/goods/2021/09-19/b3aeba7fe9991bf41bca4d56afbda869.png',
+      src:
+        'https://app.global3plus.com/public/upload/goods/2021/09-19/b3aeba7fe9991bf41bca4d56afbda869.png',
       title: '升级套餐 (只限旧会员)',
       status: 0,
       new_price: '123.34',
@@ -97,7 +108,8 @@ export default class extends Vue {
     },
     {
       id: 4,
-      src: 'https://app.global3plus.com/public/upload/goods/2021/09-19/b3aeba7fe9991bf41bca4d56afbda869.png',
+      src:
+        'https://app.global3plus.com/public/upload/goods/2021/09-19/b3aeba7fe9991bf41bca4d56afbda869.png',
       title: '升级套餐 (只限旧会员)',
       status: 1,
       new_price: '100.59',
@@ -117,6 +129,12 @@ export default class extends Vue {
         message: '请选择商品'
       })
     }
+  }
+
+  async mounted() {
+    const res = await getGoods({ page: 1 })
+    this.gridData = res.data.items
+    this.total = res.data.total
   }
 }
 </script>

@@ -50,3 +50,13 @@ export interface iShopData {
   page_name: string
   page_scene_depict: string
 }
+
+export interface IGoods {
+  id: number
+  src: string
+  title: string
+  status: number
+  new_price: number
+  old_price: number
+  stock: number
+}
