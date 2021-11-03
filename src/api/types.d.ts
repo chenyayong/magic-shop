@@ -59,4 +59,5 @@ export interface IGoods {
   new_price: number
   old_price: number
   stock: number
+  sales: number
 }

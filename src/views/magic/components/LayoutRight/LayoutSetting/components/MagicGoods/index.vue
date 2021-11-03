@@ -13,48 +13,37 @@
             <el-col><el-slider :min="0" :max="30" v-model="componentData.data.padding" show-input=""></el-slider></el-col>
           </el-row>
           <el-row class="block">
+            <el-col>商品圆角</el-col>
+            <el-col><el-slider :min="0" :max="50" v-model="componentData.data.borderRadius" show-input></el-slider></el-col>
+          </el-row>
+          <el-row class="block">
             <el-col>商品排列样式</el-col>
             <el-col>
-              <el-radio-group v-model="radio">
-                <el-radio-button label="0">一列</el-radio-button>
-                <el-radio-button label="1">两列</el-radio-button>
-                <el-radio-button label="2">三列</el-radio-button>
-                <el-radio-button label="3">一行</el-radio-button>
+              <el-radio-group v-model="componentData.data.layout">
+                <el-radio-button :label="item.label" v-for="item in layouts" :key="item.label">{{ item.name }}</el-radio-button>
               </el-radio-group>
             </el-col>
           </el-row>
           <el-row class="block">
-            <el-col>商品圆角</el-col>
-            <el-col><el-slider show-input=""></el-slider></el-col>
-          </el-row>
-          <el-row class="block">
             <el-col>商品属性</el-col>
             <el-col>
-              <el-radio-group v-model="radio1">
-                <el-radio-button label="0">无</el-radio-button>
-                <el-radio-button label="1">推荐</el-radio-button>
-                <el-radio-button label="2">热销</el-radio-button>
-                <el-radio-button label="3">新上</el-radio-button>
-                <el-radio-button label="4">包邮</el-radio-button>
-                <el-radio-button label="5">限时</el-radio-button>
+              <el-radio-group v-model="componentData.data.attribute">
+                <el-radio-button :label="item.label" v-for="item in attributes" :key="item.label">{{ item.name }}</el-radio-button>
               </el-radio-group>
             </el-col>
           </el-row>
           <el-row class="block">
             <el-col>内容显示</el-col>
             <el-col>
-              <el-checkbox-group v-model="checkList">
-                <el-checkbox label="0">标题</el-checkbox>
-                <el-checkbox label="1">原价</el-checkbox>
-                <el-checkbox label="2">现价</el-checkbox>
-                <el-checkbox label="3">销量</el-checkbox>
+              <el-checkbox-group v-model="componentData.data.content">
+                <el-checkbox :label="item.label" v-for="item in contents" :key="item.label">{{ item.name }}</el-checkbox>
               </el-checkbox-group>
             </el-col>
           </el-row>
         </el-collapse-item>
         <el-collapse-item title="数据配置" name="2">
-          <magicGoodsDialog :tabelData="tabelData" @confirm="goodsConfirm" :visible.sync="goodsVisible" />
-          <!-- <magicSettingGrid v-for="(item, index) in componentData.data.items" :items="componentData.data.items" :index="index" :item="item" :key="index"></magicSettingGrid> -->
+          <magicGoodsDialog @confirm="goodsConfirm" :visible.sync="goodsVisible" />
+          <GoodsItem v-for="item in componentData.data.items" :key="item.id" :data="item" :list="componentData.data.items" />
           <el-button type="primary" style="width: 100%;" @click="goodsVisible = true">添加更多</el-button>
         </el-collapse-item>
       </el-collapse>
@@ -63,27 +52,46 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IComponentData } from '@/store/magic/index'
-// import magicSettingGrid from '@/components/magic-setting-grid/index.vue'
-import magicGoodsDialog, { IGoodsItem } from '@/components/magic-goods-dialog/index.vue'
+import GoodsItem from './components/GoodsItem/index.vue'
+import magicGoodsDialog from '@/components/magic-goods-dialog/index.vue'
+import { IMagicGoodsComponent, IMagicGoodsItem } from '@/store/magic/magic-goods'
 @Component({
   name: 'magicGoods',
   components: {
-    magicGoodsDialog
+    magicGoodsDialog,
+    GoodsItem
   }
 })
 export default class extends Vue {
-  @Prop({ type: Object, required: true }) componentData!: IComponentData
+  @Prop({ type: Object, required: true }) componentData!: IMagicGoodsComponent
   private activeNames = ['1', '2']
-  private radio = ''
-  private radio1 = ''
-  private checkList = ['0', '1']
+  private goodsList: IMagicGoodsItem[] = []
   private goodsVisible = false
-  private tabelData: IGoodsItem[] = []
+  private layouts = [
+    { label: 0, name: '一列' },
+    { label: 1, name: '两列' },
+    { label: 2, name: '三列' },
+    { label: 3, name: '一行' }
+  ]
 
-  goodsConfirm(list: IGoodsItem[]) {
-    this.tabelData = list
-    console.log('goodsConfirm', list)
+  private attributes = [
+    { label: 0, name: '无' },
+    { label: 1, name: '推荐' },
+    { label: 2, name: '热销' },
+    { label: 3, name: '新上' },
+    { label: 4, name: '包邮' },
+    { label: 5, name: '限时' }
+  ]
+
+  private contents = [
+    { label: 'title', name: '标题' },
+    { label: 'old_price', name: '原价' },
+    { label: 'new_price', name: '现价' },
+    { label: 'sales', name: '销量' }
+  ]
+
+  goodsConfirm(list: IMagicGoodsItem[]) {
+    this.componentData.data.items = list
   }
 }
 </script>
