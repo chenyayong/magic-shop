@@ -3,11 +3,18 @@ import { IGoods } from '@/api/types'
 
 export type IMagicGoodsItem = IGoods
 
+export enum ILayout {
+  one,
+  two,
+  three,
+  four
+}
+
 export interface IMagicGoods {
   background: string
   padding: number
   borderRadius: number
-  layout: number
+  layout: ILayout
   attribute: number
   content: string[]
   items: IMagicGoodsItem[]
