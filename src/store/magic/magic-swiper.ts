@@ -8,6 +8,14 @@ export interface IMagicSwiper {
   items: IMagicSwiperItem[]
 }
 
+export interface IMagicSwiperComponent {
+  id?: string
+  name: string
+  label: string
+  icon: string
+  data: IMagicSwiper
+}
+
 interface IState {
   name: string
   rawData: IMagicSwiper

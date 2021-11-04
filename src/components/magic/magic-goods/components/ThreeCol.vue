@@ -2,34 +2,49 @@
   <div class="three-col">
     <el-row class="row">
       <el-col class="col" :span="8">
-        <ColSub
-          :style="colStyle"
-          v-for="(item, index) in leftItems"
-          :item="item"
-          :attribute="attribute"
-          :content="componentData.data.content"
-          :key="index"
-        />
+        <el-skeleton style="width: 100%;" :loading="loading">
+          <template slot="template">
+            <el-skeleton-item variant="image" style="width: 100%; height: 120px;" />
+            <div style="padding: 14px;">
+              <el-skeleton-item variant="p" style="width: 50%" />
+              <div style="display: flex; align-items: center; justify-items: space-between;">
+                <el-skeleton-item variant="text" style="margin-right: 16px;" />
+                <el-skeleton-item variant="text" style="width: 50%;" />
+              </div>
+            </div>
+          </template>
+          <ColSub :style="colStyle" v-for="(item, index) in leftItems" :item="item" :attribute="attribute" :content="componentData.data.content" :key="index" />
+        </el-skeleton>
       </el-col>
       <el-col class="col" :span="8">
-        <ColSub
-          :style="colStyle"
-          v-for="(item, index) in centerItems"
-          :item="item"
-          :attribute="attribute"
-          :content="componentData.data.content"
-          :key="index"
-        />
+        <el-skeleton style="width: 100%;" :loading="loading">
+          <template slot="template">
+            <el-skeleton-item variant="image" style="width: 100%; height: 120px;" />
+            <div style="padding: 14px;">
+              <el-skeleton-item variant="p" style="width: 50%" />
+              <div style="display: flex; align-items: center; justify-items: space-between;">
+                <el-skeleton-item variant="text" style="margin-right: 16px;" />
+                <el-skeleton-item variant="text" style="width: 50%;" />
+              </div>
+            </div>
+          </template>
+          <ColSub :style="colStyle" v-for="(item, index) in centerItems" :item="item" :attribute="attribute" :content="componentData.data.content" :key="index" />
+        </el-skeleton>
       </el-col>
       <el-col class="col" :span="8">
-        <ColSub
-          :style="colStyle"
-          v-for="(item, index) in rightItems"
-          :item="item"
-          :attribute="attribute"
-          :content="componentData.data.content"
-          :key="index"
-        />
+        <el-skeleton style="width: 100%;" :loading="loading">
+          <template slot="template">
+            <el-skeleton-item variant="image" style="width: 100%; height: 120px;" />
+            <div style="padding: 14px;">
+              <el-skeleton-item variant="p" style="width: 50%" />
+              <div style="display: flex; align-items: center; justify-items: space-between;">
+                <el-skeleton-item variant="text" style="margin-right: 16px;" />
+                <el-skeleton-item variant="text" style="width: 50%;" />
+              </div>
+            </div>
+          </template>
+          <ColSub :style="colStyle" v-for="(item, index) in rightItems" :item="item" :attribute="attribute" :content="componentData.data.content" :key="index" />
+        </el-skeleton>
       </el-col>
     </el-row>
   </div>
@@ -46,6 +61,11 @@ import { IMagicGoodsComponent } from '@/store/magic/magic-goods'
 })
 export default class extends Vue {
   @Prop({ type: Object, required: true }) componentData!: IMagicGoodsComponent
+
+  get loading() {
+    const length = this.componentData.data.items.length
+    return !length
+  }
 
   get colStyle() {
     const style = {

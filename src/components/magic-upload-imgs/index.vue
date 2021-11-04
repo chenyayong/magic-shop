@@ -1,6 +1,6 @@
 <template>
   <div class="magic-upload-imgs">
-    <el-dialog :before-close="beforeClose" width="580px" title="上传图片" :append-to-body="true" :visible="visible">
+    <el-dialog :before-close="beforeClose" width="600px" title="上传图片" :append-to-body="true" :visible="visible">
       <el-tabs type="card" v-model="activeName">
         <el-tab-pane label="上传图片" name="first">
           <el-row type="flex" justify="center">
@@ -11,7 +11,7 @@
           <el-input placeholder="请输入网络图片地址" v-model="networkImageUrl"></el-input>
         </el-tab-pane>
         <el-tab-pane label="浏览图片" name="third">
-          <ImagesList @select="imagesSelect" />
+          <ImagesList ref="imagesList" @select="imagesSelect" />
         </el-tab-pane>
       </el-tabs>
       <span slot="footer" class="dialog-footer">
@@ -49,6 +49,7 @@ export default class extends Vue {
     this.$nextTick(() => {
       // eslint-disable-next-line @typescript-eslint/no-extra-semi
       ;(this.$refs.imagesUpload as any).fileList = []
+      ;(this.$refs.imagesList as any).resetList()
     })
   }
 

@@ -1,49 +1,53 @@
 <template>
   <div class="images-list" v-loading="loading">
-    <el-row style="margin-bottom: 20px;" :gutter="30">
-      <el-col :span="20"><el-input @change="titleInput" placeholder="请输入图片名称" v-model="title"></el-input></el-col>
-      <el-col :span="4"><el-button type="primary">搜 索</el-button></el-col>
+    <el-row type="flex" class="block">
+      <el-input placeholder="请输入图片名称" v-model="params.title" @change="titleChange"></el-input>
+      <el-button type="primary" style="margin-left: 10px">搜 索</el-button>
     </el-row>
     <template v-if="list && list.length">
       <ul class="el-upload-list el-upload-list--picture-card">
         <li @click="handleSelect(item)" class="el-upload-list__item is-success" v-for="item in list" :key="item.id">
-          <img src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="" class="el-upload-list__item-thumbnail" />
+          <img :src="item.src" alt="" class="el-upload-list__item-thumbnail" />
           <span class="el-upload-list__item-actions" :class="[item.active ? 'active' : '']">
-            <span class="el-upload-list__item-preview" @click="dialogVisible = true"><i class="el-icon-zoom-in"></i></span>
+            <i class="el-icon-circle-check"></i>
           </span>
         </li>
       </ul>
-      <el-pagination @current-change="currentChange" background layout="prev, pager, next" :total="total"></el-pagination>
+      <el-row type="flex" justify="end">
+        <el-pagination
+          background
+          layout="prev, pager, next, sizes"
+          :page-sizes="limits"
+          @size-change="limitChange"
+          :page-size="params.limit"
+          :total="total"
+          @current-change="currentChange"
+        ></el-pagination>
+      </el-row>
     </template>
     <template v-else>
       <el-empty></el-empty>
     </template>
-    <el-dialog :visible.sync="dialogVisible" :append-to-body="true">
-      <img width="100%" :src="dialogImg" alt="" />
-    </el-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { debounce } from 'lodash'
-import request from '@/utils/request'
-
+import { getImages } from '@/api/images'
+import { IImages } from '@/api/types'
 @Component({
   name: 'imagesList'
 })
 export default class extends Vue {
-  private list: any[] = []
-  private total = 0
-  private page = 1
-  private title = ''
+  private list: IImages[] = []
   private loading = false
-  private dialogVisible = false
-
-  get dialogImg() {
-    const item = this.list.find((item) => item.active) || {}
-    item.url = 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-    return item && item.url
+  private limits = [10, 15, 20]
+  private total = 0
+  private params = {
+    page: 1,
+    limit: 10,
+    title: ''
   }
 
   mounted() {
@@ -52,44 +56,47 @@ export default class extends Vue {
   }
 
   currentChange(page: number) {
-    this.page = page
+    this.params.page = page
     this.getList()
   }
 
-  titleInput(value: string) {
-    this.page = 1
-    this.title = value
+  titleChange(value: string) {
+    this.params.title = value
+    this.getList()
+  }
+
+  limitChange(value: number) {
+    this.params.limit = value
     this.getList()
   }
 
   async getList() {
     this.loading = true
-    const data: any = await request({
-      method: 'GET',
-      url: 'https://jsonplaceholder.typicode.com/posts',
-      params: {
-        page: this.page
-        // title: this.title
-      }
-    })
-    this.list = data.slice(0, 20).map((item: any) => {
-      item.active = false
-      return item
-    })
-    this.total = data.length
+    const res = await getImages(this.params)
+    this.list = res.data.items
+    this.resetList()
+    this.total = res.data.total
     this.loading = false
   }
 
-  handleSelect(item: any) {
-    const url = 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+  resetList() {
+    this.list.forEach((e) => {
+      this.$set(e, 'active', false)
+    })
+  }
+
+  handleSelect(item: IImages) {
     this.list.forEach((item) => (item.active = false))
     item.active = true
-    this.$emit('select', url)
+    this.$emit('select', item.src)
   }
 }
 </script>
 
 <style scoped>
+.block {
+  margin-bottom: 20px;
+}
 .images-list .el-upload-list--picture-card .el-upload-list__item {
   width: 100px;
   height: 100px;

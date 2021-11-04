@@ -40,7 +40,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IComponentData } from '@/store/magic/index'
+import { IMagicPictureGroupComponent } from '@/store/magic/magic-picture-group'
 import GridCell from './components/GridCell.vue'
 import magicSettingGrid from '@/components/magic-setting-grid/index.vue'
 import GridTable from './components/GridTable.vue'
@@ -53,7 +53,7 @@ import GridTable from './components/GridTable.vue'
   }
 })
 export default class extends Vue {
-  @Prop({ type: Object, required: true }) componentData!: IComponentData
+  @Prop({ type: Object, required: true }) componentData!: IMagicPictureGroupComponent
   private activeNames = ['1', '2']
   private gridsCellIndex = [0, 0, 0, 0]
   private gridsName = ['layout-2', 'layout-3', 'layout-4', 'layout-table']

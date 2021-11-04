@@ -1,10 +1,6 @@
 <template>
   <div class="magic-goods" :style="style">
     <component :is="layout" :componentData="componentData" />
-    <!-- <OneCol :componentData="componentData" /> -->
-    <!-- <TwoCol :componentData="componentData" />
-    <ThreeCol :componentData="componentData" />
-    <SingleRow :componentData="componentData" /> -->
   </div>
 </template>
 <script lang="ts">

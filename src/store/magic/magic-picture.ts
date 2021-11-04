@@ -8,6 +8,14 @@ export interface IMagicPicture {
   items: IMagicPictureItem[]
 }
 
+export interface IMagicPictureComponent {
+  id?: string
+  name: string
+  label: string
+  icon: string
+  data: IMagicPicture
+}
+
 interface IState {
   name: string
   rawData: IMagicPicture

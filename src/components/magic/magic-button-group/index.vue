@@ -13,7 +13,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import MagicGrid from './components/MagicGrid.vue'
-import { IComponentData } from '@/store/magic/index'
+import { IMagicButtonGroupComponent } from '@/store/magic/magic-button-group'
 
 @Component({
   name: 'magicButtonGroup',
@@ -24,7 +24,7 @@ import { IComponentData } from '@/store/magic/index'
   }
 })
 export default class extends Vue {
-  @Prop({ type: Object, required: true }) componentData!: IComponentData
+  @Prop({ type: Object, required: true }) componentData!: IMagicButtonGroupComponent
 
   private swiperOptions = {
     pagination: {

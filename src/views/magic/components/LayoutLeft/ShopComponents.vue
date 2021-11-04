@@ -1,7 +1,7 @@
 <template>
   <div class="shop-components">
-    <draggable class="grid-list" :list="compontents" :clone="clone" :group="group" :sort="false">
-      <div class="grid-item" v-for="item in compontents" :key="item.name">
+    <draggable class="grid-list" :list="compontents" filter=".filter-item" :clone="clone" :group="group" :sort="false">
+      <div class="grid-item" :class="filterClass(item)" v-for="item in compontents" :key="item.name">
         <div><i :class="[item.icon]"></i></div>
         <div>{{ item.label }}</div>
       </div>
@@ -16,7 +16,7 @@ import magicGrid from '@/components/magic-grid/index.vue'
 import { uuid } from '@/utils/index'
 import { cloneDeep } from 'lodash'
 import { namespace } from 'vuex-class'
-import { IComponentData, IComponentsFormDataMap } from '@/store/magic/index'
+import { IComponent, IComponentsFormDataMap } from '@/store/magic/index'
 const magic = namespace('magic')
 
 @Component({
@@ -27,16 +27,21 @@ const magic = namespace('magic')
   }
 })
 export default class extends Vue {
-  @magic.State('shopComponents') compontents!: IComponentData[]
+  @magic.State('shopComponents') compontents!: IComponent[]
   @magic.State('componentsFormDataMap') componentsFormDataMap!: IComponentsFormDataMap
-
+  private filterComponents = ['magicNotice', 'magicPosition', 'magicBackTop']
   private group = {
     name: 'site',
     pull: 'clone',
     put: false
   }
 
-  clone(value: IComponentData) {
+  filterClass(item: any) {
+    const index = this.filterComponents.indexOf(item.name)
+    return [index > -1 ? 'filter-item' : '']
+  }
+
+  clone(value: IComponent) {
     const name = value.name
     const element = this.componentsFormDataMap[name]
     value = cloneDeep(value)
@@ -56,6 +61,7 @@ export default class extends Vue {
   overflow: hidden;
   padding: 0 !important;
 }
+
 .grid-item {
   flex-basis: calc(100% / 3);
   text-align: center;
@@ -77,6 +83,17 @@ export default class extends Vue {
   }
   i {
     font-size: 26px;
+  }
+}
+.filter-item {
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: auto;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #5e6d82;
+  }
+  &::after {
+    content: '开发中';
   }
 }
 </style>

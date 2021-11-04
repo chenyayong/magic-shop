@@ -182,6 +182,7 @@ aside {
     cursor: pointer;
     font-size: 18px;
     color: $--color-primary;
+    z-index: 9;
   }
   .el-upload--picture-card {
     width: 100px !important;

@@ -11,7 +11,10 @@ export enum ComponentName {
   magicButtonGroup = 'magicButtonGroup',
   magicPicture = 'magicPicture',
   magicPictureGroup = 'magicPictureGroup',
-  magicGoods = 'magicGoods'
+  magicGoods = 'magicGoods',
+  magicNotice = 'magicNotice',
+  magicPosition = 'magicPosition',
+  magicBackTop = 'magicBackTop'
 }
 
 export interface IComponentData {
@@ -28,12 +31,17 @@ export interface IComponentsFormDataMap {
   magicPicture: IMagicPicture
   magicPictureGroup: IMagicPictureGroup
   magicGoods: IMagicGoods
+  magicNotice: any
+  magicPosition: any
+  magicBackTop: any
 }
 
-interface IComponent {
-  name: string
+export interface IComponent {
+  id?: string
+  name: ComponentName
   icon: string
   label: string
+  data?: any
 }
 
 interface IState {
@@ -53,7 +61,10 @@ class magic extends VuexModule implements IState {
     magicButtonGroup: magicButtonGroup.state.rawData,
     magicPicture: magicPicture.state.rawData,
     magicPictureGroup: magicPictureGroup.state.rawData,
-    magicGoods: magicGoods.state.rawData
+    magicGoods: magicGoods.state.rawData,
+    magicNotice: {},
+    magicPosition: {},
+    magicBackTop: {}
   }
 
   public baseComponents = [
@@ -104,6 +115,21 @@ class magic extends VuexModule implements IState {
       name: ComponentName.magicGoods,
       icon: 'el-icon-goods',
       label: '商品列表'
+    },
+    {
+      name: ComponentName.magicNotice,
+      icon: 'el-icon-chat-dot-round',
+      label: '公告'
+    },
+    {
+      name: ComponentName.magicPosition,
+      label: '悬浮按钮',
+      icon: 'el-icon-place'
+    },
+    {
+      name: ComponentName.magicBackTop,
+      label: '回到顶部',
+      icon: 'el-icon-top'
     }
     // {
     //   name: '定位',
@@ -114,24 +140,12 @@ class magic extends VuexModule implements IState {
     //   icon: 'el-icon-picture-outline-round'
     // },
     // {
-    //   name: '公告',
-    //   icon: 'el-icon-picture-outline'
-    // },
-    // {
     //   name: '店招',
     //   icon: 'el-icon-video-play'
     // },
     // {
-    //   name: '悬浮按钮',
-    //   icon: 'el-icon-remove-outline'
-    // },
-    // {
     //   name: '地图',
     //   icon: 'el-icon-picture-outline-round'
-    // },
-    // {
-    //   name: '回到顶部',
-    //   icon: 'el-icon-picture-outline'
     // },
     // {
     //   name: '选项卡',

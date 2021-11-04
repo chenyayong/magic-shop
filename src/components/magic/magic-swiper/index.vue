@@ -17,7 +17,7 @@
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IComponentData } from '@/store/magic/index'
+import { IMagicSwiperComponent } from '@/store/magic/magic-swiper'
 @Component({
   name: 'magicSwiper',
   components: {
@@ -26,7 +26,7 @@ import { IComponentData } from '@/store/magic/index'
   }
 })
 export default class extends Vue {
-  @Prop({ type: Object, required: true }) componentData!: IComponentData
+  @Prop({ type: Object, required: true }) componentData!: IMagicSwiperComponent
   private swiperOptions = {
     autoplay: true,
     pagination: {
@@ -37,7 +37,7 @@ export default class extends Vue {
 
   get style() {
     const style = {
-      padding: this.componentData.data?.padding + 'px'
+      padding: this.componentData.data.padding + 'px'
     }
     return style
   }
@@ -47,5 +47,6 @@ export default class extends Vue {
 .magic-swiper ::v-deep .swiper-slide img {
   width: 100%;
   height: auto;
+  display: block;
 }
 </style>

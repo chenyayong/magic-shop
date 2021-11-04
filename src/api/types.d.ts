@@ -61,3 +61,10 @@ export interface IGoods {
   stock: number
   sales: number
 }
+
+export interface IImages {
+  id: number
+  src: string
+  title: string
+  active?: boolean
+}

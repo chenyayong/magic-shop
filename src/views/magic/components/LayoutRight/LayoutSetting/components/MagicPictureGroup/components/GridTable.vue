@@ -188,6 +188,7 @@ export default class extends Vue {
       height: 100%;
       background-position: center;
       background-repeat: no-repeat;
+      background-size: cover;
     }
     .cell-tips {
       position: absolute;

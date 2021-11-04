@@ -12,15 +12,15 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IComponentData } from '@/store/magic/index'
+import { IMagicPictureComponent } from '@/store/magic/magic-picture'
 @Component({
   name: 'magicPicture'
 })
 export default class extends Vue {
-  @Prop({ type: Object, required: true }) componentData!: IComponentData
+  @Prop({ type: Object, required: true }) componentData!: IMagicPictureComponent
   get style() {
     const style = {
-      padding: this.componentData.data?.padding + 'px'
+      padding: this.componentData.data.padding + 'px'
     }
     return style
   }

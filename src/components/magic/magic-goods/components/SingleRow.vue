@@ -1,37 +1,28 @@
 <template>
   <!--  eslint-disable vue/no-use-v-if-with-v-for -->
   <div class="signle-row">
-    <el-row
-      class="row"
-      type="flex"
-      :style="colStyle"
-      v-for="(item, index) in componentData.data.items"
-      :key="index"
-    >
-      <el-col class="block-img">
-        <img :src="item.src" alt="" srcset="" />
-        <svg-icon
-          v-if="attribute"
-          :name="attribute"
-          width="30"
-          height="30"
-          color="#F56C6C"
-        ></svg-icon>
-      </el-col>
-      <el-col>
-        <el-row
-          class="label"
-          :class="[key]"
-          v-for="(value, key) in contentMap"
-          v-if="contentFilter(key)"
-          :key="key"
-          >{{ value }} {{ item[key] }}</el-row
-        >
-        <!-- <el-row class="sales label">销量 {{ item.sales }}</el-row>
-        <el-col class="new_price label">¥{{ item.new_price }}</el-col>
-        <el-col class="old_price label">¥{{ item.old_price }}</el-col> -->
-      </el-col>
-    </el-row>
+    <el-skeleton style="width: 100%;" :loading="loading">
+      <template slot="template">
+        <div style="display: flex; align-items: stretch;">
+          <div><el-skeleton-item variant="image" style="width: 120px; height: 120px;" /></div>
+          <div style="width: 100%;display: flex;flex-direction: column;justify-content: space-around;margin-left:20px;">
+            <el-skeleton-item variant="p" style="width: 70%;" />
+            <el-skeleton-item variant="p" style="width: 50%;" />
+            <el-skeleton-item variant="p" style="width: 30%;" />
+            <el-skeleton-item variant="p" style="width: 30%;" />
+          </div>
+        </div>
+      </template>
+      <el-row class="row" type="flex" :style="colStyle" v-for="(item, index) in componentData.data.items" :key="index">
+        <el-col class="block-img">
+          <img :src="item.src" alt="" srcset="" />
+          <svg-icon v-if="attribute" :name="attribute" width="30" height="30" color="#F56C6C"></svg-icon>
+        </el-col>
+        <el-col>
+          <el-row class="label" :class="[key]" v-for="(value, key) in contentMap" v-if="contentFilter(key)" :key="key">{{ value }} {{ item[key] }}</el-row>
+        </el-col>
+      </el-row>
+    </el-skeleton>
   </div>
 </template>
 <script lang="ts">
@@ -61,6 +52,11 @@ export default class extends Vue {
 
   contentFilter(key: string) {
     return this.componentData.data.content.indexOf(key) > -1
+  }
+
+  get loading() {
+    const length = this.componentData.data.items.length
+    return !length
   }
 
   get attribute() {

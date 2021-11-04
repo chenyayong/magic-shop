@@ -9,9 +9,9 @@
           <el-collapse-item title="店铺组件" name="shop-components">
             <shop-components></shop-components>
           </el-collapse-item>
-          <el-collapse-item title="营销组件" name="sale-components">
+          <!-- <el-collapse-item title="营销组件" name="sale-components">
             <sale-components></sale-components>
-          </el-collapse-item>
+          </el-collapse-item> -->
         </el-collapse>
       </div>
     </el-scrollbar>
@@ -32,7 +32,7 @@ import SaleComponents from './SaleComponents.vue'
   }
 })
 export default class extends Vue {
-  private activeNames = 'base-components'
+  private activeNames = ['base-components', 'shop-components']
 }
 </script>
 <style scoped></style>

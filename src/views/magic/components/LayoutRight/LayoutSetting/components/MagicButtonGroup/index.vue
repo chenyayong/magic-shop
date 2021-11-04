@@ -69,7 +69,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IComponentData } from '@/store/magic'
+import { IMagicButtonGroupComponent } from '@/store/magic/magic-button-group'
 import magicSettingGrid from '@/components/magic-setting-grid/index.vue'
 @Component({
   name: 'magicButtonGroup',
@@ -78,12 +78,12 @@ import magicSettingGrid from '@/components/magic-setting-grid/index.vue'
   }
 })
 export default class extends Vue {
-  @Prop({ type: Object, required: true }) componentData!: IComponentData
+  @Prop({ type: Object, required: true }) componentData!: IMagicButtonGroupComponent
 
   private activeNames = ['1', '2']
 
   addButtonGroupItem() {
-    this.componentData.data?.items.push({ imgUrl: '', imgLink: '', imgLabel: '文本' })
+    this.componentData.data.items.push({ imgUrl: '', imgLink: '', imgLabel: '文本' })
   }
 }
 </script>

@@ -14,14 +14,13 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IComponentData } from '@/store/magic/index'
-import { IMagicPictureGroupItem } from '@/store/magic/magic-picture-group'
+import { IMagicPictureGroupItem, IMagicPictureGroupComponent } from '@/store/magic/magic-picture-group'
 
 @Component({
   name: 'magicPictureGroup'
 })
 export default class extends Vue {
-  @Prop({ type: Object, required: true }) componentData!: IComponentData
+  @Prop({ type: Object, required: true }) componentData!: IMagicPictureGroupComponent
   // private data = this.componentData.data
   private offsetWidth = 0
 
@@ -84,16 +83,19 @@ export default class extends Vue {
   height: 100%;
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
 }
 .cell {
   position: absolute;
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
   .cell-sub {
     width: 100%;
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
   }
 }
 </style>

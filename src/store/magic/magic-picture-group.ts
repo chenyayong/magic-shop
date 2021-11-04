@@ -40,6 +40,14 @@ export interface IMagicPictureGroup {
   padding: number
 }
 
+export interface IMagicPictureGroupComponent {
+  id?: string
+  name: string
+  label: string
+  icon: string
+  data: IMagicPictureGroup
+}
+
 interface IState {
   name: string
   rawData: IMagicPictureGroup

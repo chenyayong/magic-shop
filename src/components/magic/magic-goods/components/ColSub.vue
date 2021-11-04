@@ -3,23 +3,9 @@
   <div class="col-sub">
     <div class="block-img">
       <img :src="item.src" alt="" srcset="" />
-      <svg-icon
-        v-if="attribute"
-        :name="attribute"
-        width="30"
-        height="30"
-        color="#F56C6C"
-      ></svg-icon>
+      <svg-icon v-if="attribute" :name="attribute" width="30" height="30" color="#F56C6C"></svg-icon>
     </div>
-    <div
-      class="label"
-      :class="[key]"
-      v-for="(value, key) in contentMap"
-      v-if="contentFilter(key)"
-      :key="key"
-    >
-      {{ value }} {{ item[key] }}
-    </div>
+    <div class="label" :class="[key]" v-for="(value, key) in contentMap" v-if="contentFilter(key)" :key="key">{{ value }} {{ item[key] }}</div>
   </div>
 </template>
 <script lang="ts">

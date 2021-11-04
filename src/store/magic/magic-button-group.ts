@@ -17,6 +17,15 @@ export interface IMagicButtonGroup {
   background?: string
   items: IMagicButtonGroupItem[]
 }
+
+export interface IMagicButtonGroupComponent {
+  id?: string
+  name: string
+  label: string
+  icon: string
+  data: IMagicButtonGroup
+}
+
 interface IState {
   name: string
   rawData: IMagicButtonGroup
