@@ -10,7 +10,9 @@
     </el-row>
     <el-row class="block">
       <el-col>高度比例</el-col>
-      <el-col><el-slider v-model="data.scale" :min="0.5" :step="0.5" :max="2" show-input></el-slider></el-col>
+      <el-col
+        ><el-slider v-model="data.scale" :min="0.5" :step="0.5" :max="2" show-input></el-slider
+      ></el-col>
     </el-row>
     <div class="grid" ref="grid" :style="setGridStyle">
       <div
@@ -24,7 +26,12 @@
         <div class="cell-sub" v-if="item.filter">
           <div class="cell-tips"><i class="el-icon-plus"></i></div>
         </div>
-        <div class="cell-sub" :style="{ 'background-image': `url(${item.imgUrl})` }" @click="changeItemIndex(index)" v-else>
+        <div
+          class="cell-sub"
+          :style="{ 'background-image': `url(${item.imgUrl})` }"
+          @click="changeItemIndex(index)"
+          v-else
+        >
           <div class="cell-tips">{{ scaleTips(item) }}</div>
         </div>
       </div>
@@ -34,7 +41,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { IMagicPictureGroupSub, IMagicPictureGroupItem, cellsData } from '@/store/magic/magic-picture-group'
+import {
+  IMagicPictureGroupSub,
+  IMagicPictureGroupItem,
+  cellsData
+} from '@/store/magic/magic-picture-group'
 import { uuid } from '@/utils/index'
 import $ from 'jquery'
 import 'jquery-ui-dist/jquery-ui'

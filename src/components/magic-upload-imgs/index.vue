@@ -1,17 +1,23 @@
 <template>
   <div class="magic-upload-imgs">
-    <el-dialog :before-close="beforeClose" width="600px" title="上传图片" :append-to-body="true" :visible="visible">
+    <el-dialog
+      :before-close="beforeClose"
+      width="600px"
+      title="上传图片"
+      :append-to-body="true"
+      :visible="visible"
+    >
       <el-tabs type="card" v-model="activeName">
         <el-tab-pane label="上传图片" name="first">
           <el-row type="flex" justify="center">
-            <ImagesUpload :img-src.sync="imgSrc" />
+            <ImagesUpload :img-url.sync="currentUrl" />
           </el-row>
         </el-tab-pane>
         <el-tab-pane label="提取网络图片" name="second">
-          <ImagesInput :img-src.sync="imgSrc" />
+          <ImagesInput :img-url.sync="currentUrl" />
         </el-tab-pane>
         <el-tab-pane label="浏览图片" name="third">
-          <ImagesList :img-src.sync="imgSrc" />
+          <ImagesList :img-url.sync="currentUrl" />
         </el-tab-pane>
       </el-tabs>
       <span slot="footer" class="dialog-footer">
@@ -22,7 +28,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import ImagesUpload from './components/ImagesUpload/index.vue'
 import ImagesInput from './components/ImagesInput/index.vue'
 import ImagesList from './components/ImagesList/index.vue'
@@ -36,18 +42,23 @@ import ImagesList from './components/ImagesList/index.vue'
   }
 })
 export default class extends Vue {
-  @Prop({ type: Boolean, required: true, default: false }) visible!: boolean
+  @Prop({ type: Boolean, required: true }) visible!: boolean
+  @Prop({ type: String, required: true }) imgUrl!: string
   private activeName = 'first'
-  private imgSrc = ''
+  private currentUrl = this.imgUrl
 
-  cancel() {
-    this.$emit('update:visible', false)
+  @Watch('visible')
+  changeVisible(visible: boolean) {
+    if (visible) {
+      this.currentUrl = this.imgUrl
+    }
   }
 
   confirm() {
-    if (this.imgSrc) {
+    if (this.currentUrl) {
       this.$emit('update:visible', false)
-      this.$emit('confirm', this.imgSrc)
+      this.$emit('confirm', this.currentUrl)
+      this.$emit('update:imgUrl', this.currentUrl)
     } else {
       this.$message({
         message: '请选择图片',
@@ -56,7 +67,13 @@ export default class extends Vue {
     }
   }
 
+  cancel() {
+    // this.$emit('update:imgSrc', '')
+    this.$emit('update:visible', false)
+  }
+
   beforeClose() {
+    // this.$emit('update:imgSrc', '')
     this.$emit('update:visible', false)
   }
 }

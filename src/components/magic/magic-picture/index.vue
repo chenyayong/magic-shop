@@ -1,6 +1,10 @@
 <template>
   <div class="magic-picture" :style="style">
-    <el-skeleton :loading="!item.imgUrl" v-for="(item, index) in componentData.data.items" :key="index">
+    <el-skeleton
+      :loading="!item.imgUrl"
+      v-for="(item, index) in componentData.data.items"
+      :key="index"
+    >
       <template slot="template">
         <el-skeleton-item variant="image" style="height: 160px;" />
       </template>
@@ -32,6 +36,7 @@ export default class extends Vue {
   img {
     width: 100%;
     height: auto;
+    display: block;
   }
 }
 </style>

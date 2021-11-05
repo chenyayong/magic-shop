@@ -7,7 +7,8 @@ import path from 'path'
 import yaml from 'yamljs'
 import * as api from './api'
 import { accessTokenAuth } from './security'
-import { connector, summarise } from 'swagger-routes-express'
+import { connector } from 'swagger-routes-express'
+// import { connector, summarise } from 'swagger-routes-express'
 
 const app = express()
 const port = 9528

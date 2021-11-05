@@ -18,7 +18,7 @@
       <i slot="trigger" ref="plus" class="el-icon-plus"></i>
     </el-upload>
     <el-dialog :visible.sync="dialogVisible" :append-to-body="true">
-      <img width="100%" :src="imgSrc" alt="" />
+      <img width="100%" :src="imgUrl" alt="" />
     </el-dialog>
   </div>
 </template>
@@ -34,14 +34,15 @@ interface IFileList {
   name: 'imagesUpload'
 })
 export default class extends Vue {
-  @Prop({ type: String, required: true }) imgSrc!: string
+  @Prop({ type: String, required: true }) imgUrl!: string
   @Prop({ type: Function }) onSuccess!: (value?: string) => void
   private fileList: IFileList[] = []
   private dialogVisible = false
   private uploadData = {
     deadline: Date.now(),
     aid: 17075,
-    Token: 'i3ao8ll9vjflthjqw3hi2jw1v6rrokbw:zaudXD2gV9RF0t0qMMPtksq_fPE=:eyJkZWFkbGluZSI6MTYzNDg4ODU4NywiYWN0aW9uIjoiZ2V0IiwidWlkIjoxMjgwMCwiYWlkIjoiMTcwNzUiLCJmcm9tIjoiZmlsZSJ9'
+    Token:
+      'i3ao8ll9vjflthjqw3hi2jw1v6rrokbw:zaudXD2gV9RF0t0qMMPtksq_fPE=:eyJkZWFkbGluZSI6MTYzNDg4ODU4NywiYWN0aW9uIjoiZ2V0IiwidWlkIjoxMjgwMCwiYWlkIjoiMTcwNzUiLCJmcm9tIjoiZmlsZSJ9'
   }
 
   @Watch('fileList')
@@ -53,8 +54,8 @@ export default class extends Vue {
     }
   }
 
-  @Watch('imgSrc')
-  changeimgSrc(value: string) {
+  @Watch('imgUrl')
+  changeimgUrl(value: string) {
     value ? (this.fileList = [{ url: value }]) : (this.fileList = [])
   }
 
@@ -63,7 +64,7 @@ export default class extends Vue {
   }
 
   handleRemove() {
-    this.$emit('update:imgSrc', '')
+    this.$emit('update:imgUrl', '')
     this.fileList = []
   }
 
@@ -86,7 +87,7 @@ export default class extends Vue {
         type: 'warning'
       })
     }
-    return format && limit
+    return !!(format && limit)
   }
 
   onExceed() {
@@ -98,9 +99,14 @@ export default class extends Vue {
 
   uploadSuccess(response: { code?: string; info?: string; linkurl?: string; name?: string }) {
     if (response.code && response.info) {
-      // this.$emit('update:imgSrc', 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg')
-      // this.fileList = [{ url: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg' }]
-      this.$emit('update:imgSrc', '')
+      // this.$emit(
+      //   'update:imgUrl',
+      //   'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg'
+      // )
+      // this.fileList = [
+      //   { url: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg' }
+      // ]
+      this.$emit('update:imgUrl', '')
       this.fileList = []
       this.$message({
         message: response.info,
@@ -109,7 +115,7 @@ export default class extends Vue {
     } else if (response.linkurl) {
       const linkurl = response.linkurl
       this.onSuccess && this.onSuccess(linkurl)
-      this.$emit('update:imgSrc', linkurl)
+      this.$emit('update:imgUrl', linkurl)
       this.fileList = [{ url: linkurl }]
     }
   }

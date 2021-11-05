@@ -1,7 +1,3 @@
-// export * from './articles'
-// export * from './role'
-// export * from './transactions'
-// export * from './users'
 export * from './shops'
 export * from './goods'
 export * from './images'

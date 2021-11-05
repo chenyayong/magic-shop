@@ -10,15 +10,23 @@
       </el-form-item>
       <el-form-item label="分享图标">
         <el-row type="flex" justify="center">
-          <div class="el-upload el-upload--picture-card" @click="uploadVisible = true" v-if="!formData.pageIcon">
+          <div
+            class="el-upload el-upload--picture-card"
+            @click="uploadVisible = true"
+            v-if="!formData.pageIcon"
+          >
             <i class="el-icon-plus"></i>
           </div>
           <ul class="el-upload-list el-upload-list--picture-card" v-else>
             <li class="el-upload-list__item is-success">
               <img :src="formData.pageIcon" alt="" class="el-upload-list__item-thumbnail" />
               <span class="el-upload-list__item-actions">
-                <span class="el-upload-list__item-preview" @click="dialogVisible = true"><i class="el-icon-zoom-in"></i></span>
-                <span class="el-upload-list__item-delete" @click="deleImg"><i class="el-icon-delete"></i></span>
+                <span class="el-upload-list__item-preview" @click="dialogVisible = true"
+                  ><i class="el-icon-zoom-in"></i
+                ></span>
+                <span class="el-upload-list__item-delete" @click="deleImg"
+                  ><i class="el-icon-delete"></i
+                ></span>
               </span>
             </li>
           </ul>
@@ -55,7 +63,10 @@
         </el-radio-group>
       </el-form-item> -->
     </el-form>
-    <MagicUploadImgs @confirm="uploadImgsConfirm" :visible.sync="uploadVisible"></MagicUploadImgs>
+    <MagicUploadImgs
+      :img-url.sync="formData.pageIcon"
+      :visible.sync="uploadVisible"
+    ></MagicUploadImgs>
     <el-dialog :visible.sync="dialogVisible" :append-to-body="true">
       <img width="100%" :src="formData.pageIcon" alt="" />
     </el-dialog>
@@ -80,9 +91,9 @@ export default class extends Vue {
   private dialogVisible = false
   private uploadVisible = false
 
-  uploadImgsConfirm(url: string) {
-    this.formData.pageIcon = url
-  }
+  // uploadImgsConfirm(url: string) {
+  //   this.formData.pageIcon = url
+  // }
 
   deleImg() {
     this.formData.pageIcon = ''

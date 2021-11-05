@@ -1,6 +1,11 @@
 <template>
   <div class="magic-picture-group" ref="magic" :style="setGridStyle">
-    <div class="cell" :style="setItemStyle(item)" v-for="(item, index) in gridData.items" :key="index">
+    <div
+      class="cell"
+      :style="setItemStyle(item)"
+      v-for="(item, index) in gridData.items"
+      :key="index"
+    >
       <el-skeleton class="cell-sub" :loading="!item.imgUrl">
         <template slot="template">
           <el-skeleton-item variant="image" class="cell-img" />
@@ -14,7 +19,10 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IMagicPictureGroupItem, IMagicPictureGroupComponent } from '@/store/magic/magic-picture-group'
+import {
+  IMagicPictureGroupItem,
+  IMagicPictureGroupComponent
+} from '@/store/magic/magic-picture-group'
 
 @Component({
   name: 'magicPictureGroup'
