@@ -8,7 +8,7 @@
       <ul class="el-upload-list el-upload-list--picture-card">
         <li @click="handleSelect(item)" class="el-upload-list__item is-success" v-for="item in list" :key="item.id">
           <img :src="item.src" alt="" class="el-upload-list__item-thumbnail" />
-          <span class="el-upload-list__item-actions" :class="[item.active ? 'active' : '']">
+          <span class="el-upload-list__item-actions" :class="[item.src === imgSrc ? 'active' : '']">
             <i class="el-icon-circle-check"></i>
           </span>
         </li>
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import { debounce } from 'lodash'
 import { getImages } from '@/api/images'
 import { IImages } from '@/api/types'
@@ -40,6 +40,7 @@ import { IImages } from '@/api/types'
   name: 'imagesList'
 })
 export default class extends Vue {
+  @Prop({ type: String, required: true }) imgSrc!: string
   private list: IImages[] = []
   private loading = false
   private limits = [10, 15, 20]
@@ -74,21 +75,13 @@ export default class extends Vue {
     this.loading = true
     const res = await getImages(this.params)
     this.list = res.data.items
-    this.resetList()
     this.total = res.data.total
     this.loading = false
   }
 
-  resetList() {
-    this.list.forEach((e) => {
-      this.$set(e, 'active', false)
-    })
-  }
-
   handleSelect(item: IImages) {
-    this.list.forEach((item) => (item.active = false))
-    item.active = true
-    this.$emit('select', item.src)
+    this.$emit('update:imgSrc', item.src)
+    // this.currentItem = item
   }
 }
 </script>

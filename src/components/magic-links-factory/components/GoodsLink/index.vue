@@ -8,9 +8,7 @@
       <el-table :data="tabelData" border ref="multipleTable" v-loading="loading" row-key="id">
         <el-table-column label="" width="40">
           <template slot-scope="scope">
-            <el-radio :label="scope.row.id" v-model="currentRowId">
-              <div style="display: none">选项</div>
-            </el-radio>
+            <el-radio :label="prePath + scope.row.id" v-model="currentRow"></el-radio>
           </template>
         </el-table-column>
         <el-table-column property="id" align="center" label="商品ID" width="70"></el-table-column>
@@ -45,23 +43,31 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getGoods } from '@/api/goods'
 import { IGoods } from '@/api/types'
 @Component({
   name: 'goodsLink'
 })
 export default class extends Vue {
-  private currentRowId = -1
+  @Prop({ type: String, required: true }) currentLink!: string
+  private prePath = '/goods?id='
   private limits = [5, 10, 15, 20]
   private total = 0
   private tabelData: IGoods[] = []
-  private selectionData: IGoods[] = []
   private loading = false
   private params = {
     page: 1,
     limit: 5,
     title: ''
+  }
+
+  get currentRow() {
+    return this.currentLink
+  }
+
+  set currentRow(link: string) {
+    this.$emit('update:currentLink', link)
   }
 
   currentChange(page: number) {
@@ -100,5 +106,8 @@ export default class extends Vue {
 <style scoped lang="scss">
 .block {
   margin-bottom: 10px;
+}
+.block ::v-deep .el-radio__label {
+  display: none;
 }
 </style>

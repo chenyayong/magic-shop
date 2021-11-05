@@ -3,10 +3,10 @@
     <el-dialog title="链接库" width="800px" :append-to-body="true" :visible.sync="visible" :before-close="beforeClose">
       <el-tabs v-model="activeName" type="card">
         <el-tab-pane label="系统页面" name="first">
-          <SystemLink ref="systemLink" />
+          <SystemLink :currentLink.sync="currentLink" ref="systemLink" />
         </el-tab-pane>
         <el-tab-pane label="商品链接" name="second">
-          <GoodsLink ref="goodsLink"></GoodsLink>
+          <GoodsLink :currentLink.sync="currentLink" ref="goodsLink" />
         </el-tab-pane>
       </el-tabs>
       <span slot="footer" class="dialog-footer">
@@ -22,6 +22,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import SystemLink from './components/SystemLink/index.vue'
 import GoodsLink from './components/GoodsLink/index.vue'
 export interface ILink {
+  src: string
   name: string
   active?: boolean
 }
@@ -36,17 +37,15 @@ export interface ILink {
 export default class extends Vue {
   @Prop({ type: Boolean, default: true }) visible!: boolean
   private activeName = 'first'
-
+  private currentLink = ''
   cancel() {
     this.$emit('update:visible', false)
   }
 
   confirm() {
-    const getSelectLink = (this.$refs.systemLink as any).getSelectLink
-    console.log(this.$refs.goodsLink.currentRowId)
-    if (getSelectLink) {
+    if (this.currentLink) {
       this.$emit('update:visible', false)
-      this.$emit('confirm', getSelectLink)
+      this.$emit('confirm', this.currentLink)
     } else {
       this.$message({
         message: '请选择链接',

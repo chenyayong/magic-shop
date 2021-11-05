@@ -36,7 +36,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import MagicUploadImgs from '@/components/magic-upload-imgs/index.vue'
-import MagicLinksFactory, { ILink } from '@/components/magic-links-factory/index.vue'
+import MagicLinksFactory from '@/components/magic-links-factory/index.vue'
 
 @Component({
   name: 'magicSettingItem',
@@ -68,9 +68,9 @@ export default class extends Vue {
     this.$emit('uploadImgsConfirm', url)
   }
 
-  linkConfirm(value: ILink) {
-    this.item.imgLink = value.name
-    this.$emit('linkConfirm', value)
+  linkConfirm(link: string) {
+    this.item.imgLink = link
+    this.$emit('linkConfirm', link)
   }
 }
 </script>

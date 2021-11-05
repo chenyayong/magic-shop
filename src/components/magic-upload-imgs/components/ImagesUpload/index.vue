@@ -1,10 +1,10 @@
 <template>
-  <div class="images-upload">
+  <div class="images-upload" style="height: 160px;">
     <el-upload
-      :file-list="fileList"
       list-type="picture-card"
       accept="image/*"
       action="http://up.tietuku.cn/"
+      :file-list="fileList"
       :data="uploadData"
       :limit="1"
       :auto-upload="true"
@@ -15,23 +15,28 @@
       :on-success="uploadSuccess"
       :on-error="uploadError"
     >
-      <i slot="default" class="el-icon-plus"></i>
+      <i slot="trigger" ref="plus" class="el-icon-plus"></i>
     </el-upload>
     <el-dialog :visible.sync="dialogVisible" :append-to-body="true">
-      <img width="100%" :src="dialogImageUrl" alt="" />
+      <img width="100%" :src="imgSrc" alt="" />
     </el-dialog>
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+
+interface IFileList {
+  name?: string
+  url: string
+}
 
 @Component({
   name: 'imagesUpload'
 })
 export default class extends Vue {
+  @Prop({ type: String, required: true }) imgSrc!: string
   @Prop({ type: Function }) onSuccess!: (value?: string) => void
-  private fileList: { name?: string; url?: string }[] = []
-  private dialogImageUrl = ''
+  private fileList: IFileList[] = []
   private dialogVisible = false
   private uploadData = {
     deadline: Date.now(),
@@ -39,13 +44,27 @@ export default class extends Vue {
     Token: 'i3ao8ll9vjflthjqw3hi2jw1v6rrokbw:zaudXD2gV9RF0t0qMMPtksq_fPE=:eyJkZWFkbGluZSI6MTYzNDg4ODU4NywiYWN0aW9uIjoiZ2V0IiwidWlkIjoxMjgwMCwiYWlkIjoiMTcwNzUiLCJmcm9tIjoiZmlsZSJ9'
   }
 
-  handlePreview(file: any) {
-    this.dialogImageUrl = file.url
+  @Watch('fileList')
+  changeFileList(value: IFileList[]) {
+    if (value.length) {
+      ;(this.$refs.plus as any).parentNode.style = 'display: none'
+    } else {
+      ;(this.$refs.plus as any).parentNode.style = 'display: block'
+    }
+  }
+
+  @Watch('imgSrc')
+  changeimgSrc(value: string) {
+    value ? (this.fileList = [{ url: value }]) : (this.fileList = [])
+  }
+
+  handlePreview() {
     this.dialogVisible = true
   }
 
-  handleRemove(file: any) {
-    this.fileList = this.fileList.filter((item) => file !== item)
+  handleRemove() {
+    this.$emit('update:imgSrc', '')
+    this.fileList = []
   }
 
   beforeUpload(file: any) {
@@ -79,16 +98,19 @@ export default class extends Vue {
 
   uploadSuccess(response: { code?: string; info?: string; linkurl?: string; name?: string }) {
     if (response.code && response.info) {
+      // this.$emit('update:imgSrc', 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg')
+      // this.fileList = [{ url: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg' }]
+      this.$emit('update:imgSrc', '')
       this.fileList = []
-      this.dialogImageUrl = ''
       this.$message({
         message: response.info,
         type: 'warning'
       })
-    } else {
-      this.dialogImageUrl = response.linkurl as string
-      this.fileList = [{ name: response.name, url: response.linkurl }]
-      this.onSuccess && this.onSuccess(this.dialogImageUrl)
+    } else if (response.linkurl) {
+      const linkurl = response.linkurl
+      this.onSuccess && this.onSuccess(linkurl)
+      this.$emit('update:imgSrc', linkurl)
+      this.fileList = [{ url: linkurl }]
     }
   }
 
@@ -101,4 +123,11 @@ export default class extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.images-upload ::v-deep .el-upload-list__item {
+  transition: none !important;
+}
+.images-upload ::v-deep .el-upload--picture-card {
+  transition: none !important;
+}
+</style>

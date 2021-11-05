@@ -4,14 +4,14 @@
       <el-tabs type="card" v-model="activeName">
         <el-tab-pane label="上传图片" name="first">
           <el-row type="flex" justify="center">
-            <ImagesUpload ref="imagesUpload" :on-success="uploadSuccess" />
+            <ImagesUpload :img-src.sync="imgSrc" />
           </el-row>
         </el-tab-pane>
         <el-tab-pane label="提取网络图片" name="second">
-          <el-input placeholder="请输入网络图片地址" v-model="networkImageUrl"></el-input>
+          <ImagesInput :img-src.sync="imgSrc" />
         </el-tab-pane>
         <el-tab-pane label="浏览图片" name="third">
-          <ImagesList ref="imagesList" @select="imagesSelect" />
+          <ImagesList :img-src.sync="imgSrc" />
         </el-tab-pane>
       </el-tabs>
       <span slot="footer" class="dialog-footer">
@@ -24,52 +24,56 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import ImagesUpload from './components/ImagesUpload/index.vue'
+import ImagesInput from './components/ImagesInput/index.vue'
 import ImagesList from './components/ImagesList/index.vue'
 
 @Component({
   name: 'magicUploadImgs',
   components: {
     ImagesUpload,
+    ImagesInput,
     ImagesList
   }
 })
 export default class extends Vue {
   @Prop({ type: Boolean, required: true, default: false }) visible!: boolean
   private activeName = 'first'
-  private uploadImageUrl = ''
-  private networkImageUrl = ''
-  private browseImageUrl = ''
-
+  // private uploadImageUrl = ''
+  // private networkImageUrl = ''
+  // private browseImageUrl = ''
+  // private uploadImg = ''
+  private imgSrc = ''
   @Watch('visible')
   changeVisible() {
-    this.activeName = 'first'
-    this.uploadImageUrl = ''
-    this.networkImageUrl = ''
-    this.browseImageUrl = ''
-    this.$nextTick(() => {
-      // eslint-disable-next-line @typescript-eslint/no-extra-semi
-      ;(this.$refs.imagesUpload as any).fileList = []
-      ;(this.$refs.imagesList as any).resetList()
-    })
+    // this.activeName = 'first'
+    // this.uploadImageUrl = ''
+    // this.networkImageUrl = ''
+    // this.browseImageUrl = ''
+    // this.$nextTick(() => {
+    //   // eslint-disable-next-line @typescript-eslint/no-extra-semi
+    //   ;(this.$refs.imagesUpload as any).fileList = []
+    //   ;(this.$refs.imagesList as any).currentItem = {}
+    // })
   }
 
-  get imageUrl() {
-    const map: { [key: string]: any } = {
-      first: this.uploadImageUrl,
-      second: this.networkImageUrl,
-      third: this.browseImageUrl
-    }
-    return map[this.activeName]
-  }
+  // get imageUrl() {
+  //   this.browseImageUrl = (this.$refs.imagesList as any).currentItem.src
+  //   const map: { [key: string]: any } = {
+  //     first: this.uploadImageUrl,
+  //     second: this.networkImageUrl,
+  //     third: this.browseImageUrl
+  //   }
+  //   return map[this.activeName]
+  // }
 
   cancel() {
     this.$emit('update:visible', false)
   }
 
   confirm() {
-    if (this.imageUrl) {
+    if (this.imgSrc) {
       this.$emit('update:visible', false)
-      this.$emit('confirm', this.imageUrl)
+      this.$emit('confirm', this.imgSrc)
     } else {
       this.$message({
         message: '请选择图片',
@@ -82,13 +86,9 @@ export default class extends Vue {
     this.$emit('update:visible', false)
   }
 
-  uploadSuccess(url: string) {
-    this.uploadImageUrl = url
-  }
-
-  imagesSelect(url: string) {
-    this.browseImageUrl = url
-  }
+  // uploadSuccess(url: string) {
+  //   this.uploadImageUrl = url
+  // }
 }
 </script>
 
