@@ -35,10 +35,11 @@ export default class extends Vue {
 
   set network(value: string) {
     // eslint-disable-next-line no-useless-escape
-    const reg = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\*\+,;=.]+$/
-    if (reg.test(value)) {
-      this.$emit('update:imgSrc', value)
-    }
+    // const reg = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\*\+,;=.]+$/
+    // if (reg.test(value)) {
+    //   this.$emit('update:imgSrc', value)
+    // }
+    this.$emit('update:imgSrc', value)
   }
 
   changeImgSrc(value: string) {

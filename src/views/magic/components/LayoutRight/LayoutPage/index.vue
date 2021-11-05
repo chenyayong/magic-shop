@@ -9,10 +9,25 @@
         <el-input v-model="formData.pageDescription"></el-input>
       </el-form-item>
       <el-form-item label="分享图标">
-        <el-upload list-type="picture-card" class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/">
-          <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar" /> -->
+        <el-row type="flex" justify="center">
+          <div class="el-upload el-upload--picture-card" @click="uploadVisible = true" v-if="!formData.pageIcon">
+            <i class="el-icon-plus"></i>
+          </div>
+          <ul class="el-upload-list el-upload-list--picture-card" v-else>
+            <li class="el-upload-list__item is-success">
+              <img :src="formData.pageIcon" alt="" class="el-upload-list__item-thumbnail" />
+              <span class="el-upload-list__item-actions">
+                <span class="el-upload-list__item-preview" @click="dialogVisible = true"><i class="el-icon-zoom-in"></i></span>
+                <span class="el-upload-list__item-delete" @click="deleImg"><i class="el-icon-delete"></i></span>
+              </span>
+            </li>
+          </ul>
+        </el-row>
+
+        <!-- <el-upload list-type="picture-card" class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/">
+          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
           <i class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+        </el-upload> -->
       </el-form-item>
       <!-- <el-form-item label="全屏广告">
         <el-radio-group>
@@ -40,18 +55,37 @@
         </el-radio-group>
       </el-form-item> -->
     </el-form>
+    <MagicUploadImgs @confirm="uploadImgsConfirm" :visible.sync="uploadVisible"></MagicUploadImgs>
+    <el-dialog :visible.sync="dialogVisible" :append-to-body="true">
+      <img width="100%" :src="formData.pageIcon" alt="" />
+    </el-dialog>
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import MagicUploadImgs from '@/components/magic-upload-imgs/index.vue'
 @Component({
-  name: 'LayoutPage'
+  name: 'LayoutPage',
+  components: {
+    MagicUploadImgs
+  }
 })
 export default class extends Vue {
   private formData = {
     pageTitle: '',
     pageDescription: '',
     pageIcon: ''
+  }
+
+  private dialogVisible = false
+  private uploadVisible = false
+
+  uploadImgsConfirm(url: string) {
+    this.formData.pageIcon = url
+  }
+
+  deleImg() {
+    this.formData.pageIcon = ''
   }
 }
 </script>

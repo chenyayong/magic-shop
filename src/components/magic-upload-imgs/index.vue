@@ -22,7 +22,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import ImagesUpload from './components/ImagesUpload/index.vue'
 import ImagesInput from './components/ImagesInput/index.vue'
 import ImagesList from './components/ImagesList/index.vue'
@@ -38,33 +38,7 @@ import ImagesList from './components/ImagesList/index.vue'
 export default class extends Vue {
   @Prop({ type: Boolean, required: true, default: false }) visible!: boolean
   private activeName = 'first'
-  // private uploadImageUrl = ''
-  // private networkImageUrl = ''
-  // private browseImageUrl = ''
-  // private uploadImg = ''
   private imgSrc = ''
-  @Watch('visible')
-  changeVisible() {
-    // this.activeName = 'first'
-    // this.uploadImageUrl = ''
-    // this.networkImageUrl = ''
-    // this.browseImageUrl = ''
-    // this.$nextTick(() => {
-    //   // eslint-disable-next-line @typescript-eslint/no-extra-semi
-    //   ;(this.$refs.imagesUpload as any).fileList = []
-    //   ;(this.$refs.imagesList as any).currentItem = {}
-    // })
-  }
-
-  // get imageUrl() {
-  //   this.browseImageUrl = (this.$refs.imagesList as any).currentItem.src
-  //   const map: { [key: string]: any } = {
-  //     first: this.uploadImageUrl,
-  //     second: this.networkImageUrl,
-  //     third: this.browseImageUrl
-  //   }
-  //   return map[this.activeName]
-  // }
 
   cancel() {
     this.$emit('update:visible', false)
@@ -85,10 +59,6 @@ export default class extends Vue {
   beforeClose() {
     this.$emit('update:visible', false)
   }
-
-  // uploadSuccess(url: string) {
-  //   this.uploadImageUrl = url
-  // }
 }
 </script>
 
