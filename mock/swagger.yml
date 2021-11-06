@@ -35,29 +35,29 @@ paths:
       tags:
         - shops
       summary: 店铺页面的列表
-      description: 返回店铺页面的数据列表.
+      description: 返回店铺页面的数据列表
       operationId: getShops
       parameters:
         - name: page
-            in: query
-            description: 页码.
-            schema:
-              type: integer
-              format: int32
-              minimum: 1
+          in: query
+          description: 页码.
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
         - name: limit
-            in: query
-            description: 每个页码显示的数据量.
-            schema:
-              type: integer
-              format: int32
-              minimum: 0
-              maximum: 50
+          in: query
+          description: 每个页码显示的数据量.
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
         - name: page_name
-            in: query
-            description: 页面名称.
-            schema:
-              type: string
+          in: query
+          description: 页面名称.
+          schema:
+            type: string
   /articles:
     get:
       tags:
@@ -748,6 +748,9 @@ paths:
                         $ref: '#/components/schemas/User'
         401:
           $ref: '#/components/responses/Unauthorized'
+  /users/{userId}:
+    get:
+      operationId: getUserById
 components:
   securitySchemes:
     AccessTokenAuth:

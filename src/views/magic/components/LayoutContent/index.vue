@@ -2,35 +2,14 @@
   <div class="layout-content">
     <div class="content-main">
       <el-scrollbar>
-        <draggable
-          class="draggable"
-          :group="group"
-          :sort="true"
-          :list="componentsFormData"
-          @change="draggableChange"
-        >
+        <draggable class="draggable" :group="group" :sort="true" :list="componentsFormData" @change="draggableChange">
           <template v-if="componentsFormData.length">
-            <el-tooltip
-              :key="item.id"
-              v-for="(item, index) in componentsFormData"
-              class="item"
-              effect="dark"
-              :content="item.label"
-              placement="left-start"
-            >
+            <el-tooltip :key="item.id" v-for="(item, index) in componentsFormData" class="item" effect="dark" :content="item.label" placement="left-start">
               <el-tooltip placement="right-start">
                 <template v-slot:content>
-                  <i
-                    class="el-icon-delete component-delete-icon"
-                    @click="deleComponent(item.id)"
-                  ></i>
+                  <i class="el-icon-delete component-delete-icon" @click="deleComponent(item.id)"></i>
                 </template>
-                <component
-                  @click.native="changeActive(index)"
-                  :class="[index === componentsFormDataIndex ? 'active' : '']"
-                  :is="item.name"
-                  :componentData="item"
-                ></component>
+                <component @click.native="changeActive(index)" :class="[index === componentsFormDataIndex ? 'active' : '']" :is="item.name" :componentData="item"></component>
               </el-tooltip>
             </el-tooltip>
           </template>
@@ -60,9 +39,14 @@ interface iComponents {
   [key: string]: Vue
 }
 interface draggableElement {
-  added: {
+  added?: {
     element: IComponentData
     newIndex: number
+  }
+  moved?: {
+    element: IComponentData
+    newIndex: number
+    oldIndex: number
   }
 }
 
@@ -84,14 +68,10 @@ const components = files.keys().reduce((ret: iComponents, file: string): iCompon
 export default class extends Vue {
   @magic.State('componentsFormDataIndex') componentsFormDataIndex!: number
   @magic.State('componentsFormData') componentsFormData!: IComponentData[]
-  @magic.Mutation('SET_COMPONENTS_FORM_DATA_INDEX') SET_COMPONENTS_FORM_DATA_INDEX!: (
-    index?: number
-  ) => void
+  @magic.Mutation('SET_COMPONENTS_FORM_DATA_INDEX') SET_COMPONENTS_FORM_DATA_INDEX!: (index?: number) => void
 
   @magic.Mutation('DELE_COMPONENTS_FORM_DATA') DELE_COMPONENTS_FORM_DATA!: (id: string) => void
-  @magicAsidebar.Mutation('SET_ASIDEBAR_DATA_INDEX') SET_ASIDEBAR_DATA_INDEX!: (
-    index: number
-  ) => void
+  @magicAsidebar.Mutation('SET_ASIDEBAR_DATA_INDEX') SET_ASIDEBAR_DATA_INDEX!: (index: number) => void
 
   private group = {
     name: 'site',
@@ -111,9 +91,15 @@ export default class extends Vue {
   }
 
   draggableChange(value: draggableElement) {
-    const index = this.componentsFormData.length === value.added.newIndex ? 0 : value.added.newIndex
-    this.SET_COMPONENTS_FORM_DATA_INDEX(index)
-    this.SET_ASIDEBAR_DATA_INDEX(1)
+    if (value.added) {
+      const index = this.componentsFormData.length === value.added.newIndex ? 0 : value.added.newIndex
+      this.SET_COMPONENTS_FORM_DATA_INDEX(index)
+      this.SET_ASIDEBAR_DATA_INDEX(1)
+    } else if (value.moved) {
+      const index = this.componentsFormData.length === value.moved.newIndex ? 0 : value.moved.newIndex
+      this.SET_COMPONENTS_FORM_DATA_INDEX(index)
+      this.SET_ASIDEBAR_DATA_INDEX(1)
+    }
   }
 
   changeActive(index: number) {

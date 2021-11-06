@@ -40,7 +40,7 @@ const apiDefinition = yaml.load(path.resolve(__dirname, 'swagger.yml'))
 // Create mock functions based on swaggerConfig
 const options = {
   security: {
-    AccessTokenAuth: accessTokenAuth
+    // AccessTokenAuth: accessTokenAuth
   }
 }
 const connectSwagger = connector(api, apiDefinition, options)
