@@ -1,3 +1,4 @@
+import { IComponentData } from '@/store/magic/index'
 /* eslint-disable camelcase */
 export interface IArticleData {
   id: number
@@ -47,8 +48,9 @@ export interface IUserData {
 export interface iShopData {
   id: number
   updated_at: Date
-  page_name: string
-  page_scene_depict: string
+  page_title: string
+  shop_data: IComponentData[]
+  // page_scene_depict: string
 }
 
 export interface IGoods {

@@ -20,8 +20,8 @@ export enum ComponentName {
 export interface IComponentData {
   id?: string
   name: ComponentName
-  label: string
-  icon: string
+  label?: string
+  icon?: string
   data: IMagicSwiper & IMagicButtonGroup & IMagicPicture & IMagicPictureGroup & IMagicGoods
 }
 

@@ -1,15 +1,15 @@
 <template lang="pug">
 div
   magic-search
-    el-input(placeholder="请输入页面名称" v-model="page_nam" @change="handleSearch")
+    el-input(placeholder="请输入页面标题" v-model="page_title" @change="handleSearch")
     template(v-slot:button-group)
       el-button(type='primary', icon='el-icon-search' @click="handleSearch") 搜索
       el-button(type='primary', icon='el-icon-plus' @click="handleNav") 添加页面
   magic-table(@current-change="currentChange" :data='tableData' :total='total' :current-page="currentPage" v-loading="loading")
     el-table-column(prop='id', label='ID', width='60')
     el-table-column(prop='updated_at', label='上次修改时间', width='150')
-    el-table-column(prop='page_name', label='页面名称', width='380')
-    el-table-column(prop='page_scene_depict', label='页面场景', width='120')
+    el-table-column(prop='page_title', label='页面标题', width='380')
+    //- el-table-column(prop='page_scene_depict', label='页面场景', width='120')
     //- el-table-column(prop='page_sort_depict', label='显示终端', width='120')
     //- el-table-column(prop="id" label="页面类型" width="120")
     el-table-column(label='操作', width='480')
@@ -33,7 +33,7 @@ export default class extends Vue {
   private tableData = []
   private total = 0
   private currentPage = 1
-  private page_nam = ''
+  private page_title = ''
   private loading = false
 
   currentChange(page: number) {
@@ -45,7 +45,7 @@ export default class extends Vue {
     this.loading = true
     const params = {
       page: this.currentPage,
-      page_name: this.page_nam
+      page_title: this.page_title
     }
     const res = await getShops(params)
     if (res && res.data && res.data.items && res.data.items.length) {

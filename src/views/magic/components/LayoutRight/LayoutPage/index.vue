@@ -5,10 +5,10 @@
       <el-form-item label="页面标题">
         <el-input v-model="formData.pageTitle"></el-input>
       </el-form-item>
-      <el-form-item label="页面描述">
+      <!-- <el-form-item label="页面描述">
         <el-input v-model="formData.pageDescription"></el-input>
-      </el-form-item>
-      <el-form-item label="分享图标">
+      </el-form-item> -->
+      <!-- <el-form-item label="分享图标">
         <el-row type="flex" justify="center">
           <div
             class="el-upload el-upload--picture-card"
@@ -31,12 +31,7 @@
             </li>
           </ul>
         </el-row>
-
-        <!-- <el-upload list-type="picture-card" class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-          <i class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload> -->
-      </el-form-item>
+      </el-form-item> -->
       <!-- <el-form-item label="全屏广告">
         <el-radio-group>
           <el-radio label="不显示"></el-radio>
@@ -63,10 +58,7 @@
         </el-radio-group>
       </el-form-item> -->
     </el-form>
-    <MagicUploadImgs
-      :img-url.sync="formData.pageIcon"
-      :visible.sync="uploadVisible"
-    ></MagicUploadImgs>
+    <MagicUploadImgs :img-url.sync="formData.pageIcon" :visible.sync="uploadVisible"></MagicUploadImgs>
     <el-dialog :visible.sync="dialogVisible" :append-to-body="true">
       <img width="100%" :src="formData.pageIcon" alt="" />
     </el-dialog>

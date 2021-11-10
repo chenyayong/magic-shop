@@ -17,7 +17,7 @@ export default class extends Vue {
   @Prop({ type: String, default: 'prev, pager, next, jumper' }) layout!: string
   @Prop({ type: Number, default: 0 }) total!: number
   @Prop({ type: Number, default: 1 }) currentPage!: number
-  @Prop({ type: Array, default: () => [10, 15, 20, 30] })
+  @Prop({ type: Array, default: () => [10, 15, 20, 30] }) pageSizes!: number[]
   @Prop({ type: Number, default: 10 })
   pageSize!: number
 
