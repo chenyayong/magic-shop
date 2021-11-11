@@ -24,7 +24,7 @@ import { IMagicPictureComponent } from '@/store/magic/magic-picture'
 import magicSettingGrid from '@/components/magic-setting-grid/index.vue'
 
 @Component({
-  name: 'magicPicture',
+  name: 'magic_picture',
   components: {
     magicSettingGrid
   }
@@ -34,7 +34,7 @@ export default class extends Vue {
   public activeNames = ['1', '2']
 
   addPictureItem() {
-    this.componentData.data.items.push({ imgUrl: '', imgLink: '' })
+    this.componentData.data.items.push({ img_url: '', img_link: '' })
   }
 }
 </script>

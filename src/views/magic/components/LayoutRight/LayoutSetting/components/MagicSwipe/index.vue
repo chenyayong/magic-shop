@@ -28,7 +28,7 @@ import { IMagicSwiperComponent } from '@/store/magic/magic-swiper'
 import magicSettingGrid from '@/components/magic-setting-grid/index.vue'
 
 @Component({
-  name: 'magicSwiper',
+  name: 'magic_swiper',
   components: {
     magicSettingGrid
   }
@@ -39,7 +39,7 @@ export default class extends Vue {
   private dialogVisible = false
 
   addSwiperItem() {
-    this.componentData.data.items.push({ imgUrl: '', imgLink: '' })
+    this.componentData.data.items.push({ img_url: '', img_link: '' })
   }
 }
 </script>

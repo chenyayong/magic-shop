@@ -1,19 +1,19 @@
 import { VuexModule, Module } from 'vuex-module-decorators'
 export interface IMagicButtonGroupItem {
-  imgUrl: string
-  imgLink: string
-  imgLabel: string
+  img_url: string
+  img_link: string
+  img_label: string
 }
 export interface IMagicButtonGroup {
-  rowButtonCount?: number
+  row_button_count?: number
   swiper?: number
-  rowSwiper?: number
-  paddingTop?: number
-  paddingBottom?: number
-  buttonSize?: number
-  buttonRound?: number
-  textSize?: number
-  textColor?: string
+  row_swiper?: number
+  padding_top?: number
+  padding_bottom?: number
+  button_size?: number
+  button_round?: number
+  text_size?: number
+  text_color?: string
   background?: string
   items: IMagicButtonGroupItem[]
 }
@@ -34,21 +34,21 @@ interface IState {
 export default class extends VuexModule implements IState {
   public name = 'magicButtonGroup'
   public rawData = {
-    rowButtonCount: 4,
+    row_button_count: 4,
     swiper: 0,
-    rowSwiper: 1,
-    paddingTop: 0,
-    paddingBottom: 0,
-    buttonSize: 50,
-    buttonRound: 0,
-    textSize: 0,
-    textColor: '',
+    row_swiper: 1,
+    padding_top: 0,
+    padding_bottom: 0,
+    button_size: 50,
+    button_round: 0,
+    text_size: 0,
+    text_color: '',
     background: '',
     items: [
       {
-        imgUrl: '',
-        imgLink: '',
-        imgLabel: '文本'
+        img_url: '',
+        img_link: '',
+        img_label: '文本'
       }
     ]
   }

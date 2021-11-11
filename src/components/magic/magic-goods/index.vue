@@ -12,7 +12,7 @@ import SingleRow from './components/SingleRow.vue'
 import { IMagicGoodsComponent } from '@/store/magic/magic-goods'
 
 @Component({
-  name: 'magicGoods',
+  name: 'magic_goods',
   components: {
     OneCol,
     TwoCol,

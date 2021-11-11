@@ -1,17 +1,12 @@
 <template>
   <div class="magic-picture-group" ref="magic" :style="setGridStyle">
-    <div
-      class="cell"
-      :style="setItemStyle(item)"
-      v-for="(item, index) in gridData.items"
-      :key="index"
-    >
-      <el-skeleton class="cell-sub" :loading="!item.imgUrl">
+    <div class="cell" :style="setItemStyle(item)" v-for="(item, index) in gridData.items" :key="index">
+      <el-skeleton class="cell-sub" :loading="!item.img_url">
         <template slot="template">
           <el-skeleton-item variant="image" class="cell-img" />
         </template>
         <template>
-          <div class="cell-img" :style="{ 'background-image': `url(${item.imgUrl})` }"></div>
+          <div class="cell-img" :style="{ 'background-image': `url(${item.img_url})` }"></div>
         </template>
       </el-skeleton>
     </div>
@@ -19,13 +14,10 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import {
-  IMagicPictureGroupItem,
-  IMagicPictureGroupComponent
-} from '@/store/magic/magic-picture-group'
+import { IMagicPictureGroupItem, IMagicPictureGroupComponent } from '@/store/magic/magic-picture-group'
 
 @Component({
-  name: 'magicPictureGroup'
+  name: 'magic_picture_group'
 })
 export default class extends Vue {
   @Prop({ type: Object, required: true }) componentData!: IMagicPictureGroupComponent
@@ -33,7 +25,7 @@ export default class extends Vue {
   private offsetWidth = 0
 
   get gridData() {
-    return this.componentData.data.gridsData[this.componentData.data.gridsIndex]
+    return this.componentData.data.grids_data[this.componentData.data.grids_index]
   }
 
   get cellWidth() {

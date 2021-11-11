@@ -1,0 +1,314 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Mock API for magic-shop.",
+    "version": "1.0.0",
+    "title": "店铺商城 API",
+    "contact": {
+      "email": "451998731@qq.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://192.168.1.106:9528/mock-api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "shops",
+      "description": "店铺页面"
+    },
+    {
+      "name": "images",
+      "description": "图片库"
+    },
+    {
+      "name": "goods",
+      "description": "商品"
+    }
+  ],
+  "paths": {
+    "/images": {
+      "get": {
+        "tags": [
+          "images"
+        ],
+        "summary": "图片列表",
+        "operationId": "getImages",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "example": 5
+            }
+          },
+          {
+            "in": "query",
+            "name": "title",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Images"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/goods": {
+      "get": {
+        "tags": [
+          "goods"
+        ],
+        "summary": "商品列表",
+        "operationId": "getGoods",
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/shops"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shops": {
+      "get": {
+        "tags": [
+          "shops"
+        ],
+        "summary": "店铺页面列表",
+        "operationId": "getShops",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0,
+              "maximum": 50
+            }
+          },
+          {
+            "name": "page_name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/shops"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "NotFound": {
+        "description": "The specified resource was not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "code": 4004,
+              "message": "not found"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/Code"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ]
+      },
+      "Images": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "example": 2000
+          },
+          "msg": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "integer"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "src": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "goods": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "example": 2000
+          },
+          "msg": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "integer"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "src": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "enum": [
+                        0,
+                        1
+                      ],
+                      "description": "0: 代表下架，1：代表上架"
+                    },
+                    "new_price": {
+                      "type": "number",
+                      "format": "float"
+                    },
+                    "old_price": {
+                      "type": "number",
+                      "format": "float"
+                    },
+                    "stock": {
+                      "type": "integer"
+                    },
+                    "sales": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "shops": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date"
+          },
+          "page_name": {
+            "type": "string"
+          }
+        }
+      },
+      "Code": {
+        "type": "integer",
+        "enum": [
+          20000,
+          4004,
+          50001,
+          50002,
+          50003,
+          50004,
+          50005
+        ],
+        "description": "Sort order:\n * `20000` - success\n * `4004`  - not found\n * `50001` - invalid access token\n * `50002` - already login in other place\n * `50003` - access token expired\n * `50004` - invalid user (user not exist)\n * `50005` - username or password is incorrect\n"
+      }
+    }
+  }
+}

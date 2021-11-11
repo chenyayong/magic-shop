@@ -1,10 +1,6 @@
 <template>
   <div class="magic-picture" :style="style">
-    <el-skeleton
-      :loading="!item.imgUrl"
-      v-for="(item, index) in componentData.data.items"
-      :key="index"
-    >
+    <el-skeleton :loading="!item.imgUrl" v-for="(item, index) in componentData.data.items" :key="index">
       <template slot="template">
         <el-skeleton-item variant="image" style="height: 160px;" />
       </template>
@@ -18,7 +14,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IMagicPictureComponent } from '@/store/magic/magic-picture'
 @Component({
-  name: 'magicPicture'
+  name: 'magic_picture'
 })
 export default class extends Vue {
   @Prop({ type: Object, required: true }) componentData!: IMagicPictureComponent

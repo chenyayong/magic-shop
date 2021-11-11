@@ -12,12 +12,12 @@ div
     //- el-table-column(prop='page_scene_depict', label='页面场景', width='120')
     //- el-table-column(prop='page_sort_depict', label='显示终端', width='120')
     //- el-table-column(prop="id" label="页面类型" width="120")
-    el-table-column(label='操作', width='480')
+    el-table-column(label='操作', width='380')
       template(slot-scope='scope')
         el-button(icon='el-icon-view' @click="handlePrevView(scope)") 预览
         el-button(icon='el-icon-edit'  @click="handleEdit(scope)") 编辑
         el-button(icon='el-icon-link' @click="handleCopyLink(scope)") 复制链接
-        el-button(icon='el-icon-copy-document' @click="handleCopyPage(scope)") 复制页面
+        //- el-button(icon='el-icon-copy-document' @click="handleCopyPage(scope)") 复制页面
         el-button(icon='el-icon-delete' @click="handleDelete(scope)") 删除
 </template>
 <script lang="ts">

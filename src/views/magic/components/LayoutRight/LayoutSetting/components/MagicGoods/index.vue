@@ -6,39 +6,21 @@
         <el-collapse-item title="样式配置" name="1">
           <el-row type="flex" class="block">
             <el-col :span="8">背景颜色</el-col>
-            <el-col
-              ><el-color-picker v-model="componentData.data.background"></el-color-picker
-            ></el-col>
+            <el-col><el-color-picker v-model="componentData.data.background"></el-color-picker></el-col>
           </el-row>
           <el-row class="block">
             <el-col>内边距</el-col>
-            <el-col
-              ><el-slider
-                :min="0"
-                :max="30"
-                v-model="componentData.data.padding"
-                show-input=""
-              ></el-slider
-            ></el-col>
+            <el-col><el-slider :min="0" :max="30" v-model="componentData.data.padding" show-input=""></el-slider></el-col>
           </el-row>
           <el-row class="block">
             <el-col>商品圆角</el-col>
-            <el-col
-              ><el-slider
-                :min="0"
-                :max="50"
-                v-model="componentData.data.borderRadius"
-                show-input
-              ></el-slider
-            ></el-col>
+            <el-col><el-slider :min="0" :max="50" v-model="componentData.data.border_radius" show-input></el-slider></el-col>
           </el-row>
           <el-row class="block">
             <el-col>商品排列样式</el-col>
             <el-col>
               <el-radio-group v-model="componentData.data.layout">
-                <el-radio-button :label="item.label" v-for="item in layouts" :key="item.label">{{
-                  item.name
-                }}</el-radio-button>
+                <el-radio-button :label="item.label" v-for="item in layouts" :key="item.label">{{ item.name }}</el-radio-button>
               </el-radio-group>
             </el-col>
           </el-row>
@@ -46,9 +28,7 @@
             <el-col>商品属性</el-col>
             <el-col>
               <el-radio-group v-model="componentData.data.attribute">
-                <el-radio-button :label="item.label" v-for="item in attributes" :key="item.label">{{
-                  item.name
-                }}</el-radio-button>
+                <el-radio-button :label="item.label" v-for="item in attributes" :key="item.label">{{ item.name }}</el-radio-button>
               </el-radio-group>
             </el-col>
           </el-row>
@@ -56,24 +36,15 @@
             <el-col>内容显示</el-col>
             <el-col>
               <el-checkbox-group v-model="componentData.data.content">
-                <el-checkbox :label="item.label" v-for="item in contents" :key="item.label">{{
-                  item.name
-                }}</el-checkbox>
+                <el-checkbox :label="item.label" v-for="item in contents" :key="item.label">{{ item.name }}</el-checkbox>
               </el-checkbox-group>
             </el-col>
           </el-row>
         </el-collapse-item>
         <el-collapse-item title="数据配置" name="2">
           <magicGoodsDialog @confirm="goodsConfirm" :visible.sync="goodsVisible" />
-          <GoodsItem
-            v-for="item in componentData.data.items"
-            :key="item.id"
-            :data="item"
-            :list="componentData.data.items"
-          />
-          <el-button type="primary" style="width: 100%;" @click="goodsVisible = true"
-            >添加更多</el-button
-          >
+          <GoodsItem v-for="item in componentData.data.items" :key="item.id" :data="item" :list="componentData.data.items" />
+          <el-button type="primary" style="width: 100%;" @click="goodsVisible = true">添加更多</el-button>
         </el-collapse-item>
       </el-collapse>
     </el-form>
@@ -85,7 +56,7 @@ import GoodsItem from './components/GoodsItem/index.vue'
 import magicGoodsDialog from '@/components/magic-goods-dialog/index.vue'
 import { IMagicGoodsComponent, IMagicGoodsItem } from '@/store/magic/magic-goods'
 @Component({
-  name: 'magicGoods',
+  name: 'magic_goods',
   components: {
     magicGoodsDialog,
     GoodsItem

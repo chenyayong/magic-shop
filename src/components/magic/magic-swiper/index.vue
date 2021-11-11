@@ -19,7 +19,7 @@ import 'swiper/css/swiper.css'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IMagicSwiperComponent } from '@/store/magic/magic-swiper'
 @Component({
-  name: 'magicSwiper',
+  name: 'magic_swiper',
   components: {
     Swiper,
     SwiperSlide

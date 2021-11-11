@@ -7,14 +7,14 @@ import magicPictureGroup, { IMagicPictureGroup } from './magic-picture-group'
 import magicGoods, { IMagicGoods } from './magic-goods'
 
 export enum ComponentName {
-  magicSwiper = 'magicSwiper',
-  magicButtonGroup = 'magicButtonGroup',
-  magicPicture = 'magicPicture',
-  magicPictureGroup = 'magicPictureGroup',
-  magicGoods = 'magicGoods',
-  magicNotice = 'magicNotice',
-  magicPosition = 'magicPosition',
-  magicBackTop = 'magicBackTop'
+  magicSwiper = 'magic_swiper',
+  magicButtonGroup = 'magic_button_group',
+  magicPicture = 'magic_picture',
+  magicPictureGroup = 'magic_picture_group',
+  magicGoods = 'magic_goods',
+  magicNotice = 'magic_notice',
+  magicPosition = 'magic_position',
+  magicBackTop = 'magic_backTop'
 }
 
 export interface IComponentData {
@@ -26,14 +26,14 @@ export interface IComponentData {
 }
 
 export interface IComponentsFormDataMap {
-  magicSwiper: IMagicSwiper
-  magicButtonGroup: IMagicButtonGroup
-  magicPicture: IMagicPicture
-  magicPictureGroup: IMagicPictureGroup
-  magicGoods: IMagicGoods
-  magicNotice: any
-  magicPosition: any
-  magicBackTop: any
+  magic_swiper: IMagicSwiper
+  magic_button_group: IMagicButtonGroup
+  magic_picture: IMagicPicture
+  magic_picture_group: IMagicPictureGroup
+  magic_goods: IMagicGoods
+  magic_notice: any
+  magic_position: any
+  magic_backTop: any
 }
 
 export interface IComponent {
@@ -57,14 +57,14 @@ class magic extends VuexModule implements IState {
   public componentsFormDataIndex = 0
   public componentsFormData: IComponentData[] = []
   public componentsFormDataMap: IComponentsFormDataMap = {
-    magicSwiper: magicSwiper.state.rawData,
-    magicButtonGroup: magicButtonGroup.state.rawData,
-    magicPicture: magicPicture.state.rawData,
-    magicPictureGroup: magicPictureGroup.state.rawData,
-    magicGoods: magicGoods.state.rawData,
-    magicNotice: {},
-    magicPosition: {},
-    magicBackTop: {}
+    magic_swiper: magicSwiper.state.rawData,
+    magic_button_group: magicButtonGroup.state.rawData,
+    magic_picture: magicPicture.state.rawData,
+    magic_picture_group: magicPictureGroup.state.rawData,
+    magic_goods: magicGoods.state.rawData,
+    magic_notice: {},
+    magic_position: {},
+    magic_backTop: {}
   }
 
   public baseComponents = [

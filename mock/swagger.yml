@@ -53,7 +53,7 @@ paths:
             format: int32
             minimum: 0
             maximum: 50
-        - name: page_name
+        - name: page_title
           in: query
           description: 页面名称.
           schema:

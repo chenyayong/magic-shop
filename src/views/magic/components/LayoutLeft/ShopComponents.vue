@@ -29,7 +29,7 @@ const magic = namespace('magic')
 export default class extends Vue {
   @magic.State('shopComponents') compontents!: IComponent[]
   @magic.State('componentsFormDataMap') componentsFormDataMap!: IComponentsFormDataMap
-  private filterComponents = ['magicNotice', 'magicPosition', 'magicBackTop']
+  private filterComponents = ['magic_notice', 'magic_position', 'magic_backTop']
   private group = {
     name: 'site',
     pull: 'clone',

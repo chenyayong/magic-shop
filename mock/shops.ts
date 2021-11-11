@@ -26,9 +26,8 @@ const cellsData = (col: number, row: number) => {
         id: uuid(),
         size: '1:1',
         position: `${j}:${i}`,
-        imgUrl: imgUrl(),
-        imgLink: Mock.mock('@url()'),
-        filter: false
+        img_url: imgUrl(),
+        img_link: Mock.mock('@url()')
       }
       data.push(temp)
     }
@@ -46,46 +45,46 @@ const imgUrl = () => {
 
 function swiper() {
   const item = {
-    imgUrl: imgUrl(),
-    imgLink: Mock.mock('@url()')
+    img_url: imgUrl(),
+    img_link: Mock.mock('@url()')
   }
   const ret = {
     padding: Mock.mock('@integer(0, 100)'),
-    items: new Array(Mock.mock('@integer(1, 5)')).fill(item)
+    items: new Array(Mock.mock('@integer(1, 2)')).fill(item)
   }
   return ret
 }
 
 function buttonGroup() {
   const item = {
-    imgUrl: imgUrl(),
-    imgLink: Mock.mock('@url()'),
-    imgLabel: Mock.mock('@word(5)')
+    img_url: imgUrl(),
+    img_link: Mock.mock('@url()'),
+    img_label: Mock.mock('@word(5)')
   }
   const data = {
-    rowButtonCount: Mock.mock('@pick([4, 5])'),
+    row_button_count: Mock.mock('@pick([4, 5])'),
     swiper: Mock.mock('@pick([0, 1])'),
-    rowSwiper: Mock.mock('@pick([1, 2, 3])'),
-    paddingTop: Mock.mock('@integer(0, 100)'),
-    paddingBottom: Mock.mock('@integer(0, 100)'),
-    buttonSize: Mock.mock('@integer(30, 70)'),
-    buttonRound: Mock.mock('@integer(0, 35)'),
-    textSize: Mock.mock('@integer(12, 30)'),
-    textColor: Mock.mock('@color()'),
+    row_swiper: Mock.mock('@pick([1, 2, 3])'),
+    padding_top: Mock.mock('@integer(0, 100)'),
+    padding_bottom: Mock.mock('@integer(0, 100)'),
+    button_size: Mock.mock('@integer(30, 70)'),
+    button_round: Mock.mock('@integer(0, 35)'),
+    text_size: Mock.mock('@integer(12, 30)'),
+    text_color: Mock.mock('@color()'),
     background: Mock.mock('@color()'),
-    items: new Array(Mock.mock('@integer(1, 5)')).fill(item)
+    items: new Array(Mock.mock('@integer(1, 2)')).fill(item)
   }
   return data
 }
 
 function picture() {
   const item = {
-    imgUrl: imgUrl(),
-    imgLink: Mock.mock('@url()')
+    img_url: imgUrl(),
+    img_link: Mock.mock('@url()')
   }
   const ret = {
     padding: Mock.mock('@integer(0, 100)'),
-    items: new Array(Mock.mock('@integer(1, 5)')).fill(item)
+    items: new Array(Mock.mock('@integer(1, 2)')).fill(item)
   }
   return ret
 }
@@ -94,7 +93,7 @@ function pictureGroup() {
   const rawData = {
     background: Mock.mock('@color()'),
     padding: Mock.mock('@integer(0, 30)'),
-    gridsIndex: Mock.mock('@pick([0, 1, 2, 3])'),
+    grids_index: Mock.mock('@pick([0, 1, 2, 3])'),
     gridsData: [
       {
         scale: 1,
@@ -111,25 +110,22 @@ function pictureGroup() {
             id: uuid(),
             size: '1:2',
             position: '0:0',
-            imgUrl: imgUrl(),
-            imgLink: Mock.mock('@url()'),
-            filter: false
+            img_url: imgUrl(),
+            img_link: Mock.mock('@url()')
           },
           {
             id: uuid(),
             size: '1:1',
             position: '1:0',
-            imgUrl: imgUrl(),
-            imgLink: Mock.mock('@url()'),
-            filter: false
+            img_url: imgUrl(),
+            img_link: Mock.mock('@url()')
           },
           {
             id: uuid(),
             size: '1:1',
             position: '1:1',
-            imgUrl: imgUrl(),
-            imgLink: Mock.mock('@url()'),
-            filter: false
+            img_url: imgUrl(),
+            img_link: Mock.mock('@url()')
           }
         ]
       },
@@ -169,36 +165,36 @@ function goods() {
   const rawData = {
     background: Mock.mock('@color()'),
     padding: Mock.mock('@integer(0, 30)'),
-    borderRadius: Mock.mock('@integer(0, 50)'),
+    border_radius: Mock.mock('@integer(0, 50)'),
     layout: Mock.mock('@pick([0, 1, 2, 3])'),
     attribute: Mock.mock('@pick([0, 1, 2, 3, 4, 5])'),
     content: ['title', 'old_price', 'new_price', 'sales'].slice(0, Mock.mock('@pick([1, 2, 3, 4])')),
-    items: new Array(Mock.mock('@integer(1, 5)')).fill(item)
+    items: new Array(Mock.mock('@integer(1, 2)')).fill(item)
   }
   return rawData
 }
 
 const mapComponent: IMapComponent = {
-  magicSwiper: swiper,
-  magicButtonGroup: buttonGroup,
-  magicPicture: picture,
-  magicPictureGroup: pictureGroup,
-  magicGoods: goods
+  magic_swiper: swiper,
+  magic_button_group: buttonGroup,
+  magic_picture: picture,
+  magic_picture_group: pictureGroup,
+  magic_goods: goods
 }
 const mapLabel: IMapComponent = {
-  magicSwiper: '轮播图',
-  magicButtonGroup: '按钮组',
-  magicPicture: '单图',
-  magicPictureGroup: '图片组合',
-  magicGoods: '商品列表'
+  magic_swiper: '轮播图',
+  magic_button_group: '按钮组',
+  magic_picture: '单图',
+  magic_picture_group: '图片组合',
+  magic_goods: '商品列表'
 }
 
 function getShopData() {
   const ret: any[] = []
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 5; i++) {
     const componentData: IComponentData = {
       id: uuid(),
-      name: Mock.mock('@pick(["magicSwiper", "magicButtonGroup", "magicPicture", "magicPictureGroup", "magicGoods"])'),
+      name: Mock.mock('@pick(["magic_swiper", "magic_button_group", "magic_picture", "magic_picture_group", "magic_goods"])'),
       label: '',
       icon: Mock.mock('@pick(["el-icon-picture", "el-icon-switch-button", "el-icon-picture-outlin", "el-icon-camera", "商品列表"])'),
       data: {}

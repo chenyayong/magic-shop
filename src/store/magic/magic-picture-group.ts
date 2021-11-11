@@ -9,8 +9,8 @@ export const cellsData = (col: number, row: number) => {
         id: uuid(),
         size: '1:1',
         position: `${j}:${i}`,
-        imgUrl: '',
-        imgLink: '',
+        img_url: '',
+        img_link: '',
         filter: true
       }
       data.push(temp)
@@ -23,8 +23,8 @@ export interface IMagicPictureGroupItem {
   id?: string
   size: string
   position: string
-  imgUrl: string
-  imgLink: string
+  img_url: string
+  img_link: string
   filter?: boolean
 }
 export interface IMagicPictureGroupSub {
@@ -34,8 +34,8 @@ export interface IMagicPictureGroupSub {
   items: IMagicPictureGroupItem[]
 }
 export interface IMagicPictureGroup {
-  gridsIndex: number
-  gridsData: IMagicPictureGroupSub[]
+  grids_index: number
+  grids_data: IMagicPictureGroupSub[]
   background: string
   padding: number
 }
@@ -59,8 +59,8 @@ export default class extends VuexModule implements IState {
   public rawData = {
     background: '',
     padding: 0,
-    gridsIndex: 0,
-    gridsData: [
+    grids_index: 0,
+    grids_data: [
       {
         scale: 1,
         row: 1,
@@ -76,24 +76,24 @@ export default class extends VuexModule implements IState {
             id: uuid(),
             size: '1:2',
             position: '0:0',
-            imgUrl: '',
-            imgLink: '',
+            img_url: '',
+            img_link: '',
             filter: true
           },
           {
             id: uuid(),
             size: '1:1',
             position: '1:0',
-            imgUrl: '',
-            imgLink: '',
+            img_url: '',
+            img_link: '',
             filter: true
           },
           {
             id: uuid(),
             size: '1:1',
             position: '1:1',
-            imgUrl: '',
-            imgLink: '',
+            img_url: '',
+            img_link: '',
             filter: true
           }
         ]

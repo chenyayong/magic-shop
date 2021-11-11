@@ -1,14 +1,7 @@
 <template>
   <div class="grid-cell" ref="layout" :style="setGridStyle">
-    <div
-      class="cell"
-      :class="[itemIndex === index ? 'active' : '']"
-      @click="selectCell(index)"
-      :style="setItemStyle(item)"
-      v-for="(item, index) in data.items"
-      :key="index"
-    >
-      <div class="cell-sub" :style="{ 'background-image': `url(${item.imgUrl})` }"></div>
+    <div class="cell" :class="[itemIndex === index ? 'active' : '']" @click="selectCell(index)" :style="setItemStyle(item)" v-for="(item, index) in data.items" :key="index">
+      <div class="cell-sub" :style="{ 'background-image': `url(${item.img_url})` }"></div>
       <span class="cell-tips">{{ scaleTips(item) }}</span>
     </div>
   </div>

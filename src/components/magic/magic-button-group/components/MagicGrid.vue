@@ -2,7 +2,7 @@
   <div class="magic-grid">
     <grid :border="false" :column-num="componentData.data.rowButtonCount">
       <grid-item v-for="(item, index) in items" :key="index">
-        <el-skeleton :loading="!item.imgUrl">
+        <el-skeleton :loading="!item.img_url">
           <template slot="template">
             <el-row type="flex" justify="center">
               <el-skeleton-item variant="image" :style="imgStyle" />
@@ -14,10 +14,10 @@
           <template>
             <el-row>
               <div class="button-group__image">
-                <img :src="item.imgUrl" alt="" srcset="" :style="imgStyle" />
+                <img :src="item.img_url" alt="" srcset="" :style="imgStyle" />
               </div>
               <div class="button-group__text" :style="textStyle">
-                {{ item.imgLabel }}
+                {{ item.img_label }}
               </div>
             </el-row>
           </template>
@@ -47,23 +47,19 @@ export default class extends Vue {
 
   get imgStyle() {
     const style = {
-      width: this.componentData.data?.buttonSize + 'px',
-      height: this.componentData.data?.buttonSize + 'px',
-      borderRadius: this.componentData.data?.buttonRound + 'px'
+      width: this.componentData.data.button_size + 'px',
+      height: this.componentData.data.button_size + 'px',
+      borderRadius: this.componentData.data.button_round + 'px'
     }
     return style
   }
 
   get textStyle() {
     const style = {
-      color: this.componentData.data?.textColor,
-      fontSize: this.componentData.data?.textSize + 'px'
+      color: this.componentData.data.text_color,
+      fontSize: this.componentData.data.text_size + 'px'
     }
     return style
-  }
-
-  mounted() {
-    console.log('mounted grid', this.componentData)
   }
 }
 </script>

@@ -1,7 +1,7 @@
 import { VuexModule, Module } from 'vuex-module-decorators'
 export interface IMagicSwiperItem {
-  imgUrl: string
-  imgLink: string
+  img_url: string
+  img_link: string
 }
 export interface IMagicSwiper {
   padding?: number
@@ -28,8 +28,8 @@ export default class extends VuexModule implements IState {
     padding: 0,
     items: [
       {
-        imgUrl: '',
-        imgLink: ''
+        img_url: '',
+        img_link: ''
       }
     ]
   }

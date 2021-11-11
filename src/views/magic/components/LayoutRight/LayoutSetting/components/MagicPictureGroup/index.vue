@@ -19,14 +19,20 @@
             <el-row>魔方布局</el-row>
             <el-row>
               <el-col :span="6" v-for="(item, index) in gridsName" :key="index">
-                <svg-icon @click.native="changegridsIndex(index)" :class="[componentData.data.gridsIndex === index ? 'active' : '']" :name="item" width="50" height="50"></svg-icon>
+                <svg-icon
+                  @click.native="changegridsIndex(index)"
+                  :class="[componentData.data.grids_index === index ? 'active' : '']"
+                  :name="item"
+                  width="50"
+                  height="50"
+                ></svg-icon>
               </el-col>
             </el-row>
             <el-row>
               <el-alert title="选定布局区域，在下方添加图片，建议添加比例一致的图片" type="info" show-icon :closable="false"></el-alert>
             </el-row>
             <el-row>
-              <GridCell v-if="componentData.data.gridsIndex !== 3" :itemIndex.sync="gridCellIndex" :padding="componentData.data.padding" :data="gridData" />
+              <GridCell v-if="componentData.data.grids_index !== 3" :itemIndex.sync="gridCellIndex" :padding="componentData.data.padding" :data="gridData" />
               <GridTable v-else :data="gridData" :padding="componentData.data.padding" :itemIndex.sync="gridCellIndex" />
               <div style="margin-top: 20px;">
                 <magicSettingGrid :closable="false" v-for="(item, index) in magicSettingGrid" v-if="item" :item="item" :index="index" :key="index" :items="magicSettingGrid" />
@@ -45,7 +51,7 @@ import GridCell from './components/GridCell.vue'
 import magicSettingGrid from '@/components/magic-setting-grid/index.vue'
 import GridTable from './components/GridTable.vue'
 @Component({
-  name: 'magicPictureGroup',
+  name: 'magic_picture_group',
   components: {
     GridCell,
     GridTable,
@@ -59,16 +65,16 @@ export default class extends Vue {
   private gridsName = ['layout-2', 'layout-3', 'layout-4', 'layout-table']
 
   get gridData() {
-    const data = this.componentData.data.gridsData[this.componentData.data.gridsIndex]
+    const data = this.componentData.data.grids_data[this.componentData.data.grids_index]
     return data
   }
 
   get gridCellIndex() {
-    return this.gridsCellIndex[this.componentData.data.gridsIndex]
+    return this.gridsCellIndex[this.componentData.data.grids_index]
   }
 
   set gridCellIndex(index: number) {
-    this.$set(this.gridsCellIndex, this.componentData.data.gridsIndex, index)
+    this.$set(this.gridsCellIndex, this.componentData.data.grids_index, index)
   }
 
   get magicSettingGrid() {
@@ -77,7 +83,7 @@ export default class extends Vue {
   }
 
   changegridsIndex(index: number) {
-    this.componentData.data.gridsIndex = index
+    this.componentData.data.grids_index = index
   }
 }
 </script>

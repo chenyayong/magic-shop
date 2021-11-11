@@ -16,7 +16,7 @@ import MagicGrid from './components/MagicGrid.vue'
 import { IMagicButtonGroupComponent } from '@/store/magic/magic-button-group'
 
 @Component({
-  name: 'magicButtonGroup',
+  name: 'magic_button_group',
   components: {
     MagicGrid,
     Swiper,
@@ -35,13 +35,13 @@ export default class extends Vue {
 
   get swiperSlides() {
     let result = []
-    const items = this.componentData.data?.items as []
+    const items = this.componentData.data.items
     const length = items.length
-    const rowSwiper = this.componentData.data?.rowSwiper as number
-    const rowButtonCount = this.componentData.data?.rowButtonCount as number
+    const rowSwiper = this.componentData.data.row_swiper as number
+    const rowButtonCount = this.componentData.data.row_button_count as number
     const swiperCount = rowSwiper * rowButtonCount
     let page = 1
-    if (this.componentData.data?.swiper) {
+    if (this.componentData.data.swiper) {
       page = Math.ceil(length / swiperCount)
       for (let i = 0; i < page; i++) {
         const start = i * rowButtonCount
@@ -57,9 +57,9 @@ export default class extends Vue {
 
   get style() {
     const style = {
-      paddingTop: this.componentData.data?.paddingTop + 'px',
-      paddingBottom: this.componentData.data?.paddingBottom + 'px',
-      background: this.componentData.data?.background
+      paddingTop: this.componentData.data.padding_top + 'px',
+      paddingBottom: this.componentData.data.padding_bottom + 'px',
+      background: this.componentData.data.background
     }
     return style
   }

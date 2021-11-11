@@ -69,7 +69,7 @@ export default class extends Vue {
 
   get colStyle() {
     const style = {
-      borderRadius: this.componentData.data.borderRadius + 'px'
+      borderRadius: this.componentData.data.border_radius + 'px'
     }
     return style
   }

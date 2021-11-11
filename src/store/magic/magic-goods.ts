@@ -13,7 +13,7 @@ export enum ILayout {
 export interface IMagicGoods {
   background: string
   padding: number
-  borderRadius: number
+  border_radius: number
   layout: ILayout
   attribute: number
   content: string[]
@@ -38,7 +38,7 @@ export default class extends VuexModule implements IState {
   public rawData = {
     background: '',
     padding: 0,
-    borderRadius: 0,
+    border_radius: 0,
     layout: 1,
     attribute: 0,
     content: ['title', 'old_price', 'new_price'],
