@@ -49,7 +49,8 @@ function swiper() {
     img_link: Mock.mock('@url()')
   }
   const ret = {
-    padding: Mock.mock('@integer(0, 100)'),
+    // padding: Mock.mock('@integer(0, 100)'),
+    padding: 0,
     items: new Array(Mock.mock('@integer(1, 2)')).fill(item)
   }
   return ret
@@ -65,8 +66,10 @@ function buttonGroup() {
     row_button_count: Mock.mock('@pick([4, 5])'),
     swiper: Mock.mock('@pick([0, 1])'),
     row_swiper: Mock.mock('@pick([1, 2, 3])'),
-    padding_top: Mock.mock('@integer(0, 100)'),
-    padding_bottom: Mock.mock('@integer(0, 100)'),
+    // padding_top: Mock.mock('@integer(0, 100)'),
+    // padding_bottom: Mock.mock('@integer(0, 100)'),
+    padding_top: 0,
+    padding_bottom: 0,
     button_size: Mock.mock('@integer(30, 70)'),
     button_round: Mock.mock('@integer(0, 35)'),
     text_size: Mock.mock('@integer(12, 30)'),
@@ -83,7 +86,8 @@ function picture() {
     img_link: Mock.mock('@url()')
   }
   const ret = {
-    padding: Mock.mock('@integer(0, 100)'),
+    // padding: Mock.mock('@integer(0, 100)'),
+    padding: 0,
     items: new Array(Mock.mock('@integer(1, 2)')).fill(item)
   }
   return ret
@@ -92,9 +96,10 @@ function picture() {
 function pictureGroup() {
   const rawData = {
     background: Mock.mock('@color()'),
-    padding: Mock.mock('@integer(0, 30)'),
+    // padding: Mock.mock('@integer(0, 30)'),
+    padding: 0,
     grids_index: Mock.mock('@pick([0, 1, 2, 3])'),
-    gridsData: [
+    grids_data: [
       {
         scale: 1,
         row: 1,
@@ -164,7 +169,8 @@ function goods() {
   const item = goodsItem()
   const rawData = {
     background: Mock.mock('@color()'),
-    padding: Mock.mock('@integer(0, 30)'),
+    // padding: Mock.mock('@integer(0, 30)'),
+    padding: 0,
     border_radius: Mock.mock('@integer(0, 50)'),
     layout: Mock.mock('@pick([0, 1, 2, 3])'),
     attribute: Mock.mock('@pick([0, 1, 2, 3, 4, 5])'),
@@ -191,12 +197,12 @@ const mapLabel: IMapComponent = {
 
 function getShopData() {
   const ret: any[] = []
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 3; i++) {
     const componentData: IComponentData = {
       id: uuid(),
       name: Mock.mock('@pick(["magic_swiper", "magic_button_group", "magic_picture", "magic_picture_group", "magic_goods"])'),
       label: '',
-      icon: Mock.mock('@pick(["el-icon-picture", "el-icon-switch-button", "el-icon-picture-outlin", "el-icon-camera", "商品列表"])'),
+      icon: Mock.mock('@pick(["el-icon-picture", "el-icon-switch-button", "el-icon-picture-outlin", "el-icon-camera", "el-icon-goods"])'),
       data: {}
     }
     componentData.label = mapLabel[componentData.name]

@@ -1,11 +1,11 @@
 <template>
   <div class="magic-picture" :style="style">
-    <el-skeleton :loading="!item.imgUrl" v-for="(item, index) in componentData.data.items" :key="index">
+    <el-skeleton :loading="!item.img_url" v-for="(item, index) in componentData.data.items" :key="index">
       <template slot="template">
         <el-skeleton-item variant="image" style="height: 160px;" />
       </template>
       <div class="picture">
-        <img :src="item.imgUrl" alt="" srcset="" />
+        <img :src="item.img_url" alt="" srcset="" />
       </div>
     </el-skeleton>
   </div>

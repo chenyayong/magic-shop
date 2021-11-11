@@ -57,7 +57,6 @@ const components = files.keys().reduce((ret: iComponents, file: string): iCompon
   ret[name] = component
   return ret
 }, {})
-console.log(components)
 @Component({
   name: 'LayoutContent',
   components: {
