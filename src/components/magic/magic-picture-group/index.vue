@@ -75,6 +75,9 @@ export default class extends Vue {
 }
 </script>
 <style scoped lang="scss">
+.magic-picture-group {
+  position: relative;
+}
 .magic-picture-group ::v-deep .el-skeleton {
   height: 100%;
 }

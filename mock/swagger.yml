@@ -52,6 +52,23 @@ paths:
         - goods
       summary: 商品列表
       operationId: getGoods
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 5
+            # minimum: 5
+            # maximum: 50
+        - in: query
+          name: title
+          schema:
+            type: string
       responses:
         '200':
           $ref: '#/components/responses/Goods'
@@ -59,7 +76,7 @@ paths:
     get:
       tags:
         - shops
-      summary: 店铺页面列表
+      summary: 店铺列表
       operationId: getShops
       parameters:
         - name: page
@@ -79,10 +96,78 @@ paths:
           in: query
           schema:
             type: string
+        - name: id
+          in: query
+          schema:
+            type: integer
       responses:
         '200':
           $ref: '#/components/responses/Shops'
+    post:
+      tags:
+        - shops
+      summary: 创建店铺
+      operationId: createShop
+      requestBody:
+        $ref: '#/components/requestBodies/Shops'
+      responses:
+        '200':
+          description: ok
+  /shops/{shopId}:
+    get:
+      tags:
+        - shops
+      summary: 店铺信息
+      operationId: getShop
+      parameters:
+        - in: path
+          name: shopId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ok
+
+    delete:
+      tags:
+        - shops
+      summary: 删除店铺
+      operationId: deleteShop
+      parameters:
+        - in: path
+          name: shopId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ok
+    put:
+      tags:
+        - shops
+      summary: 更新店铺
+      operationId: updateShop
+      parameters:
+        - in: path
+          name: shopId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/Shops'
+      responses:
+        '200':
+          description: ok
 components:
+  requestBodies:
+    Shops:
+      description: 店铺JSON Object
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Shops'
   responses:
     NotFound:
       description: The specified resource was not found
@@ -91,7 +176,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            code: 4004
+            code: 40004
             message: not found
     Images:
       description: ok
@@ -102,7 +187,7 @@ components:
             properties:
               code:
                 type: integer
-                example: 2000
+                example: 20000
               msg:
                 type: string
               data:
@@ -130,7 +215,7 @@ components:
             properties:
               code:
                 type: integer
-                example: 2000
+                example: 20000
               msg:
                 type: string
               data:
@@ -168,24 +253,7 @@ components:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              id:
-                type: integer
-              updated_at:
-                type: string
-                format: date
-              page_title:
-                type: string
-              shop_data:
-                type: array
-                items:
-                  anyOf:
-                    - $ref: '#/components/schemas/Swiper'
-                    - $ref: '#/components/schemas/ButtonGroup'
-                    - $ref: '#/components/schemas/Picture'
-                    - $ref: '#/components/schemas/PictureGroup'
-                    - $ref: '#/components/schemas/Goods'
+            $ref: '#/components/schemas/Shops'
   schemas:
     Error:
       type: object
@@ -197,6 +265,27 @@ components:
       required:
         - code
         - message
+    Shops:
+      type: object
+      properties:
+        id:
+          type: integer
+        updated_at:
+          type: string
+          format: date
+        page_title:
+          type: string
+        page_icon:
+          type: string
+        shop_data:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/Swiper'
+              - $ref: '#/components/schemas/ButtonGroup'
+              - $ref: '#/components/schemas/Picture'
+              - $ref: '#/components/schemas/PictureGroup'
+              - $ref: '#/components/schemas/Goods'
     Swiper:
       type: object
       properties:
@@ -392,7 +481,7 @@ components:
           example: magic_goods
         label:
           type: string
-          example: 商品列表
+          example: 商品列表组件
         icon:
           type: string
           example: el-icon-goods
@@ -459,7 +548,7 @@ components:
       description: >
         Sort order:
          * `20000` - success
-         * `4004`  - not found
+         * `40004`  - not found
          * `50001` - invalid access token
          * `50002` - already login in other place
          * `50003` - access token expired

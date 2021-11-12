@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-content">
+  <div class="layout-content" v-loading="loading">
     <div class="content-main">
       <el-scrollbar>
         <draggable class="draggable" :group="group" :sort="true" :list="componentsFormData" @change="draggableChange">
@@ -30,8 +30,8 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import draggable from 'vuedraggable'
-import { IComponentData } from '@/store/magic'
-
+import { IComponentData, IPageData } from '@/store/magic'
+import { getShop } from '@/api/shops'
 const magic = namespace('magic')
 const magicAsidebar = namespace('magicAsidebar')
 
@@ -68,10 +68,11 @@ export default class extends Vue {
   @magic.State('componentsFormDataIndex') componentsFormDataIndex!: number
   @magic.State('componentsFormData') componentsFormData!: IComponentData[]
   @magic.Mutation('SET_COMPONENTS_FORM_DATA_INDEX') SET_COMPONENTS_FORM_DATA_INDEX!: (index?: number) => void
-
+  @magic.Mutation('SET_COMPONENTS_FORM_DATA') SET_COMPONENTS_FORM_DATA!: (data?: IComponentData[]) => void
+  @magic.Mutation('SET_PAGE_DATA') SET_PAGE_DATA!: (data: IPageData) => void
   @magic.Mutation('DELE_COMPONENTS_FORM_DATA') DELE_COMPONENTS_FORM_DATA!: (id: string) => void
   @magicAsidebar.Mutation('SET_ASIDEBAR_DATA_INDEX') SET_ASIDEBAR_DATA_INDEX!: (index: number) => void
-
+  private loading = true
   private group = {
     name: 'site',
     pull: false,
@@ -104,6 +105,48 @@ export default class extends Vue {
   changeActive(index: number) {
     this.SET_COMPONENTS_FORM_DATA_INDEX(index)
     this.SET_ASIDEBAR_DATA_INDEX(1)
+  }
+
+  async getShop(id: number) {
+    const res = (await getShop(id)) as any
+    if (res && res.code && res.code === 20000) {
+      const data = res.data as IPageData
+      const pageData = {
+        page_title: data.page_title || '',
+        page_icon: data.page_icon || ''
+      }
+      this.SET_COMPONENTS_FORM_DATA(data.shop_data)
+      this.SET_PAGE_DATA(pageData)
+    } else {
+      this.$message({
+        type: 'error',
+        message: res.msg
+      })
+    }
+  }
+
+  create() {
+    this.loading = true
+  }
+
+  async mounted() {
+    const id = parseInt(this.$route.query.id as string)
+    if (id === 0 || id) {
+      await this.getShop(id)
+      this.loading = false
+    } else {
+      this.loading = false
+    }
+  }
+
+  beforeDestroy() {
+    this.SET_COMPONENTS_FORM_DATA([])
+    this.SET_COMPONENTS_FORM_DATA_INDEX(0)
+    this.SET_ASIDEBAR_DATA_INDEX(0)
+    this.SET_PAGE_DATA({
+      page_title: '',
+      page_icon: ''
+    })
   }
 }
 </script>

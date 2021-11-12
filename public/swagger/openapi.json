@@ -14,7 +14,7 @@
   },
   "servers": [
     {
-      "url": "http://192.168.1.106:9528/mock-api/v1"
+      "url": "http://localhost:9528/mock-api/v1"
     }
   ],
   "tags": [
@@ -66,14 +66,7 @@
         ],
         "responses": {
           "200": {
-            "description": "ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Images"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Images"
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
@@ -90,14 +83,7 @@
         "operationId": "getGoods",
         "responses": {
           "200": {
-            "description": "ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/shops"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Goods"
           }
         }
       }
@@ -130,7 +116,7 @@
             }
           },
           {
-            "name": "page_name",
+            "name": "page_title",
             "in": "query",
             "schema": {
               "type": "string"
@@ -139,14 +125,7 @@
         ],
         "responses": {
           "200": {
-            "description": "ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/shops"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Shops"
           }
         }
       }
@@ -164,6 +143,160 @@
             "example": {
               "code": 4004,
               "message": "not found"
+            }
+          }
+        }
+      },
+      "Images": {
+        "description": "ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 2000
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "src": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Goods": {
+        "description": "ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 2000
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "src": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "integer",
+                            "enum": [
+                              0,
+                              1
+                            ],
+                            "description": "0: 代表下架，1：代表上架"
+                          },
+                          "new_price": {
+                            "type": "number",
+                            "format": "float"
+                          },
+                          "old_price": {
+                            "type": "number",
+                            "format": "float"
+                          },
+                          "stock": {
+                            "type": "integer"
+                          },
+                          "sales": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Shops": {
+        "description": "ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "page_title": {
+                  "type": "string"
+                },
+                "shop_data": {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "$ref": "#/components/schemas/Swiper"
+                      },
+                      {
+                        "$ref": "#/components/schemas/ButtonGroup"
+                      },
+                      {
+                        "$ref": "#/components/schemas/Picture"
+                      },
+                      {
+                        "$ref": "#/components/schemas/PictureGroup"
+                      },
+                      {
+                        "$ref": "#/components/schemas/Goods"
+                      }
+                    ]
+                  }
+                }
+              }
             }
           }
         }
@@ -185,20 +318,28 @@
           "message"
         ]
       },
-      "Images": {
+      "Swiper": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "integer",
-            "example": 2000
-          },
-          "msg": {
+          "id": {
             "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "example": "magic_swiper"
+          },
+          "label": {
+            "type": "string",
+            "example": "轮播图"
+          },
+          "icon": {
+            "type": "string",
+            "example": "el-icon-picture"
           },
           "data": {
             "type": "object",
             "properties": {
-              "total": {
+              "padding": {
                 "type": "integer"
               },
               "items": {
@@ -206,13 +347,10 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "integer"
-                    },
-                    "src": {
+                    "img_url": {
                       "type": "string"
                     },
-                    "title": {
+                    "img_link": {
                       "type": "string"
                     }
                   }
@@ -222,20 +360,125 @@
           }
         }
       },
-      "goods": {
+      "ButtonGroup": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "integer",
-            "example": 2000
-          },
-          "msg": {
+          "id": {
             "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "example": "magic_button_group"
+          },
+          "label": {
+            "type": "string",
+            "example": "按钮组"
+          },
+          "icon": {
+            "type": "string",
+            "example": "el-icon-switch-button"
           },
           "data": {
             "type": "object",
             "properties": {
-              "total": {
+              "row_button_count": {
+                "type": "integer",
+                "enum": [
+                  4,
+                  5
+                ]
+              },
+              "swiper": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ]
+              },
+              "row_swiper": {
+                "type": "integer",
+                "enum": [
+                  1,
+                  2,
+                  3
+                ]
+              },
+              "padding_top": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "padding_bottom": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "button_size": {
+                "type": "integer",
+                "minimum": 30,
+                "maximum": 70
+              },
+              "button_round": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 35
+              },
+              "text_size": {
+                "type": "integer",
+                "minimum": 12,
+                "maximum": 12
+              },
+              "text_color": {
+                "type": "string",
+                "example": "#fff"
+              },
+              "background": {
+                "type": "string",
+                "example": "#000"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "img_url": {
+                      "type": "string"
+                    },
+                    "img_link": {
+                      "type": "string"
+                    },
+                    "img_label": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Picture": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "example": "magic_picture"
+          },
+          "label": {
+            "type": "string",
+            "example": "单图"
+          },
+          "icon": {
+            "type": "string",
+            "example": "el-icon-picture-outlin"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "padding": {
                 "type": "integer"
               },
               "items": {
@@ -243,13 +486,178 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "integer"
-                    },
-                    "src": {
+                    "img_url": {
                       "type": "string"
                     },
-                    "title": {
+                    "img_link": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PictureGroup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "example": "magic_picture_group"
+          },
+          "label": {
+            "type": "string",
+            "example": "图片组合"
+          },
+          "icon": {
+            "type": "string",
+            "example": "el-icon-camera"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "background": {
+                "type": "string",
+                "example": "#fff"
+              },
+              "padding": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 30
+              },
+              "grids_index": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              },
+              "grids_data": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "scale": {
+                      "type": "integer"
+                    },
+                    "row": {
+                      "type": "integer"
+                    },
+                    "col": {
+                      "type": "integer"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "size": {
+                            "type": "string",
+                            "example": "1:1"
+                          },
+                          "position": {
+                            "type": "string",
+                            "example": "1:1"
+                          },
+                          "img_url": {
+                            "type": "string"
+                          },
+                          "img_link": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Goods": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "example": "magic_goods"
+          },
+          "label": {
+            "type": "string",
+            "example": "商品列表"
+          },
+          "icon": {
+            "type": "string",
+            "example": "el-icon-goods"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "background": {
+                "type": "string",
+                "example": "#fff"
+              },
+              "padding": {
+                "type": "integer"
+              },
+              "border_radius": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 50
+              },
+              "layout": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              },
+              "attribute": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5
+                ]
+              },
+              "content": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "title",
+                  "old_price",
+                  "new_price",
+                  "sales"
+                ]
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "src": {
                       "type": "string"
                     },
                     "status": {
@@ -257,8 +665,7 @@
                       "enum": [
                         0,
                         1
-                      ],
-                      "description": "0: 代表下架，1：代表上架"
+                      ]
                     },
                     "new_price": {
                       "type": "number",
@@ -278,21 +685,6 @@
                 }
               }
             }
-          }
-        }
-      },
-      "shops": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date"
-          },
-          "page_name": {
-            "type": "string"
           }
         }
       },

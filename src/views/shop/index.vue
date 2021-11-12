@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable vue/camelcase -->
-  <div>
+  <div class="shops">
     <magic-search>
       <el-input placeholder="请输入页面标题" v-model="page_title" @change="handleSearch" />
       <template v-slot:button-group>
@@ -16,23 +16,21 @@
         <template slot-scope="scope">
           <el-button icon="el-icon-view" @click="handlePrevView(scope)">预览</el-button>
           <el-button icon="el-icon-view" @click="handleEdit(scope)">编辑</el-button>
-          <el-button icon="el-icon-view" @click="handleCopyLink(scope)">复制链接</el-button>
+          <el-button icon="el-icon-view" @click="handleCopyLink(scope, $event)">复制链接</el-button>
           <el-button icon="el-icon-view" @click="handleDelete(scope)">删除</el-button>
         </template>
       </el-table-column>
     </magic-table>
-    <el-dialog title="提示" width="375px" :visible.sync="dialogVisible">
-      <div class="layout-content">
-        <div class="content-main">
-          <el-scrollbar>
-            <component :key="item.id" v-for="item in componentsFormData" :is="item.name" :componentData="item"></component>
-          </el-scrollbar>
-        </div>
+    <el-dialog title="预览" width="375px" :visible.sync="dialogVisible">
+      <div class="content-main">
+        <el-scrollbar>
+          <component :key="item.id" v-for="item in componentsFormData" :is="item.name" :componentData="item"></component>
+        </el-scrollbar>
       </div>
-      <span slot="footer" class="dialog-footer">
+      <!-- <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span>
+      </span> -->
     </el-dialog>
   </div>
 </template>
@@ -40,7 +38,8 @@
 import { Vue, Component } from 'vue-property-decorator'
 import magicTable from '@/components/magic-table/index.vue'
 import magicSearch from '@/components/magic-search/index.vue'
-import { getShops } from '@/api/shops'
+import { getShops, deleteShop } from '@/api/shops'
+import { handleClipboard } from '@/utils/clipboard'
 interface iComponents {
   [key: string]: Vue
 }
@@ -86,6 +85,25 @@ export default class extends Vue {
     this.loading = false
   }
 
+  async deleteShop(id: number) {
+    this.loading = true
+    const res = (await deleteShop(id)) as any
+    if (res && res.code && res.code === 20000) {
+      this.$message({
+        type: 'success',
+        message: '删除成功!'
+      })
+      this.getShops()
+    } else {
+      this.$message({
+        type: 'success',
+        message: '删除失败!'
+      })
+    }
+
+    this.loading = false
+  }
+
   created() {
     this.getShops()
   }
@@ -106,11 +124,14 @@ export default class extends Vue {
   }
 
   handleEdit(scope: any) {
+    this.$router.push({ path: '/magic', query: { id: scope.row.id } })
     console.log('prevView', scope)
   }
 
-  handleCopyLink(scope: any) {
-    console.log('prevView', scope)
+  handleCopyLink(scope: any, event: MouseEvent) {
+    const link = `/magic?id=${scope.row.id}`
+    handleClipboard(link, event)
+    // console.log('prevView', scope)
   }
 
   handleCopyPage(scope: any) {
@@ -124,33 +145,26 @@ export default class extends Vue {
       cancelButtonText: '取消',
       type: 'warning'
     }).then(() => {
-      this.$message({
-        type: 'success',
-        message: '删除成功!'
-      })
+      this.deleteShop(scope.row.id)
     })
   }
 }
 </script>
 
 <style scoped lang="scss">
-// .content-main {
-//   position: absolute;
-//   left: 50%;
-//   top: 50%;
-//   transform: translate(-50%, -50%);
-//   width: 375px;
-//   height: 667px;
-//   background: #fff;
-//   box-shadow: -10px 20px 30px 0px rgb(192 197 205 / 80%);
-// }
+.content-main {
+  height: 667px;
+}
 .el-scrollbar {
   height: 100%;
 }
-.layout-content ::v-deep .el-scrollbar__wrap {
+.content-main ::v-deep .el-scrollbar__wrap {
   overflow-x: hidden !important;
   .el-scrollbar__view {
     height: 100%;
   }
+}
+.shops ::v-deep .el-dialog__body {
+  padding: 0;
 }
 </style>

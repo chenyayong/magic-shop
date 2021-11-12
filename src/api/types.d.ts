@@ -50,6 +50,7 @@ export interface iShopData {
   updated_at: Date
   page_title: string
   shop_data: IComponentData[]
+  page_icon: string
   // page_scene_depict: string
 }
 

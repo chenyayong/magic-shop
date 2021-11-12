@@ -217,15 +217,17 @@ for (let i = 0; i < articleCount; i++) {
     id: i,
     updated_at: Mock.mock('@datetime'),
     page_title: Mock.mock('@title'),
+    page_icon: Mock.mock('@image()'),
     shop_data: getShopData()
     // page_scene_depict: Mock.mock('@word')
   })
 }
 export const getShops = (req: Request, res: Response) => {
-  const { page = 1, limit = 10, page_title } = req.query
+  const { page = 1, limit = 10, page_title, id } = req.query
 
   const mockList = shopList.filter((item) => {
     if (page_title && page_title !== item.page_title) return false
+    if (id && parseInt(id as string) !== item.id) return false
     return true
   })
 
@@ -238,5 +240,72 @@ export const getShops = (req: Request, res: Response) => {
       total: mockList.length,
       items: pageList
     }
+  })
+}
+
+export const deleteShop = (req: Request, res: Response) => {
+  const { shopId } = req.params
+  const index = shopList.findIndex((e) => e.id === parseInt(shopId))
+  if (index > -1) {
+    shopList.splice(index, 1)
+    return res.json({
+      code: 20000,
+      msg: '成功',
+      data: {}
+    })
+  } else {
+    return res.json({
+      code: 40004,
+      msg: '失败'
+    })
+  }
+}
+
+export const updateShop = (req: Request, res: Response) => {
+  const { shopId } = req.params
+  const body = req.body
+  const index = shopList.findIndex((e) => e.id === parseInt(shopId))
+  if (index > -1) {
+    const id = shopList[index].id
+    shopList[index] = body
+    shopList[index].id = id
+    return res.json({
+      code: 20000,
+      msg: '成功'
+    })
+  } else {
+    return res.json({
+      code: 40004,
+      msg: '失败'
+    })
+  }
+}
+
+export const getShop = (req: Request, res: Response) => {
+  const { shopId } = req.params
+  const item = shopList.find((e) => e.id === parseInt(shopId))
+  if (item) {
+    return res.json({
+      code: 20000,
+      msg: '成功',
+      data: item
+    })
+  } else {
+    return res.json({
+      code: 40004,
+      msg: '失败'
+    })
+  }
+}
+
+export const createShop = (req: Request, res: Response) => {
+  const body = req.body
+  let id = shopList[shopList.length - 1].id
+  id++
+  body.id = id
+  shopList.unshift(body)
+  return res.json({
+    code: 20000,
+    msg: '成功'
   })
 }

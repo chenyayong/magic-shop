@@ -51,11 +51,26 @@ interface IState {
   shopComponents: IComponent[]
   saleComponents: IComponent[]
 }
+
+export interface IPageData {
+  id?: number
+  page_title: string
+  page_icon: string
+  page_description?: string
+  updated_at?: string
+  shop_data?: IComponentData[]
+}
+
 @Module({ namespaced: true })
 class magic extends VuexModule implements IState {
   public name = 'magic'
   public componentsFormDataIndex = 0
   public componentsFormData: IComponentData[] = []
+  public pageData: IPageData = {
+    page_title: '',
+    page_icon: ''
+  }
+
   public componentsFormDataMap: IComponentsFormDataMap = {
     magic_swiper: magicSwiper.state.rawData,
     magic_button_group: magicButtonGroup.state.rawData,
@@ -239,6 +254,16 @@ class magic extends VuexModule implements IState {
   get componentsFormDataCurrentItem() {
     const ret = this.componentsFormData[this.componentsFormDataIndex]
     return ret
+  }
+
+  @Mutation
+  SET_PAGE_DATA(data: IPageData) {
+    this.pageData = data
+  }
+
+  @Mutation
+  SET_COMPONENTS_FORM_DATA(data: IComponentData[]) {
+    this.componentsFormData = data
   }
 
   @Mutation
