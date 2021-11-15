@@ -21,7 +21,7 @@ export default class extends Vue {
   @magic.State('componentsFormData') componentsFormData: any
   @magic.State('pageData') pageData: any
   async updateShop(id: number, data: any) {
-    const res = (await updateShop(id, data)) as any
+    const res = await updateShop(id, data)
     if (res && res.code === 20000) {
       this.$message({
         type: 'success',
@@ -36,7 +36,7 @@ export default class extends Vue {
   }
 
   async createShop(data: any) {
-    const res = (await createShop(data)) as any
+    const res = await createShop(data)
     if (res && res.code === 20000) {
       this.$message({
         type: 'success',

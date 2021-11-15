@@ -1,49 +1,29 @@
 <template>
   <div class="magic-goods-dialog">
-    <el-dialog
-      title="选择添加商品"
-      :visible.sync="visible"
-      width="800px"
-      :append-to-body="true"
-      :before-close="beforeClose"
-    >
+    <el-dialog title="选择添加商品" :visible.sync="visible" width="830px" :append-to-body="true" :before-close="beforeClose">
       <el-row type="flex" class="block">
-        <el-input
-          placeholder="请输入关键字搜索"
-          v-model="params.title"
-          @change="titleChange"
-        ></el-input>
+        <el-input placeholder="请输入商品名称" v-model="params.goods_name" @change="titleChange"></el-input>
         <el-button type="primary" style="margin-left: 10px">搜 索</el-button>
       </el-row>
       <el-row class="block">
         <el-table :data="tabelData" border ref="multipleTable" v-loading="loading" row-key="id">
-          <el-table-column
-            type="selection"
-            align="center"
-            width="50"
-            :reserve-selection="true"
-          ></el-table-column>
-          <el-table-column property="id" align="center" label="商品ID" width="70"></el-table-column>
-          <el-table-column property="src" align="center" label="商品图片" width="100">
+          <el-table-column type="selection" align="center" width="50" :reserve-selection="true"></el-table-column>
+          <el-table-column property="goods_id" align="center" label="商品ID" width="70"></el-table-column>
+          <el-table-column property="original_img" align="center" label="商品图片" width="100">
             <div slot-scope="{ row }">
-              <img :src="row.src" alt="" srcset="" style="width: 50px;height: 50px;" />
+              <img :src="row.original_img" alt="" srcset="" style="width: 50px;height: 50px;" />
             </div>
           </el-table-column>
-          <el-table-column
-            property="title"
-            align="center"
-            label="商品名称"
-            width="160"
-            show-overflow-tooltip
-          ></el-table-column>
+          <el-table-column property="goods_name" align="center" label="商品名称" width="160" show-overflow-tooltip></el-table-column>
           <el-table-column property="status" align="center" label="商品状态" width="80">
             <div slot-scope="{ row }">
-              <span>{{ row.status === 1 ? '上架' : '下架' }}</span>
+              <span>{{ row.is_on_sale === 1 ? '上架' : '下架' }}</span>
             </div>
           </el-table-column>
-          <el-table-column property="new_price" align="center" label="商品原价"></el-table-column>
-          <el-table-column property="old_price" align="center" label="商品现价"></el-table-column>
-          <el-table-column property="stock" align="center" label="库存"></el-table-column>
+          <el-table-column property="cost_price" align="center" label="商品原价"></el-table-column>
+          <el-table-column property="shop_price" align="center" label="商品现价"></el-table-column>
+          <el-table-column property="store_count" align="center" label="库存"></el-table-column>
+          <el-table-column property="sales_sum" align="center" label="销量"></el-table-column>
         </el-table>
       </el-row>
       <el-row type="flex" justify="end">
@@ -94,7 +74,7 @@ export default class extends Vue {
   private params = {
     page: 1,
     limit: 5,
-    title: ''
+    goods_name: ''
   }
 
   currentChange(page: number) {
@@ -103,7 +83,7 @@ export default class extends Vue {
   }
 
   titleChange(value: string) {
-    this.params.title = value
+    this.params.goods_name = value
     this.getGoods()
   }
 
@@ -138,8 +118,14 @@ export default class extends Vue {
   async getGoods() {
     this.loading = true
     const res = await getGoods(this.params)
-    this.tabelData = res.data.items
-    this.total = res.data.total
+    if (res.code === 20000) {
+      this.tabelData = res.data.items
+      this.total = res.data.total
+    } else {
+      this.tabelData = []
+      this.total = 0
+    }
+
     this.loading = false
   }
 

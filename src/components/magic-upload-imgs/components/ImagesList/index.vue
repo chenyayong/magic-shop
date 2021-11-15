@@ -1,23 +1,14 @@
 <template>
   <div class="images-list" v-loading="loading">
-    <el-row type="flex" class="block">
-      <el-input
-        placeholder="请输入图片名称"
-        v-model="params.title"
-        @change="titleChange"
-      ></el-input>
+    <!-- <el-row type="flex" class="block">
+      <el-input placeholder="请输入图片名称" v-model="params.title" @change="titleChange"></el-input>
       <el-button type="primary" style="margin-left: 10px">搜 索</el-button>
-    </el-row>
+    </el-row> -->
     <template v-if="list && list.length">
       <ul class="el-upload-list el-upload-list--picture-card">
-        <li
-          @click="handleSelect(item)"
-          class="el-upload-list__item is-success"
-          v-for="item in list"
-          :key="item.id"
-        >
-          <img :src="item.src" alt="" class="el-upload-list__item-thumbnail" />
-          <span class="el-upload-list__item-actions" :class="[item.src === imgUrl ? 'active' : '']">
+        <li @click="handleSelect(item)" class="el-upload-list__item is-success" v-for="item in list" :key="item.img_id">
+          <img :src="item.image_url" alt="" class="el-upload-list__item-thumbnail" />
+          <span class="el-upload-list__item-actions" :class="[item.image_url === imgUrl ? 'active' : '']">
             <i class="el-icon-circle-check"></i>
           </span>
         </li>
@@ -56,8 +47,8 @@ export default class extends Vue {
   private total = 0
   private params = {
     page: 1,
-    limit: 10,
-    title: ''
+    limit: 10
+    // title: ''
   }
 
   mounted() {
@@ -70,10 +61,10 @@ export default class extends Vue {
     this.getList()
   }
 
-  titleChange(value: string) {
-    this.params.title = value
-    this.getList()
-  }
+  // titleChange(value: string) {
+  //   this.params.title = value
+  //   this.getList()
+  // }
 
   limitChange(value: number) {
     this.params.limit = value
@@ -83,13 +74,18 @@ export default class extends Vue {
   async getList() {
     this.loading = true
     const res = await getImages(this.params)
-    this.list = res.data.items
-    this.total = res.data.total
+    if (res.code === 20000) {
+      this.list = res.data.items
+      this.total = res.data.total
+    } else {
+      this.list = []
+      this.total = 0
+    }
     this.loading = false
   }
 
   handleSelect(item: IImages) {
-    this.$emit('update:imgUrl', item.src)
+    this.$emit('update:imgUrl', item.image_url)
   }
 }
 </script>

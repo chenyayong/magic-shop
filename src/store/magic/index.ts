@@ -58,7 +58,7 @@ export interface IPageData {
   page_icon: string
   page_description?: string
   updated_at?: string
-  shop_data?: IComponentData[]
+  shop_data?: JSON
 }
 
 @Module({ namespaced: true })

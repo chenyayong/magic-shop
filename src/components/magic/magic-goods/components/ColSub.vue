@@ -2,7 +2,7 @@
   <!--  eslint-disable vue/no-use-v-if-with-v-for -->
   <div class="col-sub">
     <div class="block-img">
-      <img :src="item.src" alt="" srcset="" />
+      <img :src="item.original_img" alt="" srcset="" />
       <svg-icon v-if="attribute" :name="attribute" width="30" height="30" color="#F56C6C"></svg-icon>
     </div>
     <div class="label" :class="[key]" v-for="(value, key) in contentMap" v-if="contentFilter(key)" :key="key">{{ value }} {{ item[key] }}</div>
@@ -20,10 +20,10 @@ export default class extends Vue {
   @Prop({ type: String, required: true }) attribute!: string
   @Prop({ type: Array, required: true }) content!: string[]
   private contentMap = {
-    title: '',
-    sales: '销量',
-    new_price: '￥',
-    old_price: '￥'
+    goods_name: '',
+    sales_sum: '销量',
+    shop_price: '￥',
+    cost_price: '￥'
   }
 
   contentFilter(key: string) {
@@ -60,7 +60,7 @@ export default class extends Vue {
     padding-left: 6px;
     color: $--color-text-secondary;
   }
-  .title {
+  .goods_name {
     color: $--color-text-primary;
     font-weight: bold;
     text-overflow: -o-ellipsis-lastline;
@@ -72,14 +72,15 @@ export default class extends Vue {
     -webkit-box-orient: vertical;
     margin-top: 6px;
   }
-  .sales {
+  .sales_sum {
     margin-top: 12px;
   }
-  .new_price {
+  .shop_price {
     color: $--color-danger;
     margin-top: 12px;
+    font-size: 16px;
   }
-  .old_price {
+  .cost_price {
     text-decoration: line-through;
     margin-top: 2px;
   }

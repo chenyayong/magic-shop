@@ -15,21 +15,21 @@ const count = 100
 // https://fuss10.elemecdn.com/9/bb/e27858e973f5d7d3904835f46abbdjpeg.jpeg
 for (let i = 0; i < count; i++) {
   list.push({
-    id: i,
-    src: Mock.mock(
+    img_id: i,
+    image_url: Mock.mock(
       '@pick(["https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg", "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png", "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg", "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg", "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"])'
     ),
-    title: Mock.mock('@title(3, 5)')
+    image_description: Mock.mock('@title(3, 5)')
   })
 }
 
 export const getImages = (req: Request, res: Response) => {
-  const { page = 1, limit = 10, title } = req.query
+  const { page = 1, limit = 10 } = req.query
 
-  const mockList = list.filter((item) => {
-    if (title && item.title !== title) {
-      return false
-    }
+  const mockList = list.filter(() => {
+    // if (title && item.title !== title) {
+    //   return false
+    // }
     return true
   })
 

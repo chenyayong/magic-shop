@@ -108,14 +108,15 @@ export default class extends Vue {
   }
 
   async getShop(id: number) {
-    const res = (await getShop(id)) as any
+    const res = await getShop(id)
     if (res && res.code && res.code === 20000) {
       const data = res.data as IPageData
       const pageData = {
         page_title: data.page_title || '',
         page_icon: data.page_icon || ''
       }
-      this.SET_COMPONENTS_FORM_DATA(data.shop_data)
+      const shop_data = JSON.parse((data.shop_data as unknown) as string)
+      this.SET_COMPONENTS_FORM_DATA(shop_data)
       this.SET_PAGE_DATA(pageData)
     } else {
       this.$message({
@@ -216,7 +217,7 @@ export default class extends Vue {
     bottom: 0px;
     top: 0px;
     right: 0px;
-    border: 2px dashed $--color-primary;
+    border: 2px solid $--color-primary;
     box-shadow: none;
     pointer-events: none;
     z-index: 1000;

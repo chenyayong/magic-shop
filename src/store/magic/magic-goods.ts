@@ -10,13 +10,20 @@ export enum ILayout {
   four
 }
 
+export enum IContent {
+  goods_name,
+  cost_price,
+  shop_price,
+  sales_sum
+}
+
 export interface IMagicGoods {
   background: string
   padding: number
   border_radius: number
   layout: ILayout
   attribute: number
-  content: string[]
+  content: IContent[]
   items: IMagicGoodsItem[]
 }
 export interface IMagicGoodsComponent {
@@ -41,7 +48,7 @@ export default class extends VuexModule implements IState {
     border_radius: 0,
     layout: 1,
     attribute: 0,
-    content: ['title', 'old_price', 'new_price'],
+    content: [(IContent[0] as unknown) as IContent, (IContent[1] as unknown) as IContent, (IContent[2] as unknown) as IContent],
     items: []
   }
 }

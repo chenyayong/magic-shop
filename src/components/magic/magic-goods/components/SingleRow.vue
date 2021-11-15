@@ -15,7 +15,7 @@
       </template>
       <el-row class="row" type="flex" :style="colStyle" v-for="(item, index) in componentData.data.items" :key="index">
         <el-col class="block-img">
-          <img :src="item.src" alt="" srcset="" />
+          <img :src="item.original_img" alt="" srcset="" />
           <svg-icon v-if="attribute" :name="attribute" width="30" height="30" color="#F56C6C"></svg-icon>
         </el-col>
         <el-col>
@@ -27,7 +27,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IMagicGoodsComponent } from '@/store/magic/magic-goods'
+import { IMagicGoodsComponent, IContent } from '@/store/magic/magic-goods'
 @Component({
   name: 'signleRow'
 })
@@ -44,13 +44,13 @@ export default class extends Vue {
   }
 
   private contentMap = {
-    title: '',
-    sales: '销量',
-    new_price: '￥',
-    old_price: '￥'
+    goods_name: '',
+    sales_sum: '销量',
+    shop_price: '￥',
+    cost_price: '￥'
   }
 
-  contentFilter(key: string) {
+  contentFilter(key: IContent) {
     return this.componentData.data.content.indexOf(key) > -1
   }
 
@@ -101,7 +101,7 @@ export default class extends Vue {
       font-size: 12px;
       color: $--color-text-secondary;
     }
-    .title {
+    .goods_name {
       position: absolute;
       top: 8px;
       color: $--color-text-primary;
@@ -114,7 +114,7 @@ export default class extends Vue {
       line-clamp: 2;
       -webkit-box-orient: vertical;
     }
-    .sales {
+    .sales_sum {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -123,12 +123,13 @@ export default class extends Vue {
       position: absolute;
       bottom: 8px;
     }
-    .new_price {
+    .shop_price {
       color: $--color-danger;
       position: absolute;
       bottom: 24px;
+      font-size: 16px;
     }
-    .old_price {
+    .cost_price {
       position: absolute;
       bottom: 8px;
       text-decoration: line-through;

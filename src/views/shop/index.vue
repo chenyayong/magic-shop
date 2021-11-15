@@ -9,8 +9,12 @@
       </template>
     </magic-search>
     <magic-table @current-change="currentChange" :data="tableData" :total="total" :current-page="currentPage" v-loading="loading">
-      <el-table-column prop="id" label="ID" width="60" />
-      <el-table-column prop="updated_at" label="上次修改时间" width="150" />
+      <el-table-column prop="shop_id" label="ID" width="60" />
+      <el-table-column prop="updated_at" label="上次修改时间" width="150">
+        <template slot-scope="scope">
+          <div>{{ scope.row.update_at | update_at }}</div>
+        </template>
+      </el-table-column>
       <el-table-column prop="page_title" label="页面标题" width="380" />
       <el-table-column label="操作" width="380">
         <template slot-scope="scope">
@@ -52,7 +56,10 @@ const components = files.keys().reduce((ret: iComponents, file: string): iCompon
 }, {})
 @Component({
   name: 'shop',
-  components: { ...components, magicTable, magicSearch }
+  components: { ...components, magicTable, magicSearch },
+  filters: {
+    update_at: (value: number) => new Date(value * 1000).toLocaleString()
+  }
 })
 export default class extends Vue {
   private tableData = []
@@ -119,17 +126,18 @@ export default class extends Vue {
 
   handlePrevView(scope: any) {
     this.dialogVisible = true
-    this.componentsFormData = scope.row.shop_data
+    const shop_data = JSON.parse(scope.row.shop_data)
+    this.componentsFormData = shop_data
     console.log('prevView', scope)
   }
 
   handleEdit(scope: any) {
-    this.$router.push({ path: '/magic', query: { id: scope.row.id } })
+    this.$router.push({ path: '/magic', query: { id: scope.row.shop_id } })
     console.log('prevView', scope)
   }
 
   handleCopyLink(scope: any, event: MouseEvent) {
-    const link = `/magic?id=${scope.row.id}`
+    const link = `/magic?id=${scope.row.shop_id}`
     handleClipboard(link, event)
     // console.log('prevView', scope)
   }

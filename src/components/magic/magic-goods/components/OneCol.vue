@@ -14,7 +14,7 @@
       </template>
       <el-row class="row" :style="colStyle" v-for="(item, index) in componentData.data.items" :key="index">
         <div class="block-img">
-          <img :src="item.src" alt="" srcset="" />
+          <img :src="item.original_img" alt="" srcset="" />
           <svg-icon v-if="attribute" :name="attribute" width="30" height="30" color="#F56C6C"></svg-icon>
           <div class="block-img-descript">
             <el-row class="label" :class="[key]" v-for="(value, key) in contentMap" v-if="contentFilter(key)" :key="key">{{ value }}{{ item[key] }}</el-row>
@@ -26,7 +26,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IMagicGoodsComponent } from '@/store/magic/magic-goods'
+import { IMagicGoodsComponent, IContent } from '@/store/magic/magic-goods'
 @Component({
   name: 'oneCol'
 })
@@ -43,13 +43,13 @@ export default class extends Vue {
   }
 
   private contentMap = {
-    title: '',
-    sales: '销量',
-    new_price: '￥',
-    old_price: '￥'
+    goods_name: '',
+    sales_sum: '销量',
+    shop_price: '￥',
+    cost_price: '￥'
   }
 
-  contentFilter(key: string) {
+  contentFilter(key: IContent) {
     return this.componentData.data.content.indexOf(key) > -1
   }
 
@@ -106,7 +106,7 @@ export default class extends Vue {
       padding-left: 10px;
       color: $--color-white;
     }
-    .title {
+    .goods_name {
       font-weight: bold;
       font-size: 14px;
       padding-top: 10px;
@@ -119,15 +119,15 @@ export default class extends Vue {
       line-clamp: 2;
       -webkit-box-orient: vertical;
     }
-    .sales {
+    .sales_sum {
       margin-top: 10px;
     }
-    .new_price {
+    .shop_price {
       margin-top: 10px;
       color: $--color-danger;
       font-size: 18px;
     }
-    .old_price {
+    .cost_price {
       margin-bottom: 10px;
       text-decoration: line-through;
     }

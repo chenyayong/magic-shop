@@ -182,6 +182,7 @@ export default class extends Vue {
       background-color: $--color-primary-light-5;
       color: $--color-danger;
       box-shadow: $--box-shadow-dark;
+      border: 1px $--color-danger solid;
     }
     .cell-sub {
       width: 100%;

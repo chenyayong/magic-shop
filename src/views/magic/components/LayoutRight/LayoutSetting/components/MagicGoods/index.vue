@@ -84,10 +84,10 @@ export default class extends Vue {
   ]
 
   private contents = [
-    { label: 'title', name: '标题' },
-    { label: 'old_price', name: '原价' },
-    { label: 'new_price', name: '现价' },
-    { label: 'sales', name: '销量' }
+    { label: 'goods_name', name: '标题' },
+    { label: 'cost_price', name: '原价' },
+    { label: 'shop_price', name: '现价' },
+    { label: 'sales_sum', name: '销量' }
   ]
 
   goodsConfirm(list: IMagicGoodsItem[]) {

@@ -21,6 +21,14 @@ module.exports = {
     },
     progress: false,
     proxy: {
+      [process.env.VUE_APP_BASE_API + '/test']: {
+        target: 'https://test.global3plus.com/',
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API + '/test']: ''
+        }
+      },
       // change xxx-api/login => /mock-api/v1/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
