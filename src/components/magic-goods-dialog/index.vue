@@ -1,20 +1,41 @@
 <template>
   <div class="magic-goods-dialog">
-    <el-dialog title="选择添加商品" :visible.sync="visible" width="800px" :append-to-body="true" :before-close="beforeClose">
+    <el-dialog
+      title="选择添加商品"
+      :visible.sync="visible"
+      width="800px"
+      :append-to-body="true"
+      :before-close="beforeClose"
+    >
       <el-row type="flex" class="block">
-        <el-input placeholder="请输入关键字搜索" v-model="params.title" @change="titleChange"></el-input>
+        <el-input
+          placeholder="请输入关键字搜索"
+          v-model="params.title"
+          @change="titleChange"
+        ></el-input>
         <el-button type="primary" style="margin-left: 10px">搜 索</el-button>
       </el-row>
       <el-row class="block">
         <el-table :data="tabelData" border ref="multipleTable" v-loading="loading" row-key="id">
-          <el-table-column type="selection" align="center" width="50" :reserve-selection="true"></el-table-column>
+          <el-table-column
+            type="selection"
+            align="center"
+            width="50"
+            :reserve-selection="true"
+          ></el-table-column>
           <el-table-column property="id" align="center" label="商品ID" width="70"></el-table-column>
           <el-table-column property="src" align="center" label="商品图片" width="100">
             <div slot-scope="{ row }">
               <img :src="row.src" alt="" srcset="" style="width: 50px;height: 50px;" />
             </div>
           </el-table-column>
-          <el-table-column property="title" align="center" label="商品名称" width="160" show-overflow-tooltip></el-table-column>
+          <el-table-column
+            property="title"
+            align="center"
+            label="商品名称"
+            width="160"
+            show-overflow-tooltip
+          ></el-table-column>
           <el-table-column property="status" align="center" label="商品状态" width="80">
             <div slot-scope="{ row }">
               <span>{{ row.status === 1 ? '上架' : '下架' }}</span>
@@ -97,7 +118,7 @@ export default class extends Vue {
 
   confirm() {
     this.selectionData = (this.$refs.multipleTable as any).selection
-    ;(this.$refs.multipleTable as any).toggleRowSelection(this.tabelData[1], true)
+    // ;(this.$refs.multipleTable as any).toggleRowSelection(this.tabelData[1], true)
     if (this.selectionData && this.selectionData.length) {
       this.$emit('update:visible', false)
       this.$emit('confirm', this.selectionData)
