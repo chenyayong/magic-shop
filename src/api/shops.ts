@@ -2,16 +2,16 @@ import request from '@/utils/request'
 import { IResponse } from './types'
 export const getShops = (params?: any) =>
   (request({
-    // url: '/shops',
-    url: '/test/index.php/Admin/DiyApi/shopList',
+    url: '/shops',
+    // url: '/test/index.php/Admin/DiyApi/shopList',
     method: 'get',
     params
   }) as unknown) as IResponse
 
 export const getShop = (shopId: number) =>
   (request({
-    // url: `/shops/${shopId}`,
-    url: `/test/index.php/Admin/DiyApi/shopInfo?id=${shopId}`,
+    url: `/shops/${shopId}`,
+    // url: `/test/index.php/Admin/DiyApi/shopInfo?id=${shopId}`,
     method: 'get'
   }) as unknown) as IResponse
 

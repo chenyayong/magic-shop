@@ -1,4 +1,3 @@
-import { IComponentData } from '@/store/magic/index'
 /* eslint-disable camelcase */
 
 export interface IResponse {
@@ -9,9 +8,9 @@ export interface IResponse {
 
 export interface iShopData {
   shop_id: number
-  updated_at: Date
+  update_at: number
   page_title: string
-  shop_data: IComponentData[]
+  shop_data: string
   page_icon: string
   // page_scene_depict: string
 }

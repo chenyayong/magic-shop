@@ -51,12 +51,17 @@ export default class extends Vue {
   }
 
   handleSave() {
-    const id = this.$route.query.id as string
+    // const id = this.$route.query.id as string
+    // console.log(this.$route.query, window.location.href)
+    const search = location.href.split('?')[1]
+    const params = new URLSearchParams(search)
+    const id = params.get('id')
     if (id) {
       this.pageData.id = id
       this.pageData.shop_data = this.componentsFormData
       this.updateShop(parseInt(id), this.pageData)
     } else {
+      window.history.replaceState(null, 'title', '#/magic?id=11')
       this.pageData.shop_data = this.componentsFormData
       this.createShop(this.pageData)
     }

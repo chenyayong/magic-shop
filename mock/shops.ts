@@ -9,10 +9,11 @@ const articleCount = 100
 for (let i = 0; i < articleCount; i++) {
   shopList.push({
     shop_id: i,
-    updated_at: Mock.mock('@datetime'),
+    // update_at: Mock.mock('@datetime'),
+    update_at: Math.floor(Date.now() / 1000),
     page_title: Mock.mock('@title'),
     page_icon: Mock.mock('@image()'),
-    shop_data: getShopData()
+    shop_data: JSON.stringify(getShopData())
     // page_scene_depict: Mock.mock('@word')
   })
 }
@@ -24,7 +25,11 @@ export const getShops = (req: Request, res: Response) => {
     return true
   })
 
-  const pageList = mockList.filter((_, index) => index < (limit as number) * (page as number) && index >= (limit as number) * ((page as number) - 1))
+  const pageList = mockList.filter(
+    (_, index) =>
+      index < (limit as number) * (page as number) &&
+      index >= (limit as number) * ((page as number) - 1)
+  )
 
   return res.json({
     code: 20000,

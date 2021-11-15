@@ -2,15 +2,22 @@
   <!-- eslint-disable vue/camelcase -->
   <div class="shops">
     <magic-search>
-      <el-input placeholder="请输入页面标题" v-model="page_title" @change="handleSearch" />
+      <el-input placeholder="请输入页面标题" v-model="params.page_title" @change="handleSearch" />
       <template v-slot:button-group>
-        <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search">搜索</el-button>
         <el-button type="primary" icon="el-icon-plus" @click="handleNav">添加页面</el-button>
       </template>
     </magic-search>
-    <magic-table @current-change="currentChange" :data="tableData" :total="total" :current-page="currentPage" v-loading="loading">
+    <magic-table
+      :data="tableData"
+      :total="total"
+      @change="paginationChange"
+      :current-page.sync="params.page"
+      :page-size.sync="params.limit"
+      v-loading="loading"
+    >
       <el-table-column prop="shop_id" label="ID" width="60" />
-      <el-table-column prop="updated_at" label="上次修改时间" width="150">
+      <el-table-column prop="updated_at" label="上次修改时间" width="170">
         <template slot-scope="scope">
           <div>{{ scope.row.update_at | update_at }}</div>
         </template>
@@ -28,7 +35,12 @@
     <el-dialog title="预览" width="375px" :visible.sync="dialogVisible">
       <div class="content-main">
         <el-scrollbar>
-          <component :key="item.id" v-for="item in componentsFormData" :is="item.name" :componentData="item"></component>
+          <component
+            :key="item.id"
+            v-for="item in componentsFormData"
+            :is="item.name"
+            :componentData="item"
+          ></component>
         </el-scrollbar>
       </div>
       <!-- <span slot="footer" class="dialog-footer">
@@ -58,30 +70,30 @@ const components = files.keys().reduce((ret: iComponents, file: string): iCompon
   name: 'shop',
   components: { ...components, magicTable, magicSearch },
   filters: {
-    update_at: (value: number) => new Date(value * 1000).toLocaleString()
+    update_at: (value: number) => {
+      return new Date(value * 1000).toLocaleString()
+    }
   }
 })
 export default class extends Vue {
   private tableData = []
   private total = 0
-  private currentPage = 1
-  private page_title = ''
   private loading = false
   private dialogVisible = false
   private componentsFormData = []
+  private params = {
+    page: 1,
+    limit: 10,
+    page_title: ''
+  }
 
-  currentChange(page: number) {
-    this.currentPage = page
+  paginationChange() {
     this.getShops()
   }
 
   async getShops() {
     this.loading = true
-    const params = {
-      page: this.currentPage,
-      page_title: this.page_title
-    }
-    const res = await getShops(params)
+    const res = await getShops(this.params)
     if (res && res.data && res.data.items && res.data.items.length) {
       this.tableData = res.data.items
       this.total = res.data.total
@@ -116,7 +128,7 @@ export default class extends Vue {
   }
 
   handleSearch() {
-    this.currentPage = 1
+    this.params.page = 1
     this.getShops()
   }
 
@@ -153,7 +165,7 @@ export default class extends Vue {
       cancelButtonText: '取消',
       type: 'warning'
     }).then(() => {
-      this.deleteShop(scope.row.id)
+      this.deleteShop(scope.row.shop_id)
     })
   }
 }

@@ -84,7 +84,13 @@ function picture() {
   }
   return ret
 }
-const cellsData = (col: number, row: number, img_url: string, img_link: string, filter: boolean) => {
+const cellsData = (
+  col: number,
+  row: number,
+  img_url: string,
+  img_link: string,
+  filter: boolean
+) => {
   const data = []
   for (let i = 0; i < row; i++) {
     for (let j = 0; j < col; j++) {
@@ -171,7 +177,7 @@ function pictureGroup() {
 
 function goodsItem() {
   const data = {
-    id: Mock.mock('@id()'),
+    goods_id: Mock.mock('@id()'),
     original_img: Mock.mock('@image("50x50")'),
     goods_name: Mock.mock('@title(3, 5)'),
     is_on_sale: Mock.mock('@pick([0, 1])'),
@@ -192,7 +198,10 @@ function goods() {
     border_radius: Mock.mock('@integer(0, 50)'),
     layout: Mock.mock('@pick([0, 1, 2, 3])'),
     attribute: Mock.mock('@pick([0, 1, 2, 3, 4, 5])'),
-    content: ['title', 'old_price', 'new_price', 'sales'].slice(0, Mock.mock('@pick([1, 2, 3, 4])')),
+    content: ['title', 'old_price', 'new_price', 'sales'].slice(
+      0,
+      Mock.mock('@pick([1, 2, 3, 4])')
+    ),
     items: new Array(Mock.mock('@integer(1, 2)')).fill(item)
   }
   return rawData
@@ -203,9 +212,13 @@ export const getShopData = function() {
   for (let i = 0; i < 3; i++) {
     const componentData: IComponentData = {
       id: uuid(),
-      name: Mock.mock('@pick(["magic_swiper", "magic_button_group", "magic_picture", "magic_picture_group", "magic_goods"])'),
+      name: Mock.mock(
+        '@pick(["magic_swiper", "magic_button_group", "magic_picture", "magic_picture_group", "magic_goods"])'
+      ),
       label: '',
-      icon: Mock.mock('@pick(["el-icon-picture", "el-icon-switch-button", "el-icon-picture-outlin", "el-icon-camera", "el-icon-goods"])'),
+      icon: Mock.mock(
+        '@pick(["el-icon-picture", "el-icon-switch-button", "el-icon-picture-outlin", "el-icon-camera", "el-icon-goods"])'
+      ),
       data: {}
     }
     componentData.label = mapLabel[componentData.name]
