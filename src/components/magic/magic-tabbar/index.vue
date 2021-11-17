@@ -1,21 +1,21 @@
 <template>
-  <div class="magic-tabbar" :style="style">
-    <van-tabs v-model="active">
-      <van-tab title="标签 1">内容 1</van-tab>
-      <van-tab title="标签 2">内容 2</van-tab>
-      <van-tab title="标签 3">内容 3</van-tab>
-      <van-tab title="标签 4">内容 4</van-tab>
-    </van-tabs>
+  <div class="magic-tabbar filter-item" :style="style">
+    <van-tabbar v-model="active">
+      <van-tabbar-item icon="home-o">标签</van-tabbar-item>
+      <van-tabbar-item icon="search">标签</van-tabbar-item>
+      <van-tabbar-item icon="friends-o">标签</van-tabbar-item>
+      <van-tabbar-item icon="setting-o">标签</van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IMagicSwiperComponent } from '@/store/magic/magic-swiper'
-import { Tab, Tabs } from 'vant'
-import 'vant/lib/tabs/style'
-import 'vant/lib/tab/style'
-Vue.use(Tab)
-Vue.use(Tabs)
+import { Tabbar, TabbarItem } from 'vant'
+import 'vant/lib/tabbar/style'
+import 'vant/lib/tabbar-item/style'
+Vue.use(Tabbar)
+Vue.use(TabbarItem)
 @Component({
   name: 'magic_tabbar'
 })
@@ -32,9 +32,13 @@ export default class extends Vue {
 }
 </script>
 <style scoped lang="scss">
-.magic-swiper ::v-deep .swiper-slide img {
+.magic-tabbar {
+  position: fixed !important;
+  bottom: 0;
+  // top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-  display: block;
+  height: 50px;
+  z-index: 99;
 }
 </style>

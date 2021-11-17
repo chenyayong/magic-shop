@@ -1,10 +1,19 @@
 <template>
   <div class="layout-content" v-loading="loading">
     <div class="content-main">
-      <el-scrollbar>
-        <draggable class="draggable" :group="group" :sort="true" :list="componentsFormData" @change="draggableChange">
+      <el-scrollbar :style="scrollbarStyle">
+        <draggable class="draggable" :group="group" filter=".filter-item" :sort="true" :list="componentsFormData" @change="draggableChange">
           <template v-if="componentsFormData.length">
-            <el-tooltip :key="item.id" v-for="(item, index) in componentsFormData" class="item" effect="dark" :content="item.label" placement="left-start">
+            <div class="filter-item" v-if="getTabbar">getTabbar</div>
+            <el-tooltip
+              :popper-options="{ boundariesElement: 'viewport', removeOnDestroy: true }"
+              :key="item.id"
+              v-for="(item, index) in componentsFormData"
+              class="item"
+              effect="dark"
+              :content="item.label"
+              placement="left-start"
+            >
               <el-tooltip placement="right-start">
                 <template v-slot:content>
                   <i class="el-icon-delete component-delete-icon" @click="deleComponent(item.id)"></i>
@@ -83,6 +92,20 @@ export default class extends Vue {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   changeCompontents(val: IComponentData[]) {
     console.log('componentsFormData', val)
+  }
+
+  get getTabbar() {
+    const item = this.componentsFormData.find((e) => e.name === 'magic_tabbar')
+    return !!item
+  }
+
+  get scrollbarStyle() {
+    // const item = this.componentsFormData.find((e) => e.name === 'magic_tabbar')
+    const paddingBottom = this.getTabbar ? 50 : 0
+    const style = {
+      paddingBottom: paddingBottom + 'px'
+    }
+    return style
   }
 
   deleComponent(id: string) {

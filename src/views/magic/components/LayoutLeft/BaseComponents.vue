@@ -1,7 +1,7 @@
 <template>
   <div class="base-components">
-    <draggable class="grid-list" :list="compontents" :clone="clone" :group="group" :sort="false">
-      <div class="grid-item" v-for="item in compontents" :key="item.name">
+    <draggable class="grid-list" :list="compontents" filter=".filter-item" :clone="clone" :group="group" :sort="false">
+      <div class="grid-item" :class="filterClass(item)" v-for="item in compontents" :key="item.name">
         <div><i :class="[item.icon]"></i></div>
         <div>{{ item.label }}</div>
       </div>
@@ -30,11 +30,18 @@ const magic = namespace('magic')
 export default class extends Vue {
   @magic.State('baseComponents') compontents!: IComponentData[]
   @magic.State('componentsFormDataMap') componentsFormDataMap!: IComponentsFormDataMap
-
+  @magic.State('componentsFormData') componentsFormData!: IComponentData[]
   private group = {
     name: 'site',
     pull: 'clone',
     put: false
+  }
+
+  filterClass(item: any) {
+    if (item.name === 'magic_tabbar') {
+      const item = this.componentsFormData.find((e) => e.name === 'magic_tabbar')
+      return [item ? 'filter-item' : '']
+    }
   }
 
   clone(value: IComponentData) {
@@ -56,6 +63,7 @@ export default class extends Vue {
   overflow: hidden;
   padding: 0 !important;
 }
+
 .grid-item {
   flex-basis: calc(100% / 3);
   text-align: center;
@@ -78,5 +86,19 @@ export default class extends Vue {
   i {
     font-size: 26px;
   }
+}
+.filter-item {
+  background-color: #f4f4f5;
+  cursor: auto;
+  color: #bcbec2;
+  &:hover {
+    // background-color: rgba(0, 0, 0, 0.2);
+    // color: #5e6d82;
+    background-color: #f4f4f5;
+    color: #bcbec2;
+  }
+  // &::after {
+  //   content: '开发中';
+  // }
 }
 </style>

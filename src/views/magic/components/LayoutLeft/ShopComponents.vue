@@ -86,11 +86,12 @@ export default class extends Vue {
   }
 }
 .filter-item {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: #f4f4f5;
   cursor: auto;
+  color: #bcbec2;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-    color: #5e6d82;
+    background-color: #f4f4f5;
+    color: #bcbec2;
   }
   &::after {
     content: '开发中';

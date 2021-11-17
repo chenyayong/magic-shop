@@ -16,6 +16,7 @@ service.interceptors.request.use(
     // if (UserModule.token) {
     //   config.headers['X-Access-Token'] = UserModule.token
     // }
+    // config.headers.Cookie = 'PHPSESSID=q378caf04r06dho3m445bqj0r1'
     return config
   },
   (error) => {
