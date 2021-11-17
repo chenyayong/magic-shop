@@ -4,6 +4,8 @@ import magicSwiper, { IMagicSwiper } from './magic-swiper'
 import magicButtonGroup, { IMagicButtonGroup } from './magic-button-group'
 import magicPicture, { IMagicPicture } from './magic-picture'
 import magicPictureGroup, { IMagicPictureGroup } from './magic-picture-group'
+import magicSearch, { IMagicSearch } from './magic-search'
+import magicTabbar, { IMagicTabbar } from './magic_tabbar'
 import magicGoods, { IMagicGoods } from './magic-goods'
 
 export enum ComponentName {
@@ -11,6 +13,8 @@ export enum ComponentName {
   magicButtonGroup = 'magic_button_group',
   magicPicture = 'magic_picture',
   magicPictureGroup = 'magic_picture_group',
+  magicSearch = 'magic_search',
+  magicTabbar = 'magic_tabbar',
   magicGoods = 'magic_goods',
   magicNotice = 'magic_notice',
   magicPosition = 'magic_position',
@@ -22,7 +26,7 @@ export interface IComponentData {
   name: ComponentName
   label?: string
   icon?: string
-  data: IMagicSwiper & IMagicButtonGroup & IMagicPicture & IMagicPictureGroup & IMagicGoods
+  data: IMagicSwiper & IMagicButtonGroup & IMagicPicture & IMagicPictureGroup & IMagicSearch & IMagicTabbar & IMagicGoods
 }
 
 export interface IComponentsFormDataMap {
@@ -30,6 +34,8 @@ export interface IComponentsFormDataMap {
   magic_button_group: IMagicButtonGroup
   magic_picture: IMagicPicture
   magic_picture_group: IMagicPictureGroup
+  magic_search: IMagicSearch
+  magic_tabbar: IMagicTabbar
   magic_goods: IMagicGoods
   magic_notice: any
   magic_position: any
@@ -53,11 +59,11 @@ interface IState {
 }
 
 export interface IPageData {
-  id?: number
+  shop_id?: number
   page_title: string
   page_icon: string
   page_description?: string
-  updated_at?: string
+  update_at?: string
   shop_data?: JSON
 }
 
@@ -76,6 +82,8 @@ class magic extends VuexModule implements IState {
     magic_button_group: magicButtonGroup.state.rawData,
     magic_picture: magicPicture.state.rawData,
     magic_picture_group: magicPictureGroup.state.rawData,
+    magic_search: magicSearch.state.rawData,
+    magic_tabbar: magicTabbar.state.rawData,
     magic_goods: magicGoods.state.rawData,
     magic_notice: {},
     magic_position: {},
@@ -102,15 +110,17 @@ class magic extends VuexModule implements IState {
       name: ComponentName.magicPictureGroup,
       icon: 'el-icon-camera',
       label: '图片组合'
+    },
+    {
+      name: ComponentName.magicSearch,
+      icon: 'el-icon-search',
+      label: '搜索栏'
+    },
+    {
+      name: ComponentName.magicTabbar,
+      icon: 'el-icon-menu',
+      label: '标签栏'
     }
-    // {
-    //   name: '标题栏',
-    //   icon: 'el-icon-eleme'
-    // },
-    // {
-    //   name: '辅助空白',
-    //   icon: 'el-icon-zoom-out'
-    // },
     // {
     //   name: '辅助线',
     //   icon: 'el-icon-remove-outline'

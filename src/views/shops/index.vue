@@ -8,14 +8,7 @@
         <el-button type="primary" icon="el-icon-plus" @click="handleNav">添加页面</el-button>
       </template>
     </magic-search>
-    <magic-table
-      :data="tableData"
-      :total="total"
-      @change="paginationChange"
-      :current-page.sync="params.page"
-      :page-size.sync="params.limit"
-      v-loading="loading"
-    >
+    <magic-table :data="tableData" :total="total" @change="paginationChange" :current-page.sync="params.page" :page-size.sync="params.limit" v-loading="loading">
       <el-table-column prop="shop_id" label="ID" width="60" />
       <el-table-column prop="updated_at" label="上次修改时间" width="170">
         <template slot-scope="scope">
@@ -35,12 +28,7 @@
     <el-dialog title="预览" width="375px" :visible.sync="dialogVisible">
       <div class="content-main">
         <el-scrollbar>
-          <component
-            :key="item.id"
-            v-for="item in componentsFormData"
-            :is="item.name"
-            :componentData="item"
-          ></component>
+          <component :key="item.id" v-for="item in componentsFormData" :is="item.name" :componentData="item"></component>
         </el-scrollbar>
       </div>
       <!-- <span slot="footer" class="dialog-footer">
@@ -56,6 +44,7 @@ import magicTable from '@/components/magic-table/index.vue'
 import magicSearch from '@/components/magic-search/index.vue'
 import { getShops, deleteShop } from '@/api/shops'
 import { handleClipboard } from '@/utils/clipboard'
+import { iShopData } from '@/api/types'
 interface iComponents {
   [key: string]: Vue
 }
@@ -76,7 +65,7 @@ const components = files.keys().reduce((ret: iComponents, file: string): iCompon
   }
 })
 export default class extends Vue {
-  private tableData = []
+  private tableData: iShopData[] = []
   private total = 0
   private loading = false
   private dialogVisible = false
@@ -166,6 +155,10 @@ export default class extends Vue {
       type: 'warning'
     }).then(() => {
       this.deleteShop(scope.row.shop_id)
+      const index = this.tableData.findIndex((e) => e.shop_id === scope.row.shop_id)
+      if (index > -1) {
+        this.tableData.splice(index, 1)
+      }
     })
   }
 }

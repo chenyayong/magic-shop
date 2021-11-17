@@ -1,0 +1,552 @@
+openapi: 3.0.0
+info:
+  description: Mock API for magic-shop.
+  version: 1.0.0
+  title: 店铺商城 API
+  contact:
+    email: 451998731@qq.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://localhost:9528/mock-api/v1
+tags:
+  - name: shops
+    description: 店铺页面
+  - name: images
+    description: 图片库
+  - name: goods
+    description: 商品
+paths:
+  /images:
+    get:
+      tags:
+        - images
+      summary: 图片列表
+      operationId: getImages
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 5
+            # minimum: 5
+            # maximum: 50
+        - in: query
+          name: title
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Images'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /goods:
+    get:
+      tags:
+        - goods
+      summary: 商品列表
+      operationId: getGoods
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 5
+            # minimum: 5
+            # maximum: 50
+        - in: query
+          name: goods_name
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Goods'
+  /shops:
+    get:
+      tags:
+        - shops
+      summary: 店铺列表
+      operationId: getShops
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+        - name: page_title
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Shops'
+    post:
+      tags:
+        - shops
+      summary: 创建店铺
+      operationId: createShop
+      requestBody:
+        $ref: '#/components/requestBodies/Shops'
+      responses:
+        '200':
+          description: ok
+  /shops/{shopId}:
+    get:
+      tags:
+        - shops
+      summary: 店铺信息
+      operationId: getShop
+      parameters:
+        - in: path
+          name: shopId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ok
+
+    delete:
+      tags:
+        - shops
+      summary: 删除店铺
+      operationId: deleteShop
+      parameters:
+        - in: path
+          name: shopId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ok
+    put:
+      tags:
+        - shops
+      summary: 更新店铺
+      operationId: updateShop
+      parameters:
+        - in: path
+          name: shopId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/Shops'
+      responses:
+        '200':
+          description: ok
+components:
+  requestBodies:
+    Shops:
+      description: 店铺JSON Object
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Shops'
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 40004
+            message: not found
+    Images:
+      description: ok
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 20000
+              msg:
+                type: string
+              data:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        src:
+                          type: string
+                        title:
+                          type: string
+    Goods:
+      description: ok
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 20000
+              msg:
+                type: string
+              data:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        src:
+                          type: string
+                        title:
+                          type: string
+                        status:
+                          type: integer
+                          enum: [0, 1]
+                          description: '0: 代表下架，1：代表上架'
+                        new_price:
+                          type: number
+                          format: float
+                        old_price:
+                          type: number
+                          format: float
+                        stock:
+                          type: integer
+                        sales:
+                          type: integer
+    Shops:
+      description: ok
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Shops'
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/Code'
+        message:
+          type: string
+      required:
+        - code
+        - message
+    Shops:
+      type: object
+      properties:
+        id:
+          type: integer
+        updated_at:
+          type: string
+          format: date
+        page_title:
+          type: string
+        page_icon:
+          type: string
+        shop_data:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/Swiper'
+              - $ref: '#/components/schemas/ButtonGroup'
+              - $ref: '#/components/schemas/Picture'
+              - $ref: '#/components/schemas/PictureGroup'
+              - $ref: '#/components/schemas/Goods'
+    Swiper:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: magic_swiper
+        label:
+          type: string
+          example: 轮播图
+        icon:
+          type: string
+          example: el-icon-picture
+        data:
+          type: object
+          properties:
+            padding:
+              type: integer
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  img_url:
+                    type: string
+                  img_link:
+                    type: string
+    ButtonGroup:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: magic_button_group
+        label:
+          type: string
+          example: 按钮组
+        icon:
+          type: string
+          example: el-icon-switch-button
+        data:
+          type: object
+          properties:
+            row_button_count:
+              type: integer
+              enum:
+                - 4
+                - 5
+            swiper:
+              type: integer
+              enum:
+                - 0
+                - 1
+            row_swiper:
+              type: integer
+              enum:
+                - 1
+                - 2
+                - 3
+            padding_top:
+              type: integer
+              minimum: 0
+              maximum: 100
+            padding_bottom:
+              type: integer
+              minimum: 0
+              maximum: 100
+            button_size:
+              type: integer
+              minimum: 30
+              maximum: 70
+            button_round:
+              type: integer
+              minimum: 0
+              maximum: 35
+            text_size:
+              type: integer
+              minimum: 12
+              maximum: 12
+            text_color:
+              type: string
+              example: '#fff'
+            background:
+              type: string
+              example: '#000'
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  img_url:
+                    type: string
+                  img_link:
+                    type: string
+                  img_label:
+                    type: string
+    Picture:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: magic_picture
+        label:
+          type: string
+          example: 单图
+        icon:
+          type: string
+          example: el-icon-picture-outlin
+        data:
+          type: object
+          properties:
+            padding:
+              type: integer
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  img_url:
+                    type: string
+                  img_link:
+                    type: string
+    PictureGroup:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: magic_picture_group
+        label:
+          type: string
+          example: 图片组合
+        icon:
+          type: string
+          example: el-icon-camera
+        data:
+          type: object
+          properties:
+            background:
+              type: string
+              example: '#fff'
+            padding:
+              type: integer
+              minimum: 0
+              maximum: 30
+            grids_index:
+              type: integer
+              enum:
+                - 0
+                - 1
+                - 2
+                - 3
+            grids_data:
+              type: array
+              items:
+                type: object
+                properties:
+                  scale:
+                    type: integer
+                  row:
+                    type: integer
+                  col:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        size:
+                          type: string
+                          example: '1:1'
+                        position:
+                          type: string
+                          example: '1:1'
+                        img_url:
+                          type: string
+                        img_link:
+                          type: string
+    Goods:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: magic_goods
+        label:
+          type: string
+          example: 商品列表组件
+        icon:
+          type: string
+          example: el-icon-goods
+        data:
+          type: object
+          properties:
+            background:
+              type: string
+              example: '#fff'
+            padding:
+              type: integer
+            border_radius:
+              type: integer
+              minimum: 0
+              maximum: 50
+            layout:
+              type: integer
+              enum:
+                - 0
+                - 1
+                - 2
+                - 3
+            attribute:
+              type: integer
+              enum:
+                - 0
+                - 1
+                - 2
+                - 3
+                - 4
+                - 5
+            content:
+              type: array
+              items:
+                type: string
+              example: ['title', 'old_price', 'new_price', 'sales']
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  src:
+                    type: string
+                  status:
+                    type: integer
+                    enum:
+                      - 0
+                      - 1
+                  new_price:
+                    type: number
+                    format: float
+                  old_price:
+                    type: number
+                    format: float
+                  stock:
+                    type: integer
+                  sales:
+                    type: integer
+    Code:
+      type: integer
+      enum: [20000, 40004, 50001, 50002, 50003, 50004, 50005]
+      description: >
+        Sort order:
+         * `20000` - success
+         * `40004`  - not found
+         * `50001` - invalid access token
+         * `50002` - already login in other place
+         * `50003` - access token expired
+         * `50004` - invalid user (user not exist)
+         * `50005` - username or password is incorrect

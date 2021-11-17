@@ -12,14 +12,15 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
+import { IPageData, IComponentData } from '@/store/magic/index'
 import { updateShop, createShop } from '@/api/shops'
 const magic = namespace('magic')
 @Component({
   name: 'LayoutTop'
 })
 export default class extends Vue {
-  @magic.State('componentsFormData') componentsFormData: any
-  @magic.State('pageData') pageData: any
+  @magic.State('componentsFormData') componentsFormData!: IComponentData[]
+  @magic.State('pageData') pageData!: IPageData
   async updateShop(id: number, data: any) {
     const res = await updateShop(id, data)
     if (res && res.code === 20000) {
@@ -47,7 +48,9 @@ export default class extends Vue {
         type: 'error',
         message: res.msg
       })
+      throw new Error('error')
     }
+    return res
   }
 
   handleSave() {
@@ -57,13 +60,17 @@ export default class extends Vue {
     const params = new URLSearchParams(search)
     const id = params.get('id')
     if (id) {
-      this.pageData.id = id
-      this.pageData.shop_data = this.componentsFormData
+      this.pageData.shop_id = id as any
+      this.pageData.shop_data = JSON.stringify(this.componentsFormData) as any
       this.updateShop(parseInt(id), this.pageData)
     } else {
-      window.history.replaceState(null, 'title', '#/magic?id=11')
-      this.pageData.shop_data = this.componentsFormData
-      this.createShop(this.pageData)
+      this.pageData.shop_data = JSON.stringify(this.componentsFormData) as any
+      this.createShop(this.pageData).then((res: any) => {
+        if (res.data && res.data.id) {
+          const id = res.data.id
+          window.history.replaceState(null, 'title', `#/magic?id=${id}`)
+        }
+      })
     }
   }
 

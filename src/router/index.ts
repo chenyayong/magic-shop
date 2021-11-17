@@ -38,8 +38,8 @@ export const constantRoutes: RouteConfig[] = [
     component: () => import(/* webpackChunkName: "magic-shop" */ '@/views/magic/index.vue')
   },
   {
-    path: '/shop',
-    component: () => import(/* webpackChunkName: "magic-shop" */ '@/views/shop/index.vue')
+    path: '/shops',
+    component: () => import(/* webpackChunkName: "magic-shop" */ '@/views/shops/index.vue')
   },
   {
     path: '/head-navigation',

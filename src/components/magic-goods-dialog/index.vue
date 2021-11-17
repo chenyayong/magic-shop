@@ -1,18 +1,8 @@
 <template>
   <div class="magic-goods-dialog">
-    <el-dialog
-      title="选择添加商品"
-      :visible.sync="visible"
-      width="830px"
-      :append-to-body="true"
-      :before-close="beforeClose"
-    >
+    <el-dialog title="选择添加商品" :visible.sync="visible" width="830px" :append-to-body="true" :before-close="beforeClose">
       <el-row type="flex" class="block">
-        <el-input
-          placeholder="请输入商品名称"
-          v-model="params.goods_name"
-          @change="titleChange"
-        ></el-input>
+        <el-input placeholder="请输入商品名称" v-model="params.goods_name" @change="titleChange"></el-input>
         <el-button type="primary" style="margin-left: 10px">搜 索</el-button>
       </el-row>
       <el-row class="block">
@@ -27,30 +17,14 @@
           @change="paginationChange"
           ref="multipleTable"
         >
-          <el-table-column
-            type="selection"
-            align="center"
-            width="50"
-            :reserve-selection="true"
-          ></el-table-column>
-          <el-table-column
-            property="goods_id"
-            align="center"
-            label="商品ID"
-            width="70"
-          ></el-table-column>
+          <el-table-column type="selection" align="center" width="50" :reserve-selection="true"></el-table-column>
+          <el-table-column property="goods_id" align="center" label="商品ID" width="70"></el-table-column>
           <el-table-column property="original_img" align="center" label="商品图片" width="100">
             <div slot-scope="{ row }">
               <img :src="row.original_img" alt="" srcset="" style="width: 50px;height: 50px;" />
             </div>
           </el-table-column>
-          <el-table-column
-            property="goods_name"
-            align="center"
-            label="商品名称"
-            width="160"
-            show-overflow-tooltip
-          ></el-table-column>
+          <el-table-column property="goods_name" align="center" label="商品名称" width="160" show-overflow-tooltip></el-table-column>
           <el-table-column property="status" align="center" label="商品状态" width="80">
             <div slot-scope="{ row }">
               <span>{{ row.is_on_sale === 1 ? '上架' : '下架' }}</span>
