@@ -9,9 +9,15 @@
             <el-col><el-slider v-model="componentData.data.padding" show-input=""></el-slider></el-col>
           </el-row>
         </el-collapse-item>
-        <el-collapse-item title="轮播图数据配置" name="2">
+        <el-collapse-item title="数据配置" name="2">
           <el-row>
-            <magicSettingGrid v-for="(item, index) in componentData.data.items" :items="componentData.data.items" :item="item" :index="index" :key="index" />
+            <magicSettingGrid
+              v-for="(item, index) in componentData.data.items"
+              :img-link.sync="item.img_link"
+              :img-url.sync="item.img_url"
+              @dele="componentData.data.items.splice(index, 1)"
+              :key="index"
+            ></magicSettingGrid>
           </el-row>
           <el-row>
             <el-button type="primary" style="width: 100%;" @click="addSwiperItem">添加更多</el-button>

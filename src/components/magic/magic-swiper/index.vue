@@ -1,7 +1,7 @@
 <template>
   <div class="magic-swiper" :style="style">
     <swiper :options="swiperOptions" :auto-update="true" :auto-destroy="true">
-      <swiper-slide v-for="(item, index) in componentData.data.items" :key="index">
+      <swiper-slide class="swiper-no-swiping" v-for="(item, index) in componentData.data.items" :key="index">
         <el-skeleton style="width: 100%;" :loading="!item.img_url">
           <template slot="template">
             <div><el-skeleton-item variant="image" style="height: 160px;" /></div>
@@ -29,6 +29,7 @@ export default class extends Vue {
   @Prop({ type: Object, required: true }) componentData!: IMagicSwiperComponent
   private swiperOptions = {
     autoplay: true,
+    noSwiping: true,
     pagination: {
       el: '.swiper-pagination',
       clickable: true

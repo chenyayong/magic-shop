@@ -35,7 +35,15 @@
               <GridCell v-if="componentData.data.grids_index !== 3" :itemIndex.sync="gridCellIndex" :padding="componentData.data.padding" :data="gridData" />
               <GridTable v-else :data="gridData" :padding="componentData.data.padding" :itemIndex.sync="gridCellIndex" />
               <div style="margin-top: 20px;">
-                <magicSettingGrid :closable="false" v-for="(item, index) in magicSettingGrid" v-if="item" :item="item" :index="index" :key="index" :items="magicSettingGrid" />
+                <magicSettingGrid
+                  v-if="item"
+                  :closable="false"
+                  v-for="(item, index) in magicSettingGrid"
+                  :img-link.sync="item.img_link"
+                  :img-url.sync="item.img_url"
+                  @dele="magicSettingGrid.splice(index, 1)"
+                  :key="index"
+                />
               </div>
             </el-row>
           </el-row>

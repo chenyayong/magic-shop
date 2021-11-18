@@ -42,6 +42,11 @@ export default class extends Vue {
       const item = this.componentsFormData.find((e) => e.name === 'magic_tabbar')
       return [item ? 'filter-item' : '']
     }
+
+    if (item.name === 'magic_search') {
+      const item = this.componentsFormData.find((e) => e.name === 'magic_search')
+      return [item ? 'filter-item' : '']
+    }
   }
 
   clone(value: IComponentData) {

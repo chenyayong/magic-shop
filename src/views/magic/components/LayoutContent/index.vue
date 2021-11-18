@@ -2,9 +2,19 @@
   <div class="layout-content" v-loading="loading">
     <div class="content-main">
       <el-scrollbar :style="scrollbarStyle">
-        <draggable class="draggable" :group="group" filter=".filter-item" :sort="true" :list="componentsFormData" @change="draggableChange">
+        <draggable
+          class="draggable"
+          :delay="0"
+          :animation="200"
+          :swapThreshold="1"
+          :emptyInsertThreshold="5"
+          :group="group"
+          filter=".filter-item"
+          :sort="true"
+          :list="componentsFormData"
+          @change="draggableChange"
+        >
           <template v-if="componentsFormData.length">
-            <div class="filter-item" v-if="getTabbar">getTabbar</div>
             <el-tooltip
               :popper-options="{ boundariesElement: 'viewport', removeOnDestroy: true }"
               :key="item.id"
@@ -18,7 +28,13 @@
                 <template v-slot:content>
                   <i class="el-icon-delete component-delete-icon" @click="deleComponent(item.id)"></i>
                 </template>
-                <component @click.native="changeActive(index)" :class="[index === componentsFormDataIndex ? 'active' : '']" :is="item.name" :componentData="item"></component>
+                <component
+                  v-if="item.name !== 'magic_tabbar'"
+                  @click.native="changeActive(index)"
+                  :class="[index === componentsFormDataIndex ? 'active' : '']"
+                  :is="item.name"
+                  :componentData="item"
+                ></component>
               </el-tooltip>
             </el-tooltip>
           </template>
@@ -31,6 +47,18 @@
             </el-empty>
           </template>
         </draggable>
+        <el-tooltip v-if="getTabbar" effect="dark" :content="getTabbar.label" placement="left-start">
+          <el-tooltip placement="right-start">
+            <template v-slot:content>
+              <i class="el-icon-delete component-delete-icon" @click="deleComponent(getTabbar.id)"></i>
+            </template>
+            <magic_tabbar
+              :class="[getTabbarIndex === componentsFormDataIndex ? 'active' : '']"
+              @click.native="changeActive(getTabbarIndex)"
+              :componentData="getTabbar"
+            ></magic_tabbar>
+          </el-tooltip>
+        </el-tooltip>
       </el-scrollbar>
     </div>
   </div>
@@ -41,6 +69,7 @@ import { namespace } from 'vuex-class'
 import draggable from 'vuedraggable'
 import { IComponentData, IPageData } from '@/store/magic'
 import { getShop } from '@/api/shops'
+// import MagicTabbar from  '@/components/magic/magic-tabbar'
 const magic = namespace('magic')
 const magicAsidebar = namespace('magicAsidebar')
 
@@ -96,13 +125,25 @@ export default class extends Vue {
 
   get getTabbar() {
     const item = this.componentsFormData.find((e) => e.name === 'magic_tabbar')
-    return !!item
+    return item
+  }
+
+  get getTabbarIndex() {
+    const index = this.componentsFormData.findIndex((e) => e.name === 'magic_tabbar')
+    return index
+  }
+
+  get getSearch() {
+    const item = this.componentsFormData.find((e) => e.name === 'magic_search')
+    return item
   }
 
   get scrollbarStyle() {
-    // const item = this.componentsFormData.find((e) => e.name === 'magic_tabbar')
+    const paddingTop = this.getSearch ? 34 + this.getSearch.data.padding_top + this.getSearch.data.padding_bottom : 0
     const paddingBottom = this.getTabbar ? 50 : 0
+
     const style = {
+      paddingTop: paddingTop + 'px',
       paddingBottom: paddingBottom + 'px'
     }
     return style
@@ -220,7 +261,7 @@ export default class extends Vue {
   }
 }
 
-.draggable > ::v-deep [class*='magic-'] {
+.content-main ::v-deep [class*='magic-'] {
   position: relative;
   &:hover::after {
     position: absolute;

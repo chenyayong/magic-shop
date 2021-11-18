@@ -1,35 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <title>sortable.js例子</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
+    <script src="https://www.itxst.com/package/sortable/sortable.min.js"></script>
     <style>
-      .box {
+      .itxst {
+        margin: 10px auto;
         width: 300px;
-        height: 300px;
+        position: relative;
         border: 1px red solid;
-        position: fixed;
-        top: 100px;
-        left: 100px;
-        transform: translate(-50%, -50%);
-        left: 50%;
-        top: 50%;
       }
-      .box-sub {
-        width: 100px;
-        height: 100px;
-        border: 1px pink solid;
+
+      .itxst div {
+        padding: 6px;
+        background-color: #eee;
+        border: 1px #eee;
+        margin-bottom: 10px;
+        cursor: move;
+      }
+      .itxst2 {
+        transform: translate(0, 0);
+      }
+      .itxst2 div {
         position: fixed;
-        top: 0;
-        left: 0;
+        bottom: 0;
+        width: 100%;
+        border: 1px pink solid;
+        z-index: -1;
+      }
+      .itxst .sortable-chosen {
+        background-color: red;
+      }
+      .itxst .sortable-ghost {
+        background-color: pink;
+      }
+      .itxst .sortable-drag {
+        background-color: blue;
+        border: 1px red solid;
+        z-index: 99999999;
+      }
+      .box {
+        display: flex;
       }
     </style>
   </head>
   <body>
     <div class="box">
-      <div class="box-sub"></div>
+      <div id="itxst" class="itxst">
+        <div data-id="1" class="item">item 1</div>
+        <div data-id="2" class="item">item 2</div>
+        <div data-id="3">item 3</div>
+        <div data-id="4">item 4</div>
+        <div data-id="5">item 5</div>
+      </div>
+      <div id="itxst2" class="itxst itxst2">
+        <!-- <div data-id="1" class="item">item 1</div>
+        <div data-id="2" class="item">item 2</div>
+        <div data-id="3">item 3</div>
+        <div data-id="4">item 4</div>
+        <div data-id="5">item 5</div> -->
+      </div>
     </div>
+
+    <script>
+      //获取对象
+      var el = document.getElementById('itxst')
+      var el2 = document.getElementById('itxst2')
+      //设置配置
+      var ops = {
+        group: {
+          name: 'share',
+          pull: 'clone',
+          put: false
+        },
+        animation: 1000,
+        sort: false,
+        // 开始拖拽的时候
+        onStart: function(/**Event*/ evt) {
+          evt.oldIndex // element index within parent
+          console.log('onStart')
+        },
+
+        // 结束拖拽
+        onEnd: function(/**Event*/ evt) {
+          var itemEl = evt.item // dragged HTMLElement
+          evt.to // target list
+          evt.from // previous list
+          evt.oldIndex // element's old index within old parent
+          evt.newIndex // element's new index within new parent
+          evt.clone // the clone element
+          evt.pullMode // when item is in another sortable: `"clone"` if cloning, `true` if moving
+          console.log('onEnd')
+        },
+        onMove: function(/**Event*/ evt, /**Event*/ originalEvent) {
+          console.log('onMove')
+        },
+        // clone一个元素的时候触发
+        onClone: function(/**Event*/ evt) {
+          var origEl = evt.item
+          var cloneEl = evt.clone
+          console.log('onClone')
+        },
+
+        // 拖拽元素改变位置的时候
+        onChange: function(/**Event*/ evt) {
+          evt.newIndex // most likely why this event is used is to get the dragging element's current index
+          // same properties as onEnd
+        }
+        // swapThreshold: 0,
+        // touchStartThreshold: 0,
+        // emptyInsertThreshold: 5,
+        // draggable: '.item',
+        // ghostClass: 'sortable-ghost', // 放置占位符的类名
+        // chosenClass: 'sortable-chosen', // 所选项目的类名
+        // dragClass: 'sortable-drag' // 拖动项的类名
+        //拖动结束
+        // onEnd: function(evt) {
+        //   console.log(evt)
+        //   //获取拖动后的排序
+        //   var arr = sortable.toArray()
+        //   alert(JSON.stringify(arr))
+        // }
+      }
+
+      var ops2 = {
+        group: {
+          name: 'share',
+          pull: false,
+          put: true
+        },
+        animation: 1000,
+        sort: true,
+        delay: 1
+        // swapThreshold: 0,
+        // touchStartThreshold: 0,
+        // emptyInsertThreshold: 5,
+        // draggable: '.item',
+        // ghostClass: 'sortable-ghost', // 放置占位符的类名
+        // chosenClass: 'sortable-chosen', // 所选项目的类名
+        // dragClass: 'sortable-drag' // 拖动项的类名
+        //拖动结束
+        // onEnd: function(evt) {
+        //   console.log(evt)
+        //   //获取拖动后的排序
+        //   var arr = sortable.toArray()
+        //   alert(JSON.stringify(arr))
+        // }
+      }
+      //初始化
+      var sortable = Sortable.create(el, ops)
+      var sortable2 = Sortable.create(el2, ops2)
+    </script>
   </body>
 </html>

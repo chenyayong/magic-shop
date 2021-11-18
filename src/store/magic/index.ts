@@ -5,7 +5,7 @@ import magicButtonGroup, { IMagicButtonGroup } from './magic-button-group'
 import magicPicture, { IMagicPicture } from './magic-picture'
 import magicPictureGroup, { IMagicPictureGroup } from './magic-picture-group'
 import magicSearch, { IMagicSearch } from './magic-search'
-import magicTabbar, { IMagicTabbar } from './magic_tabbar'
+import magicTabbar, { IMagicTabbar } from './magic-tabbar'
 import magicGoods, { IMagicGoods } from './magic-goods'
 
 export enum ComponentName {

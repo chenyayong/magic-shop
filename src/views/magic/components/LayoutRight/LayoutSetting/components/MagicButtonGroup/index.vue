@@ -3,17 +3,7 @@
     <h4>按钮组组件</h4>
     <el-form>
       <el-collapse v-model="activeNames">
-        <el-collapse-item title="按钮组配置" name="1">
-          <magicSettingGrid v-for="(item, index) in componentData.data.items" :items="componentData.data.items" :item="item" :index="index" :key="index">
-            <template v-slot:input="slotProps">
-              <el-row>
-                <el-input placeholder="请输入文本" v-model="slotProps.item.img_label"></el-input>
-              </el-row>
-            </template>
-          </magicSettingGrid>
-          <el-row><el-button type="primary" style="width: 100%" @click="addButtonGroupItem">添加更多</el-button></el-row>
-        </el-collapse-item>
-        <el-collapse-item title="样式配置" name="2">
+        <el-collapse-item title="样式配置" name="1">
           <el-row class="block">
             <el-col>单行按钮数量</el-col>
             <el-col>
@@ -61,6 +51,22 @@
             <el-col :span="8">背景</el-col>
             <el-col><el-color-picker v-model="componentData.data.background"></el-color-picker></el-col>
           </el-row>
+        </el-collapse-item>
+        <el-collapse-item title="按钮组配置" name="2">
+          <magicSettingGrid
+            v-for="(item, index) in componentData.data.items"
+            :img-link.sync="item.img_link"
+            :img-url.sync="item.img_url"
+            @dele="componentData.data.items.splice(index, 1)"
+            :key="index"
+          >
+            <template v-slot:input>
+              <el-row>
+                <el-input placeholder="请输入文本" v-model="item.img_label"></el-input>
+              </el-row>
+            </template>
+          </magicSettingGrid>
+          <el-row><el-button type="primary" style="width: 100%" @click="addButtonGroupItem">添加更多</el-button></el-row>
         </el-collapse-item>
       </el-collapse>
     </el-form>

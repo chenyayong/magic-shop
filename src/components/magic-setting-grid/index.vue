@@ -1,14 +1,29 @@
 <template>
+  <!-- eslint-disable vue/camelcase -->
   <div class="magic-setting-item setting-item">
     <i class="item el-icon-delete" v-if="closable" @click="deleItem"></i>
     <el-row type="flex" :gutter="20" align="middle">
       <el-col :span="8">
-        <div class="el-upload el-upload--picture-card" @click="uploadVisible = true" v-if="!item.img_url">
+        <div class="el-upload el-upload--picture-card" @click="uploadVisible = true" v-if="!img_url">
           <i class="el-icon-plus"></i>
         </div>
         <ul class="el-upload-list el-upload-list--picture-card" v-else>
           <li class="el-upload-list__item is-success">
-            <img :src="item.img_url" alt="" class="el-upload-list__item-thumbnail" />
+            <img :src="img_url" alt="" class="el-upload-list__item-thumbnail" />
+            <span class="el-upload-list__item-actions">
+              <span class="el-upload-list__item-preview" @click="dialogVisible = true"><i class="el-icon-zoom-in"></i></span>
+              <span class="el-upload-list__item-delete" @click="deleImg"><i class="el-icon-delete"></i></span>
+            </span>
+          </li>
+        </ul>
+      </el-col>
+      <el-col :span="8">
+        <div class="el-upload el-upload--picture-card" @click="uploadVisible = true" v-if="!img_url">
+          <i class="el-icon-plus"></i>
+        </div>
+        <ul class="el-upload-list el-upload-list--picture-card" v-else>
+          <li class="el-upload-list__item is-success">
+            <img :src="img_url" alt="" class="el-upload-list__item-thumbnail" />
             <span class="el-upload-list__item-actions">
               <span class="el-upload-list__item-preview" @click="dialogVisible = true"><i class="el-icon-zoom-in"></i></span>
               <span class="el-upload-list__item-delete" @click="deleImg"><i class="el-icon-delete"></i></span>
@@ -17,18 +32,18 @@
         </ul>
       </el-col>
       <el-col>
-        <slot name="input" :item="item"></slot>
+        <slot name="input"></slot>
       </el-col>
     </el-row>
     <el-row :gutter="10" style="margin-top: 15px;">
-      <el-col :span="18"><el-input placeholder="请输入链接" v-model="item.img_link"></el-input></el-col>
+      <el-col :span="18"><el-input placeholder="请输入链接" v-model="img_link"></el-input></el-col>
       <el-col :span="6"><el-button type="primary" @click="linksVisible = true">选择</el-button></el-col>
     </el-row>
 
-    <MagicUploadImgs :img-url.sync="item.img_url" :visible.sync="uploadVisible"></MagicUploadImgs>
-    <MagicLinksFactory :img-link.sync="item.img_link" :visible.sync="linksVisible"></MagicLinksFactory>
+    <MagicUploadImgs :img-url.sync="img_url" :visible.sync="uploadVisible"></MagicUploadImgs>
+    <MagicLinksFactory :img-link.sync="img_link" :visible.sync="linksVisible"></MagicLinksFactory>
     <el-dialog :visible.sync="dialogVisible" :append-to-body="true">
-      <img width="100%" :src="item.img_url" alt="" />
+      <img width="100%" :src="img_url" alt="" />
     </el-dialog>
   </div>
 </template>
@@ -47,29 +62,34 @@ import MagicLinksFactory from '@/components/magic-links-factory/index.vue'
 })
 export default class extends Vue {
   @Prop({ type: Boolean, default: true }) closable!: boolean
-  @Prop({ type: Array }) items!: any[]
-  @Prop({ type: Object, required: true }) item!: any
-  @Prop({ type: Number, required: true }) index!: number
+  @Prop({ type: String }) imgUrl!: string
+  @Prop({ type: String }) imgLink!: string
   private linksVisible = false
   private uploadVisible = false
   private dialogVisible = false
+
+  get img_url() {
+    return this.imgUrl
+  }
+
+  set img_url(url: string) {
+    this.$emit('update:imgUrl', url)
+  }
+
+  get img_link() {
+    return this.imgLink
+  }
+
+  set img_link(link: string) {
+    this.$emit('update:imgLink', link)
+  }
+
   deleItem() {
-    this.items.splice(this.index, 1)
-    this.$emit('dele', this.index)
+    this.$emit('dele')
   }
 
   deleImg() {
-    this.item.img_url = ''
+    this.$emit('update:imgUrl', '')
   }
-
-  // uploadImgsConfirm(url: string) {
-  //   this.item.img_url = url
-  //   this.$emit('uploadImgsConfirm', url)
-  // }
-
-  // linkConfirm(link: string) {
-  //   this.item.img_link = link
-  //   this.$emit('linkConfirm', link)
-  // }
 }
 </script>

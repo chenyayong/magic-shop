@@ -1,5 +1,5 @@
 <template>
-  <div class="magic-search">
+  <div class="magic-search filter-item">
     <van-search :style="style" :clearable="false" :placeholder="componentData.data.placeholder" :shape="componentData.data.shape" :background="componentData.data.background" />
   </div>
 </template>
@@ -23,3 +23,12 @@ export default class extends Vue {
   }
 }
 </script>
+<style scoped lang="scss">
+.magic-search {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 0 6px #ddd;
+}
+</style>
