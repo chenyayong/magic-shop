@@ -23,6 +23,7 @@
               v-for="(item, index) in componentData.data.items"
               :img-link.sync="item.page_path"
               :img-url.sync="item.icon_path"
+              :img-url2.sync="item.selected_icon_path"
               @dele="componentData.data.items.splice(index, 1)"
               :key="index"
             >

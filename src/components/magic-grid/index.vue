@@ -13,7 +13,7 @@ interface IGrid {
   icon: string
 }
 @Component({
-  name: 'magicGrid'
+  name: 'MagicGrid'
 })
 export default class extends Vue {
   @Prop({ type: Array }) readonly data!: IGrid[]

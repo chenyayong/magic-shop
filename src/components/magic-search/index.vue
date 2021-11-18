@@ -10,7 +10,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 @Component({
-  name: 'magicSearch'
+  name: 'MagicSearch'
 })
 export default class extends Vue {}
 </script>

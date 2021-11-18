@@ -50,7 +50,7 @@ import MagicTable from '@/components/magic-table/index.vue'
 import { getGoods } from '@/api/goods'
 import { IGoods } from '@/api/types'
 @Component({
-  name: 'magicGoodsDialog',
+  name: 'MagicGoodsDialog',
   components: {
     MagicTable
   }

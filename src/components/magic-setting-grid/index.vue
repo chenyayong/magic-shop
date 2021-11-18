@@ -4,32 +4,10 @@
     <i class="item el-icon-delete" v-if="closable" @click="deleItem"></i>
     <el-row type="flex" :gutter="20" align="middle">
       <el-col :span="8">
-        <div class="el-upload el-upload--picture-card" @click="uploadVisible = true" v-if="!img_url">
-          <i class="el-icon-plus"></i>
-        </div>
-        <ul class="el-upload-list el-upload-list--picture-card" v-else>
-          <li class="el-upload-list__item is-success">
-            <img :src="img_url" alt="" class="el-upload-list__item-thumbnail" />
-            <span class="el-upload-list__item-actions">
-              <span class="el-upload-list__item-preview" @click="dialogVisible = true"><i class="el-icon-zoom-in"></i></span>
-              <span class="el-upload-list__item-delete" @click="deleImg"><i class="el-icon-delete"></i></span>
-            </span>
-          </li>
-        </ul>
+        <PicturePlus :img-url.sync="img_url" :visible.sync="uploadVisible" />
       </el-col>
-      <el-col :span="8">
-        <div class="el-upload el-upload--picture-card" @click="uploadVisible = true" v-if="!img_url">
-          <i class="el-icon-plus"></i>
-        </div>
-        <ul class="el-upload-list el-upload-list--picture-card" v-else>
-          <li class="el-upload-list__item is-success">
-            <img :src="img_url" alt="" class="el-upload-list__item-thumbnail" />
-            <span class="el-upload-list__item-actions">
-              <span class="el-upload-list__item-preview" @click="dialogVisible = true"><i class="el-icon-zoom-in"></i></span>
-              <span class="el-upload-list__item-delete" @click="deleImg"><i class="el-icon-delete"></i></span>
-            </span>
-          </li>
-        </ul>
+      <el-col :span="8" v-if="img_url2 !== undefined">
+        <PicturePlus :img-url.sync="img_url2" :visible.sync="uploadVisible2" />
       </el-col>
       <el-col>
         <slot name="input"></slot>
@@ -41,10 +19,8 @@
     </el-row>
 
     <MagicUploadImgs :img-url.sync="img_url" :visible.sync="uploadVisible"></MagicUploadImgs>
+    <MagicUploadImgs v-if="img_url2 !== undefined" :img-url.sync="img_url2" :visible.sync="uploadVisible2"></MagicUploadImgs>
     <MagicLinksFactory :img-link.sync="img_link" :visible.sync="linksVisible"></MagicLinksFactory>
-    <el-dialog :visible.sync="dialogVisible" :append-to-body="true">
-      <img width="100%" :src="img_url" alt="" />
-    </el-dialog>
   </div>
 </template>
 
@@ -52,21 +28,23 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import MagicUploadImgs from '@/components/magic-upload-imgs/index.vue'
 import MagicLinksFactory from '@/components/magic-links-factory/index.vue'
-
+import PicturePlus from './components/PicturePlus.vue'
 @Component({
-  name: 'magicSettingItem',
+  name: 'MagicSettingItem',
   components: {
     MagicUploadImgs,
-    MagicLinksFactory
+    MagicLinksFactory,
+    PicturePlus
   }
 })
 export default class extends Vue {
   @Prop({ type: Boolean, default: true }) closable!: boolean
   @Prop({ type: String }) imgUrl!: string
+  @Prop({ type: String }) imgUrl2!: string | undefined
   @Prop({ type: String }) imgLink!: string
   private linksVisible = false
   private uploadVisible = false
-  private dialogVisible = false
+  private uploadVisible2 = false
 
   get img_url() {
     return this.imgUrl
@@ -74,6 +52,14 @@ export default class extends Vue {
 
   set img_url(url: string) {
     this.$emit('update:imgUrl', url)
+  }
+
+  get img_url2() {
+    return this.imgUrl2 as string
+  }
+
+  set img_url2(url: string) {
+    this.$emit('update:imgUrl2', url)
   }
 
   get img_link() {

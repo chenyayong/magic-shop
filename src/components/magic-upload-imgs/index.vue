@@ -1,12 +1,6 @@
 <template>
   <div class="magic-upload-imgs">
-    <el-dialog
-      :before-close="beforeClose"
-      width="600px"
-      title="上传图片"
-      :append-to-body="true"
-      :visible="visible"
-    >
+    <el-dialog :before-close="beforeClose" width="600px" title="上传图片" :append-to-body="true" :visible="visible">
       <el-tabs type="card" v-model="activeName">
         <el-tab-pane label="上传图片" name="first">
           <el-row type="flex" justify="center">
@@ -34,7 +28,7 @@ import ImagesInput from './components/ImagesInput/index.vue'
 import ImagesList from './components/ImagesList/index.vue'
 
 @Component({
-  name: 'magicUploadImgs',
+  name: 'MagicUploadImgs',
   components: {
     ImagesUpload,
     ImagesInput,

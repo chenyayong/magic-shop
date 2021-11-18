@@ -1,12 +1,6 @@
 <template>
   <div class="magic-links-factory">
-    <el-dialog
-      title="链接库"
-      width="800px"
-      :append-to-body="true"
-      :visible.sync="visible"
-      :before-close="beforeClose"
-    >
+    <el-dialog title="链接库" width="800px" :append-to-body="true" :visible.sync="visible" :before-close="beforeClose">
       <el-tabs v-model="activeName" type="card">
         <el-tab-pane label="系统页面" name="first">
           <SystemLink :currentLink.sync="currentLink" ref="systemLink" />
@@ -34,7 +28,7 @@ export interface ILink {
 }
 
 @Component({
-  name: 'magicLinksFactory',
+  name: 'MagicLinksFactory',
   components: {
     SystemLink,
     GoodsLink
