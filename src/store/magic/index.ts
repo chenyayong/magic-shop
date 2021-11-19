@@ -1,5 +1,5 @@
 import { VuexModule, Module, Mutation } from 'vuex-module-decorators'
-
+import magicGuideline from './magic-guideline'
 import magicSwiper, { IMagicSwiper } from './magic-swiper'
 import magicButtonGroup, { IMagicButtonGroup } from './magic-button-group'
 import magicPicture, { IMagicPicture } from './magic-picture'
@@ -9,6 +9,7 @@ import magicTabbar, { IMagicTabbar } from './magic-tabbar'
 import magicGoods, { IMagicGoods } from './magic-goods'
 
 export enum ComponentName {
+  magicGuideline = 'magic_guideline',
   magicSwiper = 'magic_swiper',
   magicButtonGroup = 'magic_button_group',
   magicPicture = 'magic_picture',
@@ -26,10 +27,17 @@ export interface IComponentData {
   name: ComponentName
   label?: string
   icon?: string
-  data: IMagicSwiper & IMagicButtonGroup & IMagicPicture & IMagicPictureGroup & IMagicSearch & IMagicTabbar & IMagicGoods
+  data: IMagicSwiper &
+    IMagicButtonGroup &
+    IMagicPicture &
+    IMagicPictureGroup &
+    IMagicSearch &
+    IMagicTabbar &
+    IMagicGoods
 }
 
 export interface IComponentsFormDataMap {
+  magic_guideline: IMagicSwiper
   magic_swiper: IMagicSwiper
   magic_button_group: IMagicButtonGroup
   magic_picture: IMagicPicture
@@ -78,6 +86,7 @@ class magic extends VuexModule implements IState {
   }
 
   public componentsFormDataMap: IComponentsFormDataMap = {
+    magic_guideline: magicGuideline.state.rawData,
     magic_swiper: magicSwiper.state.rawData,
     magic_button_group: magicButtonGroup.state.rawData,
     magic_picture: magicPicture.state.rawData,
@@ -91,6 +100,11 @@ class magic extends VuexModule implements IState {
   }
 
   public baseComponents = [
+    {
+      name: ComponentName.magicGuideline,
+      icon: 'el-icon-minus',
+      label: '辅助线'
+    },
     {
       name: ComponentName.magicSwiper,
       icon: 'el-icon-picture',
@@ -121,10 +135,6 @@ class magic extends VuexModule implements IState {
       icon: 'el-icon-menu',
       label: '标签栏'
     }
-    // {
-    //   name: '辅助线',
-    //   icon: 'el-icon-remove-outline'
-    // },
     // {
     //   name: '富文本',
     //   icon: 'el-icon-remove-outline'

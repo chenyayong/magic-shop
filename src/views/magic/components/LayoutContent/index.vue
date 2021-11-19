@@ -15,28 +15,12 @@
           @change="draggableChange"
         >
           <template v-if="componentsFormData.length">
-            <el-tooltip
-              :popper-options="{ boundariesElement: 'viewport', removeOnDestroy: true }"
+            <DragComponent
               :key="item.id"
               v-for="(item, index) in componentsFormData"
-              class="item"
-              effect="dark"
-              :content="item.label"
-              placement="left-start"
-            >
-              <el-tooltip placement="right-start">
-                <template v-slot:content>
-                  <i class="el-icon-delete component-delete-icon" @click="deleComponent(item.id)"></i>
-                </template>
-                <component
-                  v-if="item.name !== 'magic_tabbar'"
-                  @click.native="changeActive(index)"
-                  :class="[index === componentsFormDataIndex ? 'active' : '']"
-                  :is="item.name"
-                  :componentData="item"
-                ></component>
-              </el-tooltip>
-            </el-tooltip>
+              :component="item"
+              :index="index"
+            />
           </template>
           <template v-else>
             <el-empty>
@@ -47,18 +31,7 @@
             </el-empty>
           </template>
         </draggable>
-        <el-tooltip v-if="getTabbar" effect="dark" :content="getTabbar.label" placement="left-start">
-          <el-tooltip placement="right-start">
-            <template v-slot:content>
-              <i class="el-icon-delete component-delete-icon" @click="deleComponent(getTabbar.id)"></i>
-            </template>
-            <magic_tabbar
-              :class="[getTabbarIndex === componentsFormDataIndex ? 'active' : '']"
-              @click.native="changeActive(getTabbarIndex)"
-              :componentData="getTabbar"
-            ></magic_tabbar>
-          </el-tooltip>
-        </el-tooltip>
+        <tabbar :component="getTabbar" :index="getTabbarIndex" />
       </el-scrollbar>
     </div>
   </div>
@@ -69,13 +42,12 @@ import { namespace } from 'vuex-class'
 import draggable from 'vuedraggable'
 import { IComponentData, IPageData } from '@/store/magic'
 import { getShop } from '@/api/shops'
-// import MagicTabbar from  '@/components/magic/magic-tabbar'
+import DragComponent from './components/DragComponent.vue'
+import tabbar from './components/tabbar.vue'
+
 const magic = namespace('magic')
 const magicAsidebar = namespace('magicAsidebar')
 
-interface iComponents {
-  [key: string]: Vue
-}
 interface draggableElement {
   added?: {
     element: IComponentData
@@ -88,28 +60,30 @@ interface draggableElement {
   }
 }
 
-const files = require.context('@/components/magic/', true, /index\.vue$/)
-const components = files.keys().reduce((ret: iComponents, file: string): iComponents => {
-  const component = files(file).default
-  const name = component.extendOptions.name
-  ret[name] = component
-  return ret
-}, {})
 @Component({
   name: 'LayoutContent',
   components: {
-    ...components,
-    draggable
+    draggable,
+    DragComponent,
+    tabbar
   }
 })
 export default class extends Vue {
-  @magic.State('componentsFormDataIndex') componentsFormDataIndex!: number
   @magic.State('componentsFormData') componentsFormData!: IComponentData[]
-  @magic.Mutation('SET_COMPONENTS_FORM_DATA_INDEX') SET_COMPONENTS_FORM_DATA_INDEX!: (index?: number) => void
-  @magic.Mutation('SET_COMPONENTS_FORM_DATA') SET_COMPONENTS_FORM_DATA!: (data?: IComponentData[]) => void
+  @magic.Mutation('SET_COMPONENTS_FORM_DATA_INDEX') SET_COMPONENTS_FORM_DATA_INDEX!: (
+    index?: number
+  ) => void
+
+  @magicAsidebar.Mutation('SET_ASIDEBAR_DATA_INDEX') SET_ASIDEBAR_DATA_INDEX!: (
+    index: number
+  ) => void
+
+  @magic.Mutation('SET_COMPONENTS_FORM_DATA') SET_COMPONENTS_FORM_DATA!: (
+    data?: IComponentData[]
+  ) => void
+
   @magic.Mutation('SET_PAGE_DATA') SET_PAGE_DATA!: (data: IPageData) => void
-  @magic.Mutation('DELE_COMPONENTS_FORM_DATA') DELE_COMPONENTS_FORM_DATA!: (id: string) => void
-  @magicAsidebar.Mutation('SET_ASIDEBAR_DATA_INDEX') SET_ASIDEBAR_DATA_INDEX!: (index: number) => void
+
   private loading = true
   private group = {
     name: 'site',
@@ -139,7 +113,9 @@ export default class extends Vue {
   }
 
   get scrollbarStyle() {
-    const paddingTop = this.getSearch ? 34 + this.getSearch.data.padding_top + this.getSearch.data.padding_bottom : 0
+    const paddingTop = this.getSearch
+      ? 34 + this.getSearch.data.padding_top + this.getSearch.data.padding_bottom
+      : 0
     const paddingBottom = this.getTabbar ? 50 : 0
 
     const style = {
@@ -149,26 +125,18 @@ export default class extends Vue {
     return style
   }
 
-  deleComponent(id: string) {
-    this.DELE_COMPONENTS_FORM_DATA(id)
-    // console.log('deleComponent', id)
-  }
-
   draggableChange(value: draggableElement) {
     if (value.added) {
-      const index = this.componentsFormData.length === value.added.newIndex ? 0 : value.added.newIndex
+      const index =
+        this.componentsFormData.length === value.added.newIndex ? 0 : value.added.newIndex
       this.SET_COMPONENTS_FORM_DATA_INDEX(index)
       this.SET_ASIDEBAR_DATA_INDEX(1)
     } else if (value.moved) {
-      const index = this.componentsFormData.length === value.moved.newIndex ? 0 : value.moved.newIndex
+      const index =
+        this.componentsFormData.length === value.moved.newIndex ? 0 : value.moved.newIndex
       this.SET_COMPONENTS_FORM_DATA_INDEX(index)
       this.SET_ASIDEBAR_DATA_INDEX(1)
     }
-  }
-
-  changeActive(index: number) {
-    this.SET_COMPONENTS_FORM_DATA_INDEX(index)
-    this.SET_ASIDEBAR_DATA_INDEX(1)
   }
 
   async getShop(id: number) {
@@ -217,10 +185,6 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
-.component-delete-icon {
-  font-size: 18px;
-  cursor: pointer;
-}
 .el-scrollbar {
   height: 100%;
 }

@@ -1,7 +1,19 @@
 <template>
   <div class="base-components">
-    <draggable class="grid-list" :list="compontents" filter=".filter-item" :clone="clone" :group="group" :sort="false">
-      <div class="grid-item" :class="filterClass(item)" v-for="item in compontents" :key="item.name">
+    <draggable
+      class="grid-list"
+      :list="compontents"
+      filter=".filter-item"
+      :clone="clone"
+      :group="group"
+      :sort="false"
+    >
+      <div
+        class="grid-item"
+        :class="filterClass(item)"
+        v-for="item in compontents"
+        :key="item.name"
+      >
         <div><i :class="[item.icon]"></i></div>
         <div>{{ item.label }}</div>
       </div>
@@ -78,12 +90,15 @@ export default class extends Vue {
   justify-content: center;
   border-right: 1px solid #eee;
   border-bottom: 1px solid #eee;
-  margin-right: -1px;
+  // margin-right: -1px;
   margin-bottom: -1px;
   font-size: 13px;
-  box-sizing: content-box;
+  box-sizing: border-box;
   cursor: move;
   transition: all ease 0.3s;
+  &:nth-child(3n) {
+    border-right: none;
+  }
   &:hover {
     background-color: $--color-primary;
     color: #fff;

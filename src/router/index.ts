@@ -35,19 +35,17 @@ Vue.use(VueRouter)
 export const constantRoutes: RouteConfig[] = [
   {
     path: '/magic',
-    component: () => import(/* webpackChunkName: "magic-shop" */ '@/views/magic/index.vue')
+    component: () => import(/* webpackChunkName: "magic-shop" */ '@/views/magic/index.vue'),
+    children: [
+      {
+        path: 'home',
+        component: () => import(/* webpackChunkName: "home" */ '@/pages/home/index.vue')
+      }
+    ]
   },
   {
     path: '/shops',
-    component: () => import(/* webpackChunkName: "magic-shop" */ '@/views/shops/index.vue')
-  },
-  {
-    path: '/head-navigation',
-    component: () => import(/* webpackChunkName: "magic-shop" */ '@/views/head-navigation/index.vue')
-  },
-  {
-    path: '/bottom-navigation',
-    component: () => import(/* webpackChunkName: "magic-shop" */ '@/views/bottom-navigation/index.vue')
+    component: () => import(/* webpackChunkName: "shops" */ '@/views/shops/index.vue')
   },
   {
     path: '/404',
