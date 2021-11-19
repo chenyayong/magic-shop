@@ -3,8 +3,9 @@
     <el-row class="layout-bar" type="flex" justify="end" align="middle">
       <!-- <span class="page-title">页面名称：</span>
       <el-input clearable placeholder="请输入页面名称" style="width: 250px;"></el-input> -->
-      <span class="return-list" @click="handleBack">返回列表</span>
-      <span class="page-save" @click="handleSave">保存</span>
+      <span class="bar-item" @click="handleBack">返回列表</span>
+      <span class="bar-item" @click="handlePreview">预览</span>
+      <span class="bar-item page-save" @click="handleSave">保存</span>
     </el-row>
   </div>
 </template>
@@ -74,8 +75,16 @@ export default class extends Vue {
     }
   }
 
+  handlePreview() {
+    const search = location.href.split('?')[1]
+    const params = new URLSearchParams(search)
+    const id = params.get('id') as string
+    const route = this.$router.resolve({ path: '/pages/home/index', query: { id: id } })
+    window.open(route.href, '_blank')
+  }
+
   handleBack() {
-    this.$router.push('/shop')
+    this.$router.push('/shops')
   }
 }
 </script>
@@ -99,7 +108,7 @@ export default class extends Vue {
     .page-title {
       color: $--color-primary;
     }
-    .return-list {
+    .bar-item {
       height: 100%;
       border-left: 1px solid #e8eaec;
       text-align: center;
@@ -107,17 +116,11 @@ export default class extends Vue {
       cursor: pointer;
       display: flex;
       align-items: center;
-      margin-left: 30px;
       padding: 0 30px;
     }
     .page-save {
-      height: 100%;
       background-color: $--color-primary;
       color: #ffffff;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      padding: 0 30px;
     }
   }
 }

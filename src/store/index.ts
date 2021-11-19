@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex, { Module } from 'vuex'
-
+import home from './pages/home'
 Vue.use(Vuex)
 
 interface IModule {
@@ -16,7 +16,10 @@ const modules = files.keys().reduce((ret: IModule, file) => {
 }, {})
 
 const store = new Vuex.Store({
-  modules
+  modules: {
+    ...modules,
+    home
+  }
 })
 
 export default store

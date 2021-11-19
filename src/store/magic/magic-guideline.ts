@@ -1,9 +1,19 @@
 import { VuexModule, Module } from 'vuex-module-decorators'
 
+export enum IBorderStyle {
+  solid,
+  dashed,
+  dotted,
+  double
+}
+
 export interface IMagicGuideline {
   background: string
-  padding: number
-  border_radius: number
+  border_color: string
+  paddingLeftAndRight: number
+  paddingTopAndBottom: number
+  border_style: IBorderStyle
+  border_width: number
 }
 export interface IMagicGuidelineComponent {
   id?: string
@@ -22,10 +32,11 @@ interface IState {
 export default class extends VuexModule implements IState {
   public name = 'magicPicture'
   public rawData = {
-    background: '',
-    padding: 0,
-    border_radius: 0,
-    layout: 1,
-    attribute: 0
+    background: '#fff',
+    border_color: '#ddd',
+    paddingLeftAndRight: 0,
+    paddingTopAndBottom: 5,
+    border_style: (IBorderStyle[0] as unknown) as IBorderStyle,
+    border_width: 3
   }
 }

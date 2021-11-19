@@ -42,19 +42,18 @@ export default class extends Vue {
   @Prop({ type: Object }) component!: iComponents
   @Prop({ type: Number }) index!: number
   @magic.State('componentsFormDataIndex') componentsFormDataIndex!: number
-  @magic.Mutation('SET_COMPONENTS_FORM_DATA_INDEX') SET_COMPONENTS_FORM_DATA_INDEX!: (
-    index?: number
-  ) => void
+  @magic.Mutation('SET_COMPONENTS_FORM_DATA_INDEX') SET_COMPONENTS_FORM_DATA_INDEX!: (index?: number) => void
 
-  @magicAsidebar.Mutation('SET_ASIDEBAR_DATA_INDEX') SET_ASIDEBAR_DATA_INDEX!: (
-    index: number
-  ) => void
+  @magicAsidebar.Mutation('SET_ASIDEBAR_DATA_INDEX') SET_ASIDEBAR_DATA_INDEX!: (index: number) => void
 
   @magic.Mutation('DELE_COMPONENTS_FORM_DATA') DELE_COMPONENTS_FORM_DATA!: (id: string) => void
 
   changeActive(index: number) {
     this.SET_COMPONENTS_FORM_DATA_INDEX(index)
     this.SET_ASIDEBAR_DATA_INDEX(1)
+    // const href = this.$router.resolve({ path: '/magic', query: { id: 2 } })
+    // console.log(href)
+    // window.open(href.href, '_blank')
   }
 
   deleComponent(id: string) {

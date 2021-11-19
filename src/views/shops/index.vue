@@ -25,16 +25,12 @@
         </template>
       </el-table-column>
     </magic-table>
-    <el-dialog title="预览" width="375px" :visible.sync="dialogVisible">
-      <div class="content-main">
-        <el-scrollbar>
+    <el-dialog width="0px" height="0px" :visible.sync="dialogVisible">
+      <div class="app">
+        <el-scrollbar :style="scrollbarStyle">
           <component :key="item.id" v-for="item in componentsFormData" :is="item.name" :componentData="item"></component>
         </el-scrollbar>
       </div>
-      <!-- <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span> -->
     </el-dialog>
   </div>
 </template>
@@ -45,6 +41,7 @@ import magicSearch from '@/components/magic-search/index.vue'
 import { getShops, deleteShop } from '@/api/shops'
 import { handleClipboard } from '@/utils/clipboard'
 import { iShopData } from '@/api/types'
+import { IComponentData } from '@/store/magic/index'
 interface iComponents {
   [key: string]: Vue
 }
@@ -69,11 +66,23 @@ export default class extends Vue {
   private total = 0
   private loading = false
   private dialogVisible = false
-  private componentsFormData = []
+  private componentsFormData: IComponentData[] = []
   private params = {
     page: 1,
     limit: 10,
     page_title: ''
+  }
+
+  get scrollbarStyle() {
+    const search = this.componentsFormData.find((e) => e.name === 'magic_search')
+    const tabbar = this.componentsFormData.find((e) => e.name === 'magic_tabbar')
+    const paddingTop = search ? 34 + search.data.padding_top + search.data.padding_bottom : 0
+    const paddingBottom = tabbar ? 50 : 0
+    const style = {
+      paddingTop: paddingTop + 'px',
+      paddingBottom: paddingBottom + 'px'
+    }
+    return style
   }
 
   paginationChange() {
@@ -165,19 +174,42 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
-.content-main {
-  height: 667px;
-}
-.el-scrollbar {
-  height: 100%;
-}
-.content-main ::v-deep .el-scrollbar__wrap {
-  overflow-x: hidden !important;
-  .el-scrollbar__view {
+// .content-main {
+//   height: 667px;
+//   transform: translate(0, 0);
+// }
+// .el-scrollbar {
+//   height: 100%;
+// }
+// .content-main ::v-deep .el-scrollbar__wrap {
+//   overflow-x: hidden !important;
+//   .el-scrollbar__view {
+//     height: 100%;
+//   }
+// }
+// .shops ::v-deep .el-dialog__body {
+//   padding: 0;
+// }
+.app {
+  box-sizing: border-box;
+  height: 640px;
+  width: 360px;
+  background: #fafafa;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: #ebedf0 0 4px 12px;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  .el-scrollbar {
     height: 100%;
   }
-}
-.shops ::v-deep .el-dialog__body {
-  padding: 0;
+  ::v-deep .el-scrollbar__wrap {
+    overflow-x: hidden !important;
+    .el-scrollbar__view {
+      height: 100%;
+    }
+  }
 }
 </style>

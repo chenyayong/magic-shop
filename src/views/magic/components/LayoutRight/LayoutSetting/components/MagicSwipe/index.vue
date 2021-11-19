@@ -3,7 +3,7 @@
     <h4>轮播图组件</h4>
     <el-form>
       <el-collapse v-model="activeNames">
-        <el-collapse-item title="边距" name="1">
+        <el-collapse-item title="样式配置" name="1">
           <el-row>
             <el-col>内边边距</el-col>
             <el-col><el-slider v-model="componentData.data.padding" show-input=""></el-slider></el-col>

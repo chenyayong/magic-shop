@@ -1,6 +1,13 @@
 <template>
   <div class="magic-search filter-item">
-    <van-search :style="style" :clearable="false" :placeholder="componentData.data.placeholder" :shape="componentData.data.shape" :background="componentData.data.background" />
+    <van-search
+      @focus="focus"
+      :style="style"
+      :clearable="false"
+      :placeholder="componentData.data.placeholder"
+      :shape="componentData.data.shape"
+      :background="componentData.data.background"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -20,6 +27,10 @@ export default class extends Vue {
       paddingBottom: this.componentData.data.padding_bottom + 'px'
     }
     return style
+  }
+
+  focus() {
+    this.$router.push('/pages/search/index')
   }
 }
 </script>
