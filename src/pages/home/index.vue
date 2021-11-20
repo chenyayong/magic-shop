@@ -6,15 +6,10 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-// import { IComponentData, IPageData } from '@/store/magic'
-import { namespace } from 'vuex-class'
 import { getShop } from '@/api/shops'
-// import { IHome } from '@/store/pages/index'
+import { IComponentData } from '@/store/pages/home'
+import { namespace } from 'vuex-class'
 const home = namespace('home')
-// import { Loading } from 'vant'
-// import 'vant/lib/loading/style'
-// Vue.use(Loading)
-
 interface iComponents {
   [key: string]: any
 }
@@ -30,17 +25,17 @@ const components = files.keys().reduce((ret: iComponents, file: string) => {
   components: { ...components }
 })
 export default class extends Vue {
-  @home.State('componentsData') componentsData!: any
-  @home.Action('setComponentsData') setComponentsData!: (data: any) => void
-  @home.Mutation('SET_COMPONENTS_DATA') SET_COMPONENTS_DATA!: (data: any) => void
+  @home.State('componentsData') componentsData!: IComponentData[]
+  @home.Action('setComponentsData') setComponentsData!: (data: IComponentData[]) => void
+  @home.Mutation('SET_COMPONENTS_DATA') SET_COMPONENTS_DATA!: (data: IComponentData[]) => void
   private loading = false
 
   async getShop(id: number) {
     const res = await getShop(id)
     if (res && res.code && res.code === 20000) {
       const data = res.data
-      const shop_data = JSON.parse((data.shop_data as unknown) as string)
-      this.SET_COMPONENTS_DATA(shop_data)
+      const shop_data = JSON.parse(data.shop_data as string)
+      this.setComponentsData(shop_data)
     } else {
       this.$message({
         type: 'error',

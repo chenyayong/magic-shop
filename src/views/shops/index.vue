@@ -174,22 +174,6 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
-// .content-main {
-//   height: 667px;
-//   transform: translate(0, 0);
-// }
-// .el-scrollbar {
-//   height: 100%;
-// }
-// .content-main ::v-deep .el-scrollbar__wrap {
-//   overflow-x: hidden !important;
-//   .el-scrollbar__view {
-//     height: 100%;
-//   }
-// }
-// .shops ::v-deep .el-dialog__body {
-//   padding: 0;
-// }
 .app {
   box-sizing: border-box;
   height: 640px;

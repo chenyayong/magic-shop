@@ -1,19 +1,7 @@
 <template>
   <div class="shop-components">
-    <draggable
-      class="grid-list"
-      :list="compontents"
-      filter=".filter-item"
-      :clone="clone"
-      :group="group"
-      :sort="false"
-    >
-      <div
-        class="grid-item"
-        :class="filterClass(item)"
-        v-for="item in compontents"
-        :key="item.name"
-      >
+    <draggable class="grid-list" :list="compontents" filter=".filter-item" :clone="clone" :group="group" :sort="false">
+      <div class="grid-item" :class="filterClass(item)" v-for="item in compontents" :key="item.name">
         <div><i :class="[item.icon]"></i></div>
         <div>{{ item.label }}</div>
       </div>
@@ -58,7 +46,7 @@ export default class extends Vue {
     const element = this.componentsFormDataMap[name]
     value = cloneDeep(value)
     value.id = uuid()
-    value.data = cloneDeep(element) as any
+    value.data = cloneDeep(element)
     return value
   }
 }

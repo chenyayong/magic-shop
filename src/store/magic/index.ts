@@ -1,5 +1,5 @@
 import { VuexModule, Module, Mutation } from 'vuex-module-decorators'
-import magicGuideline from './magic-guideline'
+import magicGuideline, { IMagicGuideline } from './magic-guideline'
 import magicSwiper, { IMagicSwiper } from './magic-swiper'
 import magicButtonGroup, { IMagicButtonGroup } from './magic-button-group'
 import magicPicture, { IMagicPicture } from './magic-picture'
@@ -8,7 +8,7 @@ import magicSearch, { IMagicSearch } from './magic-search'
 import magicTabbar, { IMagicTabbar } from './magic-tabbar'
 import magicGoods, { IMagicGoods } from './magic-goods'
 
-export enum ComponentName {
+export enum IComponentName {
   magicGuideline = 'magic_guideline',
   magicSwiper = 'magic_swiper',
   magicButtonGroup = 'magic_button_group',
@@ -22,18 +22,14 @@ export enum ComponentName {
   magicBackTop = 'magic_backTop'
 }
 
+export type IFieldData = IMagicGuideline & IMagicSwiper & IMagicButtonGroup & IMagicPicture & IMagicPictureGroup & IMagicSearch & IMagicTabbar & IMagicGoods
+
 export interface IComponentData {
-  id?: string
-  name: ComponentName
-  label?: string
-  icon?: string
-  data: IMagicSwiper &
-    IMagicButtonGroup &
-    IMagicPicture &
-    IMagicPictureGroup &
-    IMagicSearch &
-    IMagicTabbar &
-    IMagicGoods
+  id: string
+  name: IComponentName
+  label: string
+  icon: string
+  data: IFieldData
 }
 
 export interface IComponentsFormDataMap {
@@ -51,10 +47,10 @@ export interface IComponentsFormDataMap {
 }
 
 export interface IComponent {
-  id?: string
-  name: ComponentName
+  name: IComponentName
   icon: string
   label: string
+  id?: string
   data?: any
 }
 
@@ -101,37 +97,37 @@ class magic extends VuexModule implements IState {
 
   public baseComponents = [
     {
-      name: ComponentName.magicGuideline,
+      name: IComponentName.magicGuideline,
       icon: 'el-icon-minus',
       label: '辅助线'
     },
     {
-      name: ComponentName.magicSwiper,
+      name: IComponentName.magicSwiper,
       icon: 'el-icon-picture',
       label: '轮播图'
     },
     {
-      name: ComponentName.magicButtonGroup,
+      name: IComponentName.magicButtonGroup,
       icon: 'el-icon-switch-button',
       label: '按钮组'
     },
     {
-      name: ComponentName.magicPicture,
+      name: IComponentName.magicPicture,
       icon: 'el-icon-picture-outline',
       label: '单图'
     },
     {
-      name: ComponentName.magicPictureGroup,
+      name: IComponentName.magicPictureGroup,
       icon: 'el-icon-camera',
       label: '图片组合'
     },
     {
-      name: ComponentName.magicSearch,
+      name: IComponentName.magicSearch,
       icon: 'el-icon-search',
       label: '搜索栏'
     },
     {
-      name: ComponentName.magicTabbar,
+      name: IComponentName.magicTabbar,
       icon: 'el-icon-menu',
       label: '标签栏'
     }
@@ -147,22 +143,22 @@ class magic extends VuexModule implements IState {
 
   public shopComponents = [
     {
-      name: ComponentName.magicGoods,
+      name: IComponentName.magicGoods,
       icon: 'el-icon-goods',
       label: '商品列表'
     },
     {
-      name: ComponentName.magicNotice,
+      name: IComponentName.magicNotice,
       icon: 'el-icon-chat-dot-round',
       label: '公告'
     },
     {
-      name: ComponentName.magicPosition,
+      name: IComponentName.magicPosition,
       label: '悬浮按钮',
       icon: 'el-icon-place'
     },
     {
-      name: ComponentName.magicBackTop,
+      name: IComponentName.magicBackTop,
       label: '回到顶部',
       icon: 'el-icon-top'
     }
