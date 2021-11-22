@@ -46,12 +46,12 @@ export const constantRoutes: RouteConfig[] = [
     path: '/404',
     component: () => import(/* webpackChunkName: "404" */ '@/views/error-page/404.vue'),
     meta: { hidden: true }
-  },
-  {
-    path: '*',
-    redirect: '/404',
-    meta: { hidden: true }
   }
+  // {
+  //   path: '*',
+  //   redirect: '/404',
+  //   meta: { hidden: true }
+  // }
 ]
 
 /**

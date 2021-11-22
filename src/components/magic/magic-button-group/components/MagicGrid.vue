@@ -12,7 +12,7 @@
             </el-row>
           </template>
           <template>
-            <el-row>
+            <el-row @click.native="handleButton(item.img_link)">
               <div class="button-group__image">
                 <img :src="item.img_url" alt="" srcset="" :style="imgStyle" />
               </div>
@@ -60,6 +60,10 @@ export default class extends Vue {
       fontSize: this.componentData.data.text_size + 'px'
     }
     return style
+  }
+
+  handleButton(link: string) {
+    this.$router.push(link)
   }
 }
 </script>

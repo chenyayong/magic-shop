@@ -1,5 +1,5 @@
 <template>
-  <div class="magic-search filter-item">
+  <div class="magic-search filter-item" :style="height">
     <van-search
       @focus="focus"
       :style="style"
@@ -21,6 +21,16 @@ Vue.use(Search)
 })
 export default class extends Vue {
   @Prop({ type: Object, required: true }) componentData!: IMagicSearchComponent
+
+  get height() {
+    const paddingTop = this.componentData.data.padding_top
+    const paddingBottom = this.componentData.data.padding_bottom
+    const style = {
+      height: 34 + paddingTop + paddingBottom + 'px'
+    }
+    return style
+  }
+
   get style() {
     const style = {
       paddingTop: this.componentData.data.padding_top + 'px',
@@ -41,5 +51,6 @@ export default class extends Vue {
   left: 0;
   width: 100%;
   box-shadow: 0 0 6px #ddd;
+  z-index: 999;
 }
 </style>

@@ -9,7 +9,7 @@
       <van-tag type="primary" v-for="i in 3" :key="i" closeable round size="medium">标签</van-tag>
     </div>
     <div class="search-filter">
-      <van-dropdown-menu>
+      <van-dropdown-menu ref="dropdownMenu">
         <van-dropdown-item v-model="value1" :options="option1" />
         <van-dropdown-item v-model="value2" :options="option2" />
       </van-dropdown-menu>
@@ -48,6 +48,22 @@ export default class extends Vue {
   cancel() {
     this.$router.back()
   }
+
+  marginTop() {
+    const clientHeight = document.body.clientHeight
+    const height = 640
+    const value = height / 2 - clientHeight / 2
+    return value
+  }
+
+  mounted() {
+    const el = (this.$refs.dropdownMenu as any).$el as HTMLElement
+    // eslint-disable-next-line no-undef
+    const items = el.querySelectorAll('.van-dropdown-item') as NodeListOf<HTMLElement>
+    items.forEach((item) => {
+      item.style.marginTop = this.marginTop() + 'px'
+    })
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -76,5 +92,7 @@ export default class extends Vue {
     margin-bottom: 8px;
     margin-right: 8px;
   }
+}
+.search-filter {
 }
 </style>

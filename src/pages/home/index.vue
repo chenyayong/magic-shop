@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" :style="scrollbarStyle">
     <component :key="item.id" v-for="item in componentsData" :is="item.name" :componentData="item"></component>
   </div>
 </template>
@@ -29,6 +29,24 @@ export default class extends Vue {
   @home.Action('setComponentsData') setComponentsData!: (data: IComponentData[]) => void
   @home.Mutation('SET_COMPONENTS_DATA') SET_COMPONENTS_DATA!: (data: IComponentData[]) => void
   private loading = false
+
+  get scrollbarStyle() {
+    const search = this.componentsData.find((e) => e.name === 'magic_search')
+    const tabbar = this.componentsData.find((e) => e.name === 'magic_tabbar')
+    const paddingTop = search ? 34 + search.data.padding_top + search.data.padding_bottom : 0
+    const paddingBottom = tabbar ? 50 : 0
+    const home = this.$route.path.includes('home')
+    let style
+    if (home) {
+      style = {
+        paddingTop: paddingTop + 'px',
+        paddingBottom: paddingBottom + 'px'
+      }
+    } else {
+      style = {}
+    }
+    return style
+  }
 
   async getShop(id: number) {
     const res = await getShop(id)

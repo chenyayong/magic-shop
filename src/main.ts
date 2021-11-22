@@ -19,6 +19,11 @@ import '@/icons/components'
 // import * as directives from '@/directives'
 // import * as filters from '@/filsters'
 
+import Vant from 'vant'
+import 'vant/lib/index.css'
+
+Vue.use(Vant)
+
 Vue.use(ElementUI, {
   size: 'small' // AppModule.size, // Set element-ui default size
   // i18n: (key: string, value: string) => i18n.t(key, value)
