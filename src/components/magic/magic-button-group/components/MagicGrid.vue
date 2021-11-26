@@ -4,22 +4,22 @@
       <grid-item v-for="(item, index) in items" :key="index">
         <el-skeleton :loading="!item.img_url">
           <template slot="template">
-            <el-row type="flex" justify="center">
+            <van-row type="flex" justify="center">
               <el-skeleton-item variant="image" :style="imgStyle" />
-            </el-row>
-            <el-row type="flex" justify="center" style="margin-top: 10px;">
+            </van-row>
+            <van-row type="flex" justify="center" style="margin-top: 10px;">
               <el-skeleton-item variant="h3" style="width: 70%;" />
-            </el-row>
+            </van-row>
           </template>
           <template>
-            <el-row @click.native="handleButton(item.img_link)">
+            <van-row @click.native="handleButton(item.img_link)">
               <div class="button-group__image">
                 <img :src="item.img_url" alt="" srcset="" :style="imgStyle" />
               </div>
               <div class="button-group__text" :style="textStyle">
                 {{ item.img_label }}
               </div>
-            </el-row>
+            </van-row>
           </template>
         </el-skeleton>
       </grid-item>

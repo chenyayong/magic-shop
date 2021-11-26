@@ -5,7 +5,9 @@
       <template slot="template">
         <div style="display: flex; align-items: stretch;">
           <div><el-skeleton-item variant="image" style="width: 120px; height: 120px;" /></div>
-          <div style="width: 100%;display: flex;flex-direction: column;justify-content: space-around;margin-left:20px;">
+          <div
+            style="width: 100%;display: flex;flex-direction: column;justify-content: space-around;margin-left:20px;"
+          >
             <el-skeleton-item variant="p" style="width: 70%;" />
             <el-skeleton-item variant="p" style="width: 50%;" />
             <el-skeleton-item variant="p" style="width: 30%;" />
@@ -13,15 +15,34 @@
           </div>
         </div>
       </template>
-      <el-row class="row" type="flex" :style="colStyle" v-for="(item, index) in componentData.data.items" :key="index">
-        <el-col class="block-img">
+      <van-row
+        class="row"
+        type="flex"
+        :style="colStyle"
+        v-for="(item, index) in componentData.data.items"
+        :key="index"
+      >
+        <van-col class="block-img">
           <img :src="item.original_img" alt="" srcset="" />
-          <svg-icon v-if="attribute" :name="attribute" width="30" height="30" color="#F56C6C"></svg-icon>
-        </el-col>
-        <el-col>
-          <el-row class="label" :class="[key]" v-for="(value, key) in contentMap" v-if="contentFilter(key)" :key="key">{{ value }} {{ item[key] }}</el-row>
-        </el-col>
-      </el-row>
+          <svg-icon
+            v-if="attribute"
+            :name="attribute"
+            width="30"
+            height="30"
+            color="#F56C6C"
+          ></svg-icon>
+        </van-col>
+        <van-col>
+          <van-row
+            class="label"
+            :class="[key]"
+            v-for="(value, key) in contentMap"
+            v-if="contentFilter(key)"
+            :key="key"
+            >{{ value }} {{ item[key] }}</van-row
+          >
+        </van-col>
+      </van-row>
     </el-skeleton>
   </div>
 </template>

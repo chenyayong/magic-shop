@@ -13,9 +13,6 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IMagicSearchComponent } from '@/store/magic/magic-search'
-import { Search } from 'vant'
-import 'vant/lib/search/style'
-Vue.use(Search)
 @Component({
   name: 'magic_search'
 })

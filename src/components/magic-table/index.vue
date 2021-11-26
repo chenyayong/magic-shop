@@ -1,10 +1,22 @@
-<template lang="pug">
-  div.magic-able
-    .el-table-container
-      el-table(:data="data" border v-bind="$attrs")
-        slot
-    .el-pagination-container
-      el-pagination(background, :layout='layout', :total='total', @size-change="sizeChange", @current-change="currentChange", :current-page.sync="page", :page-sizes="pageSizes", :page-size.sync="limit" )
+<template>
+  <div class="magic-able">
+    <div class="el-table-container">
+      <el-table :data="data" border v-bind="$attrs">
+        <slot></slot>
+      </el-table>
+    </div>
+    <div class="el-pagination-container">
+      <el-pagination
+        :layout="layout"
+        :total="total"
+        @size-change="sizeChange"
+        @current-change="currentChange"
+        :current-page.sync="page"
+        :page-sizes="pageSizes"
+        :page-size.sync="limit"
+      ></el-pagination>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">

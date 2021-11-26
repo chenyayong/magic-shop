@@ -4,13 +4,15 @@
       <template v-slot:content>
         <i class="el-icon-delete component-delete-icon" @click="deleComponent(component.id)"></i>
       </template>
-      <component
+      <div
+        class="drag-component"
         v-if="component.name !== 'magic_tabbar'"
-        @click.native="changeActive(index)"
         :class="[index === componentsFormDataIndex ? 'active' : '']"
-        :is="component.name"
-        :component-data="component"
-      ></component>
+        @click="changeActive(index)"
+        :style="searchComponentStyle"
+      >
+        <component :is="component.name" :component-data="component"></component>
+      </div>
     </el-tooltip>
   </el-tooltip>
 </template>
@@ -42,11 +44,33 @@ export default class extends Vue {
   @Prop({ type: Object }) component!: iComponents
   @Prop({ type: Number }) index!: number
   @magic.State('componentsFormDataIndex') componentsFormDataIndex!: number
-  @magic.Mutation('SET_COMPONENTS_FORM_DATA_INDEX') SET_COMPONENTS_FORM_DATA_INDEX!: (index?: number) => void
+  @magic.Mutation('SET_COMPONENTS_FORM_DATA_INDEX') SET_COMPONENTS_FORM_DATA_INDEX!: (
+    index?: number
+  ) => void
 
-  @magicAsidebar.Mutation('SET_ASIDEBAR_DATA_INDEX') SET_ASIDEBAR_DATA_INDEX!: (index: number) => void
+  @magicAsidebar.Mutation('SET_ASIDEBAR_DATA_INDEX') SET_ASIDEBAR_DATA_INDEX!: (
+    index: number
+  ) => void
 
   @magic.Mutation('DELE_COMPONENTS_FORM_DATA') DELE_COMPONENTS_FORM_DATA!: (id: string) => void
+
+  get searchComponentStyle() {
+    let style = {
+      // height: 34 + paddingTop + paddingBottom + 'px'
+    }
+    if (this.component.name === 'magic_search') {
+      const paddingTop = this.component.data.padding_top
+      const paddingBottom = this.component.data.padding_bottom
+      style = {
+        height: 34 + paddingTop + paddingBottom + 'px',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%'
+      }
+    }
+    return style
+  }
 
   changeActive(index: number) {
     this.SET_COMPONENTS_FORM_DATA_INDEX(index)
@@ -65,5 +89,34 @@ export default class extends Vue {
 .component-delete-icon {
   font-size: 18px;
   cursor: pointer;
+}
+.drag-component {
+  position: relative;
+  [class*='magic-'] {
+    pointer-events: none;
+  }
+  &:hover::after {
+    position: absolute;
+    content: ' ';
+    left: 2px;
+    bottom: 2px;
+    top: 2px;
+    right: 2px;
+    box-shadow: 0 0 10px $--color-primary;
+    pointer-events: none;
+    z-index: 1000;
+  }
+  &.active::after {
+    position: absolute;
+    content: ' ';
+    left: 0px;
+    bottom: 0px;
+    top: 0px;
+    right: 0px;
+    border: 2px solid $--color-primary;
+    box-shadow: none;
+    pointer-events: none;
+    z-index: 1000;
+  }
 }
 </style>

@@ -25,11 +25,23 @@ const pages = {
     },
     {
       path: 'shopping-card/index',
-      component: () => import('@/pages/shopping-card/index.vue')
+      component: () => import('@/pages/shopping-cart/index.vue')
     },
     {
       path: 'search/index',
       component: () => import('@/pages/search/index.vue')
+    },
+    {
+      path: 'setting/index',
+      component: () => import('@/pages/setting/index.vue')
+    },
+    {
+      path: 'goods/index',
+      component: () => import('@/pages/goods/index.vue')
+    },
+    {
+      path: 'address/index',
+      component: () => import('@/pages/address/index.vue')
     }
   ]
 }

@@ -31,7 +31,7 @@
             </el-empty>
           </template>
         </draggable>
-        <tabbar :component="getTabbar" :index="getTabbarIndex" />
+        <tabbar v-if="getTabbar" :component="getTabbar" :index="getTabbarIndex" />
       </el-scrollbar>
     </div>
   </div>
@@ -185,19 +185,6 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
-.el-scrollbar {
-  height: 100%;
-}
-.layout-content ::v-deep .el-scrollbar__wrap {
-  overflow-x: hidden !important;
-  .el-scrollbar__view {
-    height: 100%;
-  }
-}
-.draggable {
-  height: 100%;
-  width: 100%;
-}
 .layout-content {
   position: fixed;
   left: 280px;
@@ -206,6 +193,19 @@ export default class extends Vue {
   bottom: 0px;
   box-sizing: border-box;
   overflow: hidden;
+  .el-scrollbar {
+    height: 100%;
+  }
+  ::v-deep .el-scrollbar__wrap {
+    overflow-x: hidden !important;
+    .el-scrollbar__view {
+      height: 100%;
+    }
+  }
+  .draggable {
+    height: 100%;
+    width: 100%;
+  }
 }
 .content-main {
   position: absolute;
@@ -222,33 +222,6 @@ export default class extends Vue {
   color: $--color-primary;
   p {
     text-align: left;
-  }
-}
-
-.content-main ::v-deep [class*='magic-'] {
-  position: relative;
-  &:hover::after {
-    position: absolute;
-    content: ' ';
-    left: 2px;
-    bottom: 2px;
-    top: 2px;
-    right: 2px;
-    box-shadow: 0 0 10px $--color-primary;
-    pointer-events: none;
-    z-index: 1000;
-  }
-  &.active::after {
-    position: absolute;
-    content: ' ';
-    left: 0px;
-    bottom: 0px;
-    top: 0px;
-    right: 0px;
-    border: 2px solid $--color-primary;
-    box-shadow: none;
-    pointer-events: none;
-    z-index: 1000;
   }
 }
 </style>

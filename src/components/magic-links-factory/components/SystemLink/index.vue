@@ -4,21 +4,36 @@
       <el-collapse-item title="商城页面" name="1">
         <el-row>
           <el-col :span="4" v-for="(item, index) in homeLinks" :key="index">
-            <span class="item-link" :class="[item.src === currentLink ? 'is-active' : '']" @click="selectLinks(item)">{{ item.name }}</span>
+            <span
+              class="item-link"
+              :class="[item.src === currentLink ? 'is-active' : '']"
+              @click="selectLinks(item)"
+              >{{ item.name }}</span
+            >
           </el-col>
         </el-row>
       </el-collapse-item>
       <el-collapse-item title="会员中心" name="2">
         <el-row>
           <el-col :span="4" v-for="(item, index) in memberLinks" :key="index">
-            <span class="item-link" :class="[item.src === currentLink ? 'is-active' : '']" @click="selectLinks(item)">{{ item.name }}</span>
+            <span
+              class="item-link"
+              :class="[item.src === currentLink ? 'is-active' : '']"
+              @click="selectLinks(item)"
+              >{{ item.name }}</span
+            >
           </el-col>
         </el-row>
       </el-collapse-item>
       <el-collapse-item title="其他链接" name="3">
         <el-row>
           <el-col :span="4" v-for="(item, index) in otherLinks" :key="index">
-            <span class="item-link" :class="[item.src === currentLink ? 'is-active' : '']" @click="selectLinks(item)">{{ item.name }}</span>
+            <span
+              class="item-link"
+              :class="[item.src === currentLink ? 'is-active' : '']"
+              @click="selectLinks(item)"
+              >{{ item.name }}</span
+            >
           </el-col>
         </el-row>
       </el-collapse-item>
@@ -78,6 +93,10 @@ export default class extends Vue {
       name: '注册'
     },
     {
+      src: '/pages/setting/index',
+      name: '设置'
+    },
+    {
       src: '/pages/search/index',
       name: '搜索'
     },
@@ -94,7 +113,7 @@ export default class extends Vue {
       name: '我的订单'
     },
     {
-      src: '/collection',
+      src: '/pages/collection/index',
       name: '我的收藏'
     }
     // {

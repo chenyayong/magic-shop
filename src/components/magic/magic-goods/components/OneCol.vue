@@ -12,15 +12,33 @@
           </div>
         </div>
       </template>
-      <el-row class="row" :style="colStyle" v-for="(item, index) in componentData.data.items" :key="index">
+      <van-row
+        class="row"
+        :style="colStyle"
+        v-for="(item, index) in componentData.data.items"
+        :key="index"
+      >
         <div class="block-img">
           <img :src="item.original_img" alt="" srcset="" />
-          <svg-icon v-if="attribute" :name="attribute" width="30" height="30" color="#F56C6C"></svg-icon>
+          <svg-icon
+            v-if="attribute"
+            :name="attribute"
+            width="30"
+            height="30"
+            color="#F56C6C"
+          ></svg-icon>
           <div class="block-img-descript">
-            <el-row class="label" :class="[key]" v-for="(value, key) in contentMap" v-if="contentFilter(key)" :key="key">{{ value }}{{ item[key] }}</el-row>
+            <van-row
+              class="label"
+              :class="[key]"
+              v-for="(value, key) in contentMap"
+              v-if="contentFilter(key)"
+              :key="key"
+              >{{ value }}{{ item[key] }}</van-row
+            >
           </div>
         </div>
-      </el-row>
+      </van-row>
     </el-skeleton>
   </div>
 </template>

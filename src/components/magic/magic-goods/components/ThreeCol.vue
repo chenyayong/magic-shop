@@ -1,7 +1,7 @@
 <template>
   <div class="three-col">
-    <el-row class="row">
-      <el-col class="col" :span="8">
+    <van-row class="row">
+      <van-col class="col" :span="8">
         <el-skeleton style="width: 100%;" :loading="loading">
           <template slot="template">
             <el-skeleton-item variant="image" style="width: 100%; height: 120px;" />
@@ -13,10 +13,17 @@
               </div>
             </div>
           </template>
-          <ColSub :style="colStyle" v-for="(item, index) in leftItems" :item="item" :attribute="attribute" :content="componentData.data.content" :key="index" />
+          <ColSub
+            :style="colStyle"
+            v-for="(item, index) in leftItems"
+            :item="item"
+            :attribute="attribute"
+            :content="componentData.data.content"
+            :key="index"
+          />
         </el-skeleton>
-      </el-col>
-      <el-col class="col" :span="8">
+      </van-col>
+      <van-col class="col" :span="8">
         <el-skeleton style="width: 100%;" :loading="loading">
           <template slot="template">
             <el-skeleton-item variant="image" style="width: 100%; height: 120px;" />
@@ -28,10 +35,17 @@
               </div>
             </div>
           </template>
-          <ColSub :style="colStyle" v-for="(item, index) in centerItems" :item="item" :attribute="attribute" :content="componentData.data.content" :key="index" />
+          <ColSub
+            :style="colStyle"
+            v-for="(item, index) in centerItems"
+            :item="item"
+            :attribute="attribute"
+            :content="componentData.data.content"
+            :key="index"
+          />
         </el-skeleton>
-      </el-col>
-      <el-col class="col" :span="8">
+      </van-col>
+      <van-col class="col" :span="8">
         <el-skeleton style="width: 100%;" :loading="loading">
           <template slot="template">
             <el-skeleton-item variant="image" style="width: 100%; height: 120px;" />
@@ -43,10 +57,17 @@
               </div>
             </div>
           </template>
-          <ColSub :style="colStyle" v-for="(item, index) in rightItems" :item="item" :attribute="attribute" :content="componentData.data.content" :key="index" />
+          <ColSub
+            :style="colStyle"
+            v-for="(item, index) in rightItems"
+            :item="item"
+            :attribute="attribute"
+            :content="componentData.data.content"
+            :key="index"
+          />
         </el-skeleton>
-      </el-col>
-    </el-row>
+      </van-col>
+    </van-row>
   </div>
 </template>
 <script lang="ts">

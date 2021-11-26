@@ -41,13 +41,13 @@ module.exports = {
       }
     }
   },
-  pwa: {
-    name: name,
-    workboxPluginMode: 'InjectManifest',
-    workboxOptions: {
-      swSrc: path.resolve(__dirname, 'src/pwa/service-worker.js')
-    }
-  },
+  // pwa: {
+  //   name: name,
+  //   workboxPluginMode: 'InjectManifest',
+  //   workboxOptions: {
+  //     swSrc: path.resolve(__dirname, 'src/pwa/service-worker.js')
+  //   }
+  // },
   pluginOptions: {
     'style-resources-loader': {
       preProcessor: 'scss',

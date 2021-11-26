@@ -1,6 +1,11 @@
 <template>
   <div class="magic-tabbar filter-item" :style="style">
-    <van-tabbar :inactive-color="componentData.data.color" :active-color="componentData.data.selected_color" @change="tabbarChange" v-model="active">
+    <van-tabbar
+      :inactive-color="componentData.data.color"
+      :active-color="componentData.data.selected_color"
+      @change="tabbarChange"
+      v-model="active"
+    >
       <van-tabbar-item v-for="(item, index) in componentData.data.items" :key="index">
         <template v-slot:icon>
           <i class="van-icon" v-if="active === index">
@@ -18,11 +23,6 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IMagicTabbarComponent } from '@/store/magic/magic-tabbar'
-import { Tabbar, TabbarItem } from 'vant'
-import 'vant/lib/tabbar/style'
-import 'vant/lib/tabbar-item/style'
-Vue.use(Tabbar)
-Vue.use(TabbarItem)
 @Component({
   name: 'magic_tabbar'
 })

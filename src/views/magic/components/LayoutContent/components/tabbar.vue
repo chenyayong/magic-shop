@@ -1,15 +1,15 @@
 <template>
-  <div class="tabbar" v-if="component">
+  <div
+    class="tabbar-component drag-component"
+    :class="[index === componentsFormDataIndex ? 'active' : '']"
+    @click="changeActive(index)"
+  >
     <el-tooltip effect="dark" :content="component.label" placement="left-start">
       <el-tooltip placement="right-start">
         <template v-slot:content>
           <i class="el-icon-delete component-delete-icon" @click="deleComponent(component.id)"></i>
         </template>
-        <magic_tabbar
-          :class="[index === componentsFormDataIndex ? 'active' : '']"
-          @click.native="changeActive(index)"
-          :component-data="component"
-        ></magic_tabbar>
+        <magic_tabbar :component-data="component"></magic_tabbar>
       </el-tooltip>
     </el-tooltip>
   </div>
@@ -51,3 +51,43 @@ export default class extends Vue {
   }
 }
 </script>
+<style lang="scss" scoped>
+.tabbar-component {
+  position: fixed !important;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  z-index: 99;
+  box-shadow: 0 0 6px #ddd;
+}
+.drag-component {
+  position: relative;
+  [class*='magic-'] {
+    pointer-events: none;
+  }
+  &:hover::after {
+    position: absolute;
+    content: ' ';
+    left: 2px;
+    bottom: 2px;
+    top: 2px;
+    right: 2px;
+    box-shadow: 0 0 10px $--color-primary;
+    pointer-events: none;
+    z-index: 1000;
+  }
+  &.active::after {
+    position: absolute;
+    content: ' ';
+    left: 0px;
+    bottom: 0px;
+    top: 0px;
+    right: 0px;
+    border: 2px solid $--color-primary;
+    box-shadow: none;
+    pointer-events: none;
+    z-index: 1000;
+  }
+}
+</style>

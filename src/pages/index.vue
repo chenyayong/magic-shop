@@ -1,11 +1,11 @@
 <template>
   <div class="app">
     <el-scrollbar>
-      <keep-alive>
-        <transition mode="out-in" name="slide-fade">
+      <transition mode="out-in" name="slide-fade">
+        <keep-alive>
           <router-view class="page-background"></router-view>
-        </transition>
-      </keep-alive>
+        </keep-alive>
+      </transition>
     </el-scrollbar>
   </div>
 </template>
