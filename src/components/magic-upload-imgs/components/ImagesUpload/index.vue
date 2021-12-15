@@ -3,7 +3,8 @@
     <el-upload
       list-type="picture-card"
       accept="image/*"
-      action="http://up.tietuku.cn/"
+      action="/index.php/Admin/DiyApi/uploadImg"
+      name="image"
       :file-list="fileList"
       :data="uploadData"
       :limit="1"
@@ -39,10 +40,9 @@ export default class extends Vue {
   private fileList: IFileList[] = []
   private dialogVisible = false
   private uploadData = {
-    deadline: Date.now(),
-    aid: 17075,
-    Token:
-      'i3ao8ll9vjflthjqw3hi2jw1v6rrokbw:zaudXD2gV9RF0t0qMMPtksq_fPE=:eyJkZWFkbGluZSI6MTYzNDg4ODU4NywiYWN0aW9uIjoiZ2V0IiwidWlkIjoxMjgwMCwiYWlkIjoiMTcwNzUiLCJmcm9tIjoiZmlsZSJ9'
+    // deadline: Date.now(),
+    // aid: 17075,
+    // Token: 'i3ao8ll9vjflthjqw3hi2jw1v6rrokbw:zaudXD2gV9RF0t0qMMPtksq_fPE=:eyJkZWFkbGluZSI6MTYzNDg4ODU4NywiYWN0aW9uIjoiZ2V0IiwidWlkIjoxMjgwMCwiYWlkIjoiMTcwNzUiLCJmcm9tIjoiZmlsZSJ9'
   }
 
   @Watch('fileList')
@@ -97,23 +97,16 @@ export default class extends Vue {
     })
   }
 
-  uploadSuccess(response: { code?: string; info?: string; linkurl?: string; name?: string }) {
-    if (response.code && response.info) {
-      // this.$emit(
-      //   'update:imgUrl',
-      //   'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg'
-      // )
-      // this.fileList = [
-      //   { url: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg' }
-      // ]
+  uploadSuccess(response: { code: number; data: string; msg: string }) {
+    if (response.code !== 20000) {
       this.$emit('update:imgUrl', '')
       this.fileList = []
       this.$message({
-        message: response.info,
+        message: response.msg,
         type: 'warning'
       })
-    } else if (response.linkurl) {
-      const linkurl = response.linkurl
+    } else {
+      const linkurl = response.data
       this.onSuccess && this.onSuccess(linkurl)
       this.$emit('update:imgUrl', linkurl)
       this.fileList = [{ url: linkurl }]

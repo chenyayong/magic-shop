@@ -9,19 +9,26 @@
       </template>
     </magic-search>
     <magic-table :data="tableData" :total="total" @change="paginationChange" :current-page.sync="params.page" :page-size.sync="params.limit" v-loading="loading">
-      <el-table-column prop="shop_id" label="ID" width="60" />
-      <el-table-column prop="updated_at" label="上次修改时间" width="170">
+      <el-table-column prop="shop_id" label="ID" width="60" align="center" />
+      <el-table-column prop="updated_at" label="上次修改时间" width="170" align="center">
         <template slot-scope="scope">
           <div>{{ scope.row.update_at | update_at }}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="page_title" label="页面标题" width="380" />
-      <el-table-column label="操作" width="380">
+      <el-table-column prop="page_title" label="页面标题" width="380" align="center" />
+      <el-table-column prop="is_index" label="是否首页" width="100" align="center">
         <template slot-scope="scope">
-          <el-button icon="el-icon-view" @click="handlePrevView(scope)">预览</el-button>
-          <el-button icon="el-icon-view" @click="handleEdit(scope)">编辑</el-button>
-          <el-button icon="el-icon-view" @click="handleCopyLink(scope, $event)">复制链接</el-button>
-          <el-button icon="el-icon-view" @click="handleDelete(scope)">删除</el-button>
+          <div>{{ scope.row.is_index === 1 ? '是' : '否' }}</div>
+          <!-- <el-switch v-model="scope.row.is_index" :active-value="1" :inactive-value="0" @change="indexChange(scope.row)"> </el-switch> -->
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="430">
+        <template slot-scope="scope">
+          <el-button v-if="scope.row.is_index !== 1" @click="handleIndex(scope)">设为首页</el-button>
+          <el-button @click="handlePrevView(scope)">预览</el-button>
+          <el-button @click="handleEdit(scope)">编辑</el-button>
+          <el-button @click="handleCopyLink(scope, $event)">复制链接</el-button>
+          <el-button @click="handleDelete(scope)">删除</el-button>
         </template>
       </el-table-column>
     </magic-table>
@@ -38,7 +45,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import magicTable from '@/components/magic-table/index.vue'
 import magicSearch from '@/components/magic-search/index.vue'
-import { getShops, deleteShop } from '@/api/shops'
+import { getShops, deleteShop, setIndex } from '@/api/shops'
 import { handleClipboard } from '@/utils/clipboard'
 import { iShopData } from '@/api/types'
 import { IComponentData } from '@/store/magic/index'
@@ -125,6 +132,28 @@ export default class extends Vue {
     this.getShops()
   }
 
+  async handleIndex(scope: { row: iShopData }) {
+    const id = scope.row.shop_id
+    const res = await setIndex({ id: id })
+    if (res.code !== 20000) {
+      this.$message({
+        type: 'error',
+        message: res.msg
+      })
+    } else {
+      this.tableData.forEach((e) => {
+        e.is_index = 0
+        if (e.shop_id === id) {
+          e.is_index = 1
+        }
+      })
+      this.$message({
+        type: 'success',
+        message: res.msg
+      })
+    }
+  }
+
   handleSearch() {
     this.params.page = 1
     this.getShops()
@@ -174,6 +203,9 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
+.shops {
+  padding: 20px;
+}
 .app {
   box-sizing: border-box;
   height: 640px;

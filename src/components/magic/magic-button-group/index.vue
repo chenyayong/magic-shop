@@ -1,5 +1,6 @@
 <template>
   <div class="magic-button-group" :style="style">
+    <!-- <uni-rate :max="10" :value="5" /> -->
     <swiper :auto-update="true" :auto-destroy="true" v-if="componentData.data.swiper" ref="mySwiper" :options="swiperOptions">
       <swiper-slide v-for="(item, index) in swiperSlides" :key="index">
         <MagicGrid :component-data="componentData" :items="item" />
@@ -14,13 +15,14 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import MagicGrid from './components/MagicGrid.vue'
 import { IMagicButtonGroupComponent } from '@/store/magic/magic-button-group'
-
+// import UniRate from '@dcloudio/uni-ui/lib/uni-rate/uni-rate.vue'
 @Component({
   name: 'magic_button_group',
   components: {
     MagicGrid,
     Swiper,
     SwiperSlide
+    // UniRate
   }
 })
 export default class extends Vue {
@@ -44,8 +46,8 @@ export default class extends Vue {
     if (this.componentData.data.swiper) {
       page = Math.ceil(length / swiperCount)
       for (let i = 0; i < page; i++) {
-        const start = i * rowButtonCount
-        const end = (i + 1) * rowButtonCount
+        const start = i * swiperCount
+        const end = (i + 1) * swiperCount
         const temp = items.slice(start, end)
         result.push(temp)
       }

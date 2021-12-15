@@ -12,6 +12,7 @@ export interface iShopData {
   page_title: string
   shop_data: string
   page_icon: string
+  is_index: number
   // page_scene_depict: string
 }
 

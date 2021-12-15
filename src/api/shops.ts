@@ -60,3 +60,15 @@ export const createShop = (data: any) => {
     data
   }) as unknown) as IResponse
 }
+
+export const setIndex = (params: any) => {
+  const url = process.env.NODE_ENV === 'production' ? '/index.php/Admin/DiyApi/setIndex' : '/test/index.php/Admin/DiyApi/setIndex'
+  return (request({
+    // url: '/setIndex',
+    // url: '/test/index.php/Admin/DiyApi/setIndex',
+    // url: '/index.php/Admin/DiyApi/setIndex',
+    url: url,
+    method: 'get',
+    params
+  }) as unknown) as IResponse
+}

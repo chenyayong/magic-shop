@@ -4,36 +4,21 @@
       <el-collapse-item title="商城页面" name="1">
         <el-row>
           <el-col :span="4" v-for="(item, index) in homeLinks" :key="index">
-            <span
-              class="item-link"
-              :class="[item.src === currentLink ? 'is-active' : '']"
-              @click="selectLinks(item)"
-              >{{ item.name }}</span
-            >
+            <span class="item-link" :class="[item.src === currentLink ? 'is-active' : '']" @click="selectLinks(item)">{{ item.name }}</span>
           </el-col>
         </el-row>
       </el-collapse-item>
       <el-collapse-item title="会员中心" name="2">
         <el-row>
           <el-col :span="4" v-for="(item, index) in memberLinks" :key="index">
-            <span
-              class="item-link"
-              :class="[item.src === currentLink ? 'is-active' : '']"
-              @click="selectLinks(item)"
-              >{{ item.name }}</span
-            >
+            <span class="item-link" :class="[item.src === currentLink ? 'is-active' : '']" @click="selectLinks(item)">{{ item.name }}</span>
           </el-col>
         </el-row>
       </el-collapse-item>
       <el-collapse-item title="其他链接" name="3">
         <el-row>
           <el-col :span="4" v-for="(item, index) in otherLinks" :key="index">
-            <span
-              class="item-link"
-              :class="[item.src === currentLink ? 'is-active' : '']"
-              @click="selectLinks(item)"
-              >{{ item.name }}</span
-            >
+            <span class="item-link" :class="[item.src === currentLink ? 'is-active' : '']" @click="selectLinks(item)">{{ item.name }}</span>
           </el-col>
         </el-row>
       </el-collapse-item>
@@ -51,23 +36,19 @@ export default class extends Vue {
   private activeName = ['1', '2', '3']
   private homeLinks: ILink[] = [
     {
-      src: '/pages/home/index',
+      src: 'pages/tabbar/home',
       name: '首页'
     },
     {
-      src: '/pages/category/index',
+      src: '/pages/tabbar/category',
       name: '分类导航'
     },
     {
-      src: '/pages/goods/index',
-      name: '全部商品'
-    },
-    {
-      src: '/pages/shopping-card/index',
+      src: '/pages/tabbar/cart',
       name: '购物车'
     },
     {
-      src: '/pages/my/index',
+      src: '/pages/tabbar/user',
       name: '我的'
     }
   ]
@@ -85,35 +66,39 @@ export default class extends Vue {
 
   private otherLinks: ILink[] = [
     {
-      src: '/pages/login/index',
+      src: '/pages/auth/login',
       name: '登录'
     },
+    // {
+    //   src: '/pages/register/index',
+    //   name: '注册'
+    // },
     {
-      src: '/pages/register/index',
-      name: '注册'
-    },
-    {
-      src: '/pages/setting/index',
+      src: '/pages/set/set',
       name: '设置'
     },
     {
-      src: '/pages/search/index',
+      src: '/pages/search/search',
       name: '搜索'
     },
     {
-      src: '/pages/address/index',
+      src: '/pages/product/list',
+      name: '全部商品'
+    },
+    {
+      src: '/pages/address/manage',
       name: '收货地址'
     },
     {
-      src: '/pages/appendAddress/index',
+      src: '/pages/chooseAddress/index',
       name: '添加收货地址'
     },
     {
-      src: '/pages/orders/index',
+      src: '/pages/order/list',
       name: '我的订单'
     },
     {
-      src: '/pages/collection/index',
+      src: '/pages/favorite/favorite',
       name: '我的收藏'
     }
     // {

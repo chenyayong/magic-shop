@@ -1,6 +1,6 @@
 <template>
   <div class="magic-grid">
-    <grid :border="false" :column-num="componentData.data.rowButtonCount">
+    <grid :border="false" :column-num="componentData.data.row_button_count">
       <grid-item v-for="(item, index) in items" :key="index">
         <el-skeleton :loading="!item.img_url">
           <template slot="template">

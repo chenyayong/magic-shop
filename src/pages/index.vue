@@ -24,16 +24,16 @@ export default class extends Vue {}
 }
 .app {
   box-sizing: border-box;
-  height: 640px;
-  width: 360px;
+  // height: 640px;
+  // width: 360px;
+  // position: fixed;
+  // transform: translate(-50%, -50%);
+  // left: 50%;
+  // top: 50%;
+  // border-radius: 12px;
   background: #fafafa;
   overflow: hidden;
-  border-radius: 12px;
   box-shadow: #ebedf0 0 4px 12px;
-  position: fixed;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
   .el-scrollbar {
     height: 100%;
   }

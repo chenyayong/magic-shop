@@ -6,9 +6,10 @@ const path = require('path')
 // For example, on Mac: sudo npm run / sudo yarn
 const devServerPort = 9527 // TODO: get this variable from setting.ts
 const mockServerPort = 9528 // TODO: get this variable from setting.ts
-const name = '新视界' // TODO: get this variable from setting.ts
+const name = '禧恩' // TODO: get this variable from setting.ts
 
 module.exports = {
+  transpileDependencies: ['@dcloudio/uni-ui'],
   publicPath: process.env.NODE_ENV === 'production' ? '/magic/' : '/',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
@@ -22,7 +23,8 @@ module.exports = {
     progress: false,
     proxy: {
       [process.env.VUE_APP_BASE_API + '/test']: {
-        target: 'https://test.global3plus.com/',
+        // target: 'https://test.global3plus.com/',
+        target: 'https://zhfeshop.eqypay.cn/',
         changeOrigin: true,
         ws: true,
         pathRewrite: {

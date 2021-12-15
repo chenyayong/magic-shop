@@ -1,19 +1,7 @@
 <template>
   <div class="base-components">
-    <draggable
-      class="grid-list"
-      :list="compontents"
-      filter=".filter-item"
-      :clone="clone"
-      :group="group"
-      :sort="false"
-    >
-      <div
-        class="grid-item"
-        :class="filterClass(item)"
-        v-for="item in compontents"
-        :key="item.name"
-      >
+    <draggable class="grid-list" :list="compontents" filter=".filter-item" :clone="clone" :group="group" :sort="false">
+      <div class="grid-item" :class="filterClass(item)" v-for="item in compontents" :key="item.name">
         <div><i :class="[item.icon]"></i></div>
         <div>{{ item.label }}</div>
       </div>
@@ -43,6 +31,7 @@ export default class extends Vue {
   @magic.State('baseComponents') compontents!: IComponentData[]
   @magic.State('componentsFormDataMap') componentsFormDataMap!: IComponentsFormDataMap
   @magic.State('componentsFormData') componentsFormData!: IComponentData[]
+  private filterComponents = ['magic_tabbar']
   private group = {
     name: 'site',
     pull: 'clone',
@@ -50,15 +39,19 @@ export default class extends Vue {
   }
 
   filterClass(item: any) {
-    if (item.name === 'magic_tabbar') {
-      const item = this.componentsFormData.find((e) => e.name === 'magic_tabbar')
-      return [item ? 'filter-item' : '']
-    }
+    // if (item.name === 'magic_tabbar') {
+    //   const item = this.componentsFormData.find((e) => e.name === 'magic_tabbar')
+    //   return [item ? 'filter-item' : '']
+    // }
 
     if (item.name === 'magic_search') {
       const item = this.componentsFormData.find((e) => e.name === 'magic_search')
       return [item ? 'filter-item' : '']
     }
+
+    const index = this.filterComponents.indexOf(item.name)
+    console.log(index, item)
+    return [index > -1 ? 'filter-item' : '']
   }
 
   clone(value: IComponentData) {
@@ -117,8 +110,8 @@ export default class extends Vue {
     background-color: #f4f4f5;
     color: #bcbec2;
   }
-  // &::after {
-  //   content: '开发中';
-  // }
+  &::after {
+    content: '开发中';
+  }
 }
 </style>

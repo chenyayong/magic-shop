@@ -90,7 +90,7 @@ import { IGoods } from '@/api/types'
 })
 export default class extends Vue {
   @Prop({ type: String, required: true }) currentLink!: string
-  private prePath = '/goods?id='
+  private prePath = '/pages/product/detail?id='
   private limits = [5, 10, 15, 20]
   private total = 0
   private tabelData: IGoods[] = []
