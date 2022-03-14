@@ -24,7 +24,8 @@ module.exports = {
     proxy: {
       [process.env.VUE_APP_BASE_API + '/test']: {
         // target: 'https://test.global3plus.com/',
-        target: 'https://zhfeshop.eqypay.cn/',
+        // target: 'https://zhfeshop.eqypay.cn/',
+        target: 'https://www.xiensw.com/',
         changeOrigin: true,
         ws: true,
         pathRewrite: {
