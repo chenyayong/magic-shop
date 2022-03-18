@@ -1,7 +1,7 @@
 // import path from 'path'
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import pages from './modules/pages'
+// import pages from './modules/pages'
 Vue.use(VueRouter)
 
 /*
@@ -33,7 +33,7 @@ Vue.use(VueRouter)
   all roles can be accessed
 */
 export const constantRoutes: RouteConfig[] = [
-  pages,
+  // pages,
   {
     path: '/magic',
     component: () => import(/* webpackChunkName: "magic" */ '@/views/magic/index.vue')

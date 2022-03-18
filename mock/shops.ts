@@ -9,6 +9,7 @@ const articleCount = 100
 for (let i = 0; i < articleCount; i++) {
   shopList.push({
     shop_id: i,
+    is_index: 0,
     // update_at: Mock.mock('@datetime'),
     update_at: Math.floor(Date.now() / 1000),
     page_title: Mock.mock('@title'),
