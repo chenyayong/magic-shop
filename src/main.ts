@@ -30,14 +30,14 @@ Vue.use(Vant)
 // Vue.use(Tooltip)
 
 Vue.use(ElementUI, {
-  size: 'small' // AppModule.size, // Set element-ui default size
-  // i18n: (key: string, value: string) => i18n.t(key, value)
+    size: 'small' // AppModule.size, // Set element-ui default size
+    // i18n: (key: string, value: string) => i18n.t(key, value)
 })
 
 Vue.use(SvgIcon, {
-  tagName: 'svg-icon',
-  defaultWidth: '1em',
-  defaultHeight: '1em'
+    tagName: 'svg-icon',
+    defaultWidth: '1em',
+    defaultHeight: '1em'
 })
 
 // // Register global directives
@@ -53,8 +53,8 @@ Vue.use(SvgIcon, {
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  store,
-  // i18n,
-  render: (h) => h(App)
+    router,
+    store,
+    // i18n,
+    render: (h) => h(App)
 }).$mount('#app')
